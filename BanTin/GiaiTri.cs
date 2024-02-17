@@ -25,7 +25,22 @@ namespace BanTin
             Console.WriteLine("Bắt đầu vào: " + timeStart);
             Console.WriteLine("Bắt đầu vào: " + timeEnd);
         }
- 
+
+        public static void printAll(List<BanTin> listBanTins)
+        {
+            foreach (BanTin bantin in listBanTins)
+            {
+                if (bantin is GiaiTri giaiTri)
+                {
+                    Console.WriteLine("Tên: " + giaiTri.name);
+                    Console.WriteLine("Thời gian: " + giaiTri.time);
+                    Console.WriteLine("Thời gian bắt đầu: " + giaiTri.timeStart);
+                    Console.WriteLine();
+                }
+            }
+        }
+
+
         public static double calculateTime(BanTin[] listBanTins)
         {
             double totalTime = 0;
@@ -38,5 +53,7 @@ namespace BanTin
             }
             return totalTime;
         }
+
+
     }
 }

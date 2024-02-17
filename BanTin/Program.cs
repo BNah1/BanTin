@@ -21,7 +21,7 @@ namespace BanTin
             danhSachBantin.Add(bantin3);
 
             double tongTime = GiaiTri.calculateTime(danhSachBantin.ToArray());
-            bantin1.printInfo();
+            GiaiTri.printAll(danhSachBantin);
 
             Console.WriteLine(tongTime); // In ra tổng thời gian: 22.7
         }
