@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class QuangCao : BanTin
+    internal class QuangCao : BanTinManager
     {
-        public QuangCao(string name, double time, string noiDung, string timeStart, string timeEnd)
+        private string name;
+        private string noiDung;
+        private string timeStart;
+
+        public QuangCao(string name, double time, string noiDung, string timeStart)
         {
             this.name = name;
             this.time = time;
@@ -24,9 +28,9 @@ namespace BanTin
             Console.WriteLine("Bắt đầu vào: " + timeStart);
         }
 
-        public static void printAll(List<BanTin> listBanTins)
+        public static void printAll(List<BanTinManager> listBanTins)
         {
-            foreach (BanTin bantin in listBanTins)
+            foreach (BanTinManager bantin in listBanTins)
             {
                 if (bantin is QuangCao quangCao)
                 {

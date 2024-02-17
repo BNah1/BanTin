@@ -9,19 +9,34 @@ namespace BanTin
     {
         static void Main(string[] args)
         {
-            List<BanTin> danhSachBantin = new List<BanTin>();
+            Category thethao = new Category();
+            Category giaitri = new Category();
+            Category thoisu = new Category();
+            Category dubaothoitiet = new Category();
 
-            GiaiTri bantin1 = new GiaiTri("Ban Tin 1", 11.5, "Noi dung 1", "Time Start 1", "Time End 1");
-            danhSachBantin.Add(bantin1);
+            List<BanTinManager> danhSachBantin = new List<BanTinManager>();
 
-            GiaiTri bantin2 = new GiaiTri("Ban Tin 2", 5.0, "Noi dung 2", "Time Start 2", "Time End 2");
-            danhSachBantin.Add(bantin2);
+            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thethao);
+            danhSachBantin.Add(banTin1);
 
-            GiaiTri bantin3 = new GiaiTri("Ban Tin 3", 7.2, "Noi dung 3", "Time Start 3", "Time End 3");
-            danhSachBantin.Add(bantin3);
+            BanTin banTin2 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", dubaothoitiet);
+            danhSachBantin.Add(banTin2);
 
-            double tongTime = GiaiTri.calculateTime(danhSachBantin.ToArray());
-            GiaiTri.printAll(danhSachBantin);
+            BanTin banTin3 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thoisu);
+            danhSachBantin.Add(banTin3);
+
+            BanTin banTin4 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thethao);
+            danhSachBantin.Add(banTin4);
+
+            BanTin banTin5 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", giaitri);
+            danhSachBantin.Add(banTin5);
+
+            double tongTime = BanTin.calculateTime(danhSachBantin.ToArray());
+            BanTin.printAll(danhSachBantin);
+
+            giaitri.removeCategory(banTin5);
+            giaitri.printInfo();
+            thethao.printInfo();
 
             Console.WriteLine(tongTime); // In ra tổng thời gian: 22.7
         }
