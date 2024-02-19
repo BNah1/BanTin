@@ -13,15 +13,19 @@ namespace BanTin
         private string timeStart { get; set; }
         private double time { get; set; }
         public Category belongstoCategory { get; set; }
-   
+        public Author belongstoAuthor { get; set; }
 
-        public BanTin(string name, double time, string noiDung, string timeStart, string timeEnd, Category belongstoCategory)
+
+        public BanTin(string name, double time, string noiDung, string timeStart, string timeEnd, Category belongstoCategory, Author belongstoAuthor)
         {
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
             this.timeStart = timeStart;
             this.belongstoCategory = belongstoCategory;
+            belongstoCategory.setCategory(this);
+            this.belongstoAuthor = belongstoAuthor;
+            belongstoAuthor.setAuthor(this);
         }
 
         public override void printInfo()
@@ -46,6 +50,13 @@ namespace BanTin
             }
         }
 
+        public override string ToString()
+        {
+            return "Tên bản tin: " + name + "\n" +
+                   "Nội dung: " + noiDung + "\n" +
+                   "Thời lượng: " + time + "\n" +
+                   "Bắt đầu vào: " + timeStart;
+        }
 
         public static double calculateTime(BanTinManager[] listBanTins)
         {

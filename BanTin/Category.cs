@@ -16,7 +16,7 @@ namespace BanTin
             this.news = new List<BanTin>();
         }
 
-        public void addCategory(BanTin banTinDaTao) {
+        public void setCategory(BanTin banTinDaTao) {
             news.Add(banTinDaTao);
         }
 

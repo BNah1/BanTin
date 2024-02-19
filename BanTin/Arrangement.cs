@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class QuangCao
+    internal class Arrangement
     {
     }
 }
