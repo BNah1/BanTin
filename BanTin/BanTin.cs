@@ -14,6 +14,7 @@ namespace BanTin
         private double time { get; set; }
         public Category belongstoCategory { get; set; }
         public Author belongstoAuthor { get; set; }
+        public static List<BanTin> listBanTins = new List<BanTin>();
 
 
         public BanTin(string name, double time, string noiDung, string timeStart, string timeEnd, Category belongstoCategory, Author belongstoAuthor)
@@ -26,6 +27,7 @@ namespace BanTin
             belongstoCategory.setCategory(this);
             this.belongstoAuthor = belongstoAuthor;
             belongstoAuthor.setAuthor(this);
+            listBanTins.Add(this);
         }
 
         public override void printInfo()
@@ -36,17 +38,14 @@ namespace BanTin
             Console.WriteLine("Bắt đầu vào: " + timeStart);
         }
 
-        public static void printAll(List<BanTinManager> listBanTins)
+        public static void printAll()
         {
-            foreach (BanTinManager bantin in listBanTins)
+            foreach (BanTin bantin in listBanTins)
             {
-                if (bantin is BanTin banTin)
-                {
-                    Console.WriteLine("Tên: " + banTin.name);
-                    Console.WriteLine("Thời gian: " + banTin.time);
-                    Console.WriteLine("Thời gian bắt đầu: " + banTin.timeStart);
-                    Console.WriteLine();
-                }
+                Console.WriteLine("Tên: " + bantin.name);
+                Console.WriteLine("Thời gian: " + bantin.time);
+                Console.WriteLine("Thời gian bắt đầu: " + bantin.timeStart);
+                Console.WriteLine();
             }
         }
 
@@ -74,3 +73,5 @@ namespace BanTin
 
     }
 }
+
+
