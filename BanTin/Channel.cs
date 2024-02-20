@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Channel 
+    internal class Channel : ShowBanTin
     {
         private string name;
         private int limitNews;
@@ -25,6 +25,13 @@ namespace BanTin
             news.Add(banTinDaTao);
         }
 
-
+        public void printAll()
+        {
+            Console.WriteLine("Kenh " + name + " gom cac ban tin :");
+            foreach (var banTin in news)
+            {
+                banTin.getName();
+            }
+        }
     }
 }

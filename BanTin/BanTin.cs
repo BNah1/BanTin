@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BanTin
+namespace BanTin 
 {
-    internal class BanTin : BanTinManager
+    internal class BanTin : SetTimeStart
     {
         private string name { get; set; }
         private string noiDung { get; set; }
-        private string timeStart { get; set; }
         private double time { get; set; }
+        private DateTime timeStart { get; set; } = DateTime.MinValue.Date; 
         public Category belongstoCategory { get; set; }
         public Author belongstoAuthor { get; set; }
         public static List<BanTin> listBanTins = new List<BanTin>();
@@ -22,7 +22,6 @@ namespace BanTin
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-            this.timeStart = timeStart;
             this.belongstoCategory = belongstoCategory;
             belongstoCategory.setCategory(this);
             this.belongstoAuthor = belongstoAuthor;
@@ -30,21 +29,16 @@ namespace BanTin
             listBanTins.Add(this);
         }
 
-        public override void printInfo()
-        {
-            Console.WriteLine("Tên bản tin: " + name);
-            Console.WriteLine("Nội dung: " + noiDung);
-            Console.WriteLine("Thời lượng: " + time);
-            Console.WriteLine("Bắt đầu vào: " + timeStart);
+        public void getName() {
+            Console.WriteLine("Ban Tin : " + name);
         }
-
+ 
         public static void printAll()
         {
             foreach (BanTin bantin in listBanTins)
             {
                 Console.WriteLine("Tên: " + bantin.name);
                 Console.WriteLine("Thời gian: " + bantin.time);
-                Console.WriteLine("Thời gian bắt đầu: " + bantin.timeStart);
                 Console.WriteLine();
             }
         }
@@ -53,23 +47,13 @@ namespace BanTin
         {
             return "Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung + "\n" +
-                   "Thời lượng: " + time + "\n" +
-                   "Bắt đầu vào: " + timeStart;
+                   "Thời lượng: " + time + "\n"; 
         }
 
-        public static double calculateTime(BanTinManager[] listBanTins)
-        {
-            double totalTime = 0;
-            foreach (BanTinManager bantin in listBanTins)
-            {
-                if (bantin is BanTin banTin)
-                {
-                    totalTime += banTin.time; // Truy cập thuộc tính Time của lớp con banTin
-                }
-            }
-            return totalTime;
+        public DateTime setTimeStart(string timeString) {
+            timeStart = DateTime.ParseExact(timeString, "H:mm:ss", null);
+            return timeStart;
         }
-
 
     }
 }

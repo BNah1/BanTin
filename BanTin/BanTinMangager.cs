@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal abstract class BanTinManager
+    internal interface ShowBanTin
     {
-        protected double time;
-
-        public abstract void printInfo();
-        public virtual double calculateTime()
-        {
-            return time;
-        }
+        void printAll();
     }
+    
+
 }

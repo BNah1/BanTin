@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Category : BanTinManager
+    internal class Category : ShowBanTin
     {
         public string name { get; set; }
         public List<BanTin> news { get; set; }
@@ -25,12 +25,11 @@ namespace BanTin
             news.Remove(banTinDaTao);
         }
 
-        public override void printInfo() {
+        public void printAll() {
             foreach (var banTin in news)
             {
-                Console.WriteLine(banTin.ToString());
-            }
-                
+                banTin.getName();
+            }                
          }
 
     }

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Arrangement
+    internal interface SetTimeStart
     {
+        DateTime setTimeStart(string timeS);
     }
 }

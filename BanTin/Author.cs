@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Author : BanTinManager
+    internal class Author : ShowBanTin
     {
         private string company;
         private string name;
@@ -22,7 +22,7 @@ namespace BanTin
             this.numOfNews = news.Count;
         }
 
-        public override void printInfo()
+        public void printAll()
         {
             Console.WriteLine("Tên tác giả: " + name);
             Console.WriteLine("Thuộc : " + company);
