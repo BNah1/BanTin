@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BanTin 
 {
@@ -12,6 +13,7 @@ namespace BanTin
         private string noiDung { get; set; }
         private double time { get; set; }
         private DateTime timeStart { get; set; } = DateTime.MinValue.Date; 
+        private DateTime timeEnd { get; set; }
         public Category belongstoCategory { get; set; }
         public Author belongstoAuthor { get; set; }
         public static List<BanTin> listBanTins = new List<BanTin>();
@@ -27,6 +29,8 @@ namespace BanTin
             this.belongstoAuthor = belongstoAuthor;
             belongstoAuthor.setAuthor(this);
             listBanTins.Add(this);
+
+            
         }
 
         public void getName() {
@@ -52,6 +56,8 @@ namespace BanTin
 
         public DateTime setTimeStart(string timeString) {
             timeStart = DateTime.ParseExact(timeString, "H:mm:ss", null);
+            TimeSpan duration = TimeSpan.FromSeconds(time);
+            timeEnd = timeStart.Add(duration);
             return timeStart;
         }
 

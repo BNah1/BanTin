@@ -43,7 +43,7 @@ namespace BanTin
                 DateTime startTime = DateTime.ParseExact(timeStart, "H:mm:ss", null);
                 DateTime startTime1 = DateTime.ParseExact(timeStart, "H:mm:ss", null);
 
-                int time = 120; // Giây
+                double time = 120; // Giây
                 TimeSpan duration = TimeSpan.FromSeconds(time);
 
                 DateTime endTime = startTime.Add(duration);
