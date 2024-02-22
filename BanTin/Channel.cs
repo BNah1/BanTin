@@ -11,6 +11,8 @@ namespace BanTin
         private string name;
         private int limitNews;
         public List<BanTin> news { get; set; }
+        private Schedule schedule;
+
         public Channel(string name, int limitNews)
         {
             this.news = new List<BanTin>();
@@ -33,5 +35,7 @@ namespace BanTin
                 banTin.getName();
             }
         }
+
+
     }
 }

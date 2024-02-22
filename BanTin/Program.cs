@@ -9,58 +9,84 @@ namespace BanTin
     {
             static void Main(string[] args)
             {
-
-            // tạo bản tin thử
-            Category thethao = new Category();
-                Category giaitri = new Category();
-                Category thoisu = new Category();
-                Category dubaothoitiet = new Category();
-                Author nguyenA = new Author();
-                Channel MTV = new Channel("MTV", 5);
-
-
-                BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thethao, nguyenA);
-
-                BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1", "08:00", "08:10", dubaothoitiet, nguyenA);
-
-                BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thoisu, nguyenA);
-
-                BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1", "08:00", "08:10", thethao, nguyenA);
-
-                BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1", "08:00", "08:10", giaitri, nguyenA);
-
-                BanTin.printAll();
-
-                giaitri.removeCategory(banTin5);
-                MTV.channelAddBanTin(banTin5);
-                MTV.channelAddBanTin(banTin4);
-                MTV.printAll();
-                
-
-
-
-                string timeStart = "3:29:59";
-                DateTime startTime = DateTime.ParseExact(timeStart, "H:mm:ss", null);
-                DateTime startTime1 = DateTime.ParseExact(timeStart, "H:mm:ss", null);
-
-                double time = 120; // Giây
-                TimeSpan duration = TimeSpan.FromSeconds(time);
-
-                DateTime endTime = startTime.Add(duration);
-
-                string timeEnd = endTime.ToString("H:mm:ss");
-                Console.WriteLine("Thời gian kết thúc: " + timeEnd);
-                Console.WriteLine("Thời gian kết thúc: " + time);
+                nhapDuLieu();
+            
 
             }
 
 
 
+        public static void nhapDuLieu() {
+            // tạo bản tin thử
+            Category thethao = new Category();
+            Category giaitri = new Category();
+            Category thoisu = new Category();
+            Category dubaothoitiet = new Category();
+            Author nguyenA = new Author();
+            Channel vtv1 = new Channel("vtv1", 5);
+            Channel vtv2 = new Channel("vtv2", 5);
+            Channel vtv3 = new Channel("vtv3", 5);
+
+
+            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", thethao, nguyenA);
+
+            BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1", dubaothoitiet, nguyenA);
+
+            BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1", thoisu, nguyenA);
+
+            BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1", thethao, nguyenA);
+
+            BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1", giaitri, nguyenA);
+
+
+            giaitri.removeCategory(banTin5);
+            //MTV.channelAddBanTin(banTin5);
+            //MTV.channelAddBanTin(banTin4);
+            //MTV.printAll();
+      
+            Console.WriteLine("Nhap thoi diem ma ban muon them ban tin vao :");
+            Console.WriteLine("1.Sang");
+            Console.WriteLine("2.Toi");
+            string inputPeriod = Console.ReadLine();
+            switch (inputPeriod)
+            {
+                case "1":
+                    banTin1.setTimePeriod("sang");
+                    break;
+
+                case "2":
+                    banTin1.setTimePeriod("toi");
+                    break;
+
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ nhập lại");
+                    break;
+            }
+            Console.WriteLine(banTin1.ToString());
+
+
+
+            //string timeStart = "3:29:59";
+            //DateTime startTime = DateTime.ParseExact(timeStart, "H:mm:ss", null);
+            //DateTime startTime1 = DateTime.ParseExact(timeStart, "H:mm:ss", null);
+
+            //double time = 120; // Giây
+            //TimeSpan duration = TimeSpan.FromSeconds(time);
+
+            //DateTime endTime = startTime.Add(duration);
+
+            //string timeEnd = endTime.ToString("H:mm:ss");
+            //Console.WriteLine("Thời gian kết thúc: " + timeEnd);
+            //Console.WriteLine("Thời gian kết thúc: " + time);
+
+        }
 
 
 
 
-            public void Nhap()
+
+
+        public void Nhap()
             {
                 //    bool exit = false;
                 //    while (!exit)

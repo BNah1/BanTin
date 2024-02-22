@@ -10,8 +10,8 @@ namespace BanTin
     {
         private int totalTime;
         TimeSpan duration;
-        private string day;
         public Channel nameOfChannel { get; set; }
+
         public TimeManagement(int totalTime, Channel nameOfChannel)
         {
             this.totalTime = totalTime;

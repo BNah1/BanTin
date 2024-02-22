@@ -8,6 +8,7 @@ namespace BanTin
 {
     internal interface SetTimeStart
     {
+        void setTimePeriod(string period);
         DateTime setTimeStart(string timeS);
     }
 }

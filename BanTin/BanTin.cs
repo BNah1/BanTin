@@ -12,14 +12,16 @@ namespace BanTin
         private string name { get; set; }
         private string noiDung { get; set; }
         private double time { get; set; }
-        private DateTime timeStart { get; set; } = DateTime.MinValue.Date; 
         private DateTime timeEnd { get; set; }
+        private DateTime timeStart { get; set; }
+        private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
+        private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
         public Category belongstoCategory { get; set; }
         public Author belongstoAuthor { get; set; }
         public static List<BanTin> listBanTins = new List<BanTin>();
 
 
-        public BanTin(string name, double time, string noiDung, string timeStart, string timeEnd, Category belongstoCategory, Author belongstoAuthor)
+        public BanTin(string name, double time, string noiDung, Category belongstoCategory, Author belongstoAuthor)
         {
             this.name = name;
             this.time = time;
@@ -51,7 +53,8 @@ namespace BanTin
         {
             return "Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung + "\n" +
-                   "Thời lượng: " + time + "\n"; 
+                   "Thời lượng: " + time + "\n" +
+                   "Bắt đầu vào: " + timeStart + "\n"; 
         }
 
         public DateTime setTimeStart(string timeString) {
@@ -59,6 +62,28 @@ namespace BanTin
             TimeSpan duration = TimeSpan.FromSeconds(time);
             timeEnd = timeStart.Add(duration);
             return timeStart;
+        }
+
+        public void setTimePeriod(string period)
+        {
+            if (period == "sang")
+            {
+                timeStart = timeStartMorning;
+                TimeSpan duration1 = TimeSpan.FromSeconds(time);
+                timeEnd = timeStart.Add(duration1);
+            }
+            else if (period == "toi")
+            {
+                timeStart = timeStartNight;
+                TimeSpan duration2 = TimeSpan.FromSeconds(time);
+                timeEnd = timeStart.Add(duration2);
+            }
+            else
+            {
+                timeStart = DateTime.MinValue;
+                TimeSpan duration1 = TimeSpan.FromSeconds(time);
+                timeEnd = timeStart.Add(duration1);
+            }
         }
 
     }
