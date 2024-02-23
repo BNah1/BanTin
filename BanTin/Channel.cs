@@ -12,7 +12,7 @@ namespace BanTin
         private int limitNews;
         public List<BanTin> news { get; set; }
         private Schedule schedule;
-
+        public static List<Channel> chanels { get; set; }
         public Channel(string name, int limitNews)
         {
             this.news = new List<BanTin>();
@@ -21,6 +21,11 @@ namespace BanTin
                 this.limitNews = limitNews;
             else
                 Console.WriteLine("So luong ban tin toi da cho 1 kenh la 10 va toi thieu la 3 ");
+
+            if (chanels == null)
+                chanels = new List<Channel>();
+            else
+                chanels.Add(this);
         }
 
         public void channelAddBanTin(BanTin banTinDaTao) {

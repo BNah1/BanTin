@@ -16,25 +16,27 @@ namespace BanTin
         private DateTime timeStart { get; set; }
         private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
         private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
-        public Category belongstoCategory { get; set; }
-        public Author belongstoAuthor { get; set; }
+        private string categoryName { get; set; }
         public static List<BanTin> listBanTins = new List<BanTin>();
 
 
-        public BanTin(string name, double time, string noiDung, Category belongstoCategory, Author belongstoAuthor)
+        public BanTin(string name, double time, string noiDung)
         {
+            categoryName = " Chua dat the loai ";
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-            this.belongstoCategory = belongstoCategory;
-            belongstoCategory.setCategory(this);
-            this.belongstoAuthor = belongstoAuthor;
-            belongstoAuthor.setAuthor(this);
+           
+            if (listBanTins == null)
+            {
+                listBanTins = new List<BanTin>();
+            }
             listBanTins.Add(this);
-
-            
         }
 
+        public void getCategoryName( string categoryName) { 
+            this.categoryName = categoryName;
+        }
         public void getName() {
             Console.WriteLine("Ban Tin : " + name);
         }

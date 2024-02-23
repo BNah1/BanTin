@@ -21,7 +21,10 @@ namespace BanTin
             this.company = company;
             this.email = email;
             this.numOfNews = news.Count;
-            authors = new List<Author>();
+            if (authors == null)
+                authors = new List<Author>();
+            else
+                authors.Add(this);
         }
 
         public void printAll()

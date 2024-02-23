@@ -10,10 +10,10 @@ namespace BanTin
             static void Main(string[] args)
             {
 
-            Category.printAllCategory();
-                nhapDuLieu();
-                nhapBanTin();
-
+            
+            nhapDuLieu();
+            nhapBanTin();
+            
             }
 
 
@@ -57,8 +57,25 @@ namespace BanTin
                     belongstoCategory = GetCategoryByName(categoryName);
 
                     if (belongstoCategory == null)
-                    {
-                        Console.WriteLine("Thể loại không tồn tại. Vui lòng nhập lại tên thể loại.");
+                    {                          
+                        Console.WriteLine("Thể loại không tồn tại. Vui long chon cac lua chon sau ");
+                        int choice1 = int.Parse(Console.ReadLine());
+                        Console.WriteLine("1.Tao the loai moi");
+                        Console.WriteLine("2.Nhap lai");
+                        switch (choice1)
+                        {
+                            case 1:
+                                string newCategory = categoryName;
+                                Category.categories[i] = new Category(categoryName);
+
+                                Console.WriteLine("Da tao thanh cong " + categoryName);
+                                break;
+                            case 2:
+                                break;
+                            default:
+                                Console.WriteLine("Lựa chọn không hợp lệ. Vui lòng nhập lại.");
+                                break;
+                        }
                     }
                     else
                     {
@@ -84,7 +101,7 @@ namespace BanTin
                     }
                 }
 
-                BanTin.listBanTins.Add(new BanTin(name, time, noiDung, belongstoCategory, belongstoAuthor));
+                BanTin.listBanTins.Add(new BanTin(name, time, noiDung));
 
                 //BanTin.listBanTins.Add(new BanTin(name, time, noiDung, belongstoCategory, belongstoAuthor));
 
@@ -147,22 +164,22 @@ namespace BanTin
             Channel vtv3 = new Channel("vtv3", 5);
 
 
-            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1", thethao, nguyenA);
+            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1");
 
-            BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1", dubaothoitiet, nguyenA);
+            BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1");
 
-            BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1", thoisu, nguyenA);
+            BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1");
 
-            BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1", thethao, nguyenA);
+            BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1");
 
-            BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1", giaitri, nguyenA);
+            BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1");
 
-
+            Category.printAllCategory();
             giaitri.removeCategory(banTin5);
             //MTV.channelAddBanTin(banTin5);
             //MTV.channelAddBanTin(banTin4);
             //MTV.printAll();
-      
+            giaitri.printAllBanTin();
             Console.WriteLine("Nhap thoi diem ma ban muon them ban tin vao :");
             Console.WriteLine("1.Sang");
             Console.WriteLine("2.Toi");
@@ -309,4 +326,3 @@ namespace BanTin
 
         
     }
-
