@@ -9,19 +9,138 @@ namespace BanTin
     {
             static void Main(string[] args)
             {
+
+            Category.printAllCategory();
                 nhapDuLieu();
-            
+                nhapBanTin();
 
             }
 
 
+        public static void nhapBanTin()
+        {
+            bool continueInput = true;
+
+            while (continueInput)
+            {
+                Console.WriteLine("So luong ban tin muon khai :");
+                int count = int.Parse(Console.ReadLine());
+                Console.WriteLine("Ten ban tin :");
+                string name = Console.ReadLine();
+                Console.WriteLine("Thoi luong ban tin :");
+                double time = double.Parse(Console.ReadLine());
+                Console.WriteLine("Noi dung ban tin :");
+                string noiDung = Console.ReadLine();
+
+                //Console.WriteLine("The loai cua ban tin :");
+                //string categoryName = Console.ReadLine();
+                //Console.WriteLine("Tac gia cua ban tin :");
+                //string authorName = Console.ReadLine();
+                //Category belongstoCategory = GetCategoryByName(categoryName);
+                //if (belongstoCategory == null)
+                //{
+                //    Console.WriteLine("Thể loại không tồn tại. Vui lòng nhập lại tên thể loại.");
+                //    continue;
+                //}
+                //Author belongstoAuthor = getAuthorByName(authorName);
+                //if (belongstoAuthor == null)
+                //{
+                //    Console.WriteLine("Tác giả không tồn tại. Vui lòng nhập lại tên tác giả.");
+                //    continue;
+                //}
+                Category belongstoCategory = null;
+                bool validCategory = false;
+                while (!validCategory)
+                {
+                    Console.WriteLine("The loai cua ban tin :");
+                    string categoryName = Console.ReadLine();
+                    belongstoCategory = GetCategoryByName(categoryName);
+
+                    if (belongstoCategory == null)
+                    {
+                        Console.WriteLine("Thể loại không tồn tại. Vui lòng nhập lại tên thể loại.");
+                    }
+                    else
+                    {
+                        validCategory = true;
+                    }
+                }
+
+                Author belongstoAuthor = null;
+                bool validAuthor = false;
+                while (!validAuthor)
+                {
+                    Console.WriteLine("Tac gia cua ban tin :");
+                    string authorName = Console.ReadLine();
+                    belongstoAuthor = getAuthorByName(authorName);
+
+                    if (belongstoAuthor == null)
+                    {
+                        Console.WriteLine("Tác giả không tồn tại. Vui lòng nhập lại tên tác giả.");
+                    }
+                    else
+                    {
+                        validAuthor = true;
+                    }
+                }
+
+                BanTin.listBanTins.Add(new BanTin(name, time, noiDung, belongstoCategory, belongstoAuthor));
+
+                //BanTin.listBanTins.Add(new BanTin(name, time, noiDung, belongstoCategory, belongstoAuthor));
+
+                Console.WriteLine("1. Nhập tiếp");
+                Console.WriteLine("2. Thoát");
+                Console.WriteLine("Lựa chọn của bạn: ");
+                int choice = int.Parse(Console.ReadLine());
+
+
+                switch (choice)
+                {
+                    case 1:
+                        continueInput = true;
+                        break;
+                    case 2:
+                        continueInput = false;
+                        break;
+                    default:
+                        Console.WriteLine("Lua chon khong hop le, lam on nhap lai");
+                        break;
+                }
+            }
+        }
+
+        public static Category GetCategoryByName(string categoryName)
+        {
+            foreach (Category category in Category.categories)
+            {
+                if (category.name == categoryName)
+                {
+                    return category;
+                }
+            }
+
+            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
+        }
+
+        public static Author getAuthorByName(string authorName)
+        {
+            foreach (Author author in Author.authors)
+            {
+                if (author.name == authorName)
+                {
+                    return author;
+                }
+            }
+
+            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
+        }
 
         public static void nhapDuLieu() {
             // tạo bản tin thử
-            Category thethao = new Category();
-            Category giaitri = new Category();
-            Category thoisu = new Category();
-            Category dubaothoitiet = new Category();
+            Category thethao = new Category("thethao");
+            Category giaitri = new Category("giaitri");
+            Category thoisu = new Category("thoisu");
+            Category dubaothoitiet = new Category("dubaothoitiet");
             Author nguyenA = new Author();
             Channel vtv1 = new Channel("vtv1", 5);
             Channel vtv2 = new Channel("vtv2", 5);
@@ -187,5 +306,7 @@ namespace BanTin
             }
 
         }
+
+        
     }
 

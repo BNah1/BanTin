@@ -9,10 +9,11 @@ namespace BanTin
     internal class Author : ShowBanTin
     {
         private string company;
-        private string name;
+        public string name;
         private string email;
         private int numOfNews;
         public List<BanTin> news { get; set; }
+        public static List<Author> authors { get; set; }
 
         public Author(string name, string company, string email)
         {
@@ -20,6 +21,7 @@ namespace BanTin
             this.company = company;
             this.email = email;
             this.numOfNews = news.Count;
+            authors = new List<Author>();
         }
 
         public void printAll()

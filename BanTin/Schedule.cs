@@ -10,15 +10,11 @@ namespace BanTin
     {
         private string day;
         private string month;
-        public List<BanTin> sang { get; set; }
-        public List<BanTin> toi { get; set; }
 
         public Schedule(string day, string month)
         {
             this.day = day;
             this.month = month;
-            this.sang = new List<BanTin>();
-            this.sang = new List<BanTin>();
         }
 
         public void ShowSchedule()
