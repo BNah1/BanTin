@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using BanTin;
 
 namespace BanTin
@@ -59,15 +61,13 @@ namespace BanTin
                     if (belongstoCategory == null)
                     {                          
                         Console.WriteLine("Thể loại không tồn tại. Vui long chon cac lua chon sau ");
-                        int choice1 = int.Parse(Console.ReadLine());
                         Console.WriteLine("1.Tao the loai moi");
                         Console.WriteLine("2.Nhap lai");
+                        int choice1 = int.Parse(Console.ReadLine());                      
                         switch (choice1)
                         {
                             case 1:
-                                string newCategory = categoryName;
-                                Category.categories[i] = new Category(categoryName);
-
+                                Category.categories.Add(new Category(categoryName));                                
                                 Console.WriteLine("Da tao thanh cong " + categoryName);
                                 break;
                             case 2:
@@ -158,7 +158,8 @@ namespace BanTin
             Category giaitri = new Category("giaitri");
             Category thoisu = new Category("thoisu");
             Category dubaothoitiet = new Category("dubaothoitiet");
-            Author nguyenA = new Author();
+            Author nguyenA = new Author("nguyenA","Dai VTV","nguyenA@gmail.com");
+            Channel MTV = new Channel("MTV",5);
             Channel vtv1 = new Channel("vtv1", 5);
             Channel vtv2 = new Channel("vtv2", 5);
             Channel vtv3 = new Channel("vtv3", 5);
@@ -174,12 +175,14 @@ namespace BanTin
 
             BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1");
 
+
             Category.printAllCategory();
             giaitri.removeCategory(banTin5);
-            //MTV.channelAddBanTin(banTin5);
-            //MTV.channelAddBanTin(banTin4);
-            //MTV.printAll();
+            MTV.channelAddBanTin(banTin5,"sang");
+            MTV.channelAddBanTin(banTin4, "sang");
+            MTV.printAll();
             giaitri.printAllBanTin();
+            
             Console.WriteLine("Nhap thoi diem ma ban muon them ban tin vao :");
             Console.WriteLine("1.Sang");
             Console.WriteLine("2.Toi");

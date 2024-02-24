@@ -10,12 +10,16 @@ namespace BanTin
     {
         private string name;
         private int limitNews;
-        public List<BanTin> news { get; set; }
+        private List<BanTin> sang;
+        private List<BanTin> toi;
         private Schedule schedule;
-        public static List<Channel> chanels { get; set; }
+
+    public static List<Channel> chanels { get; set; }
         public Channel(string name, int limitNews)
         {
-            this.news = new List<BanTin>();
+            
+                
+
             this.name = name;
             if (limitNews < 10 && limitNews > 3)
                 this.limitNews = limitNews;
@@ -28,16 +32,55 @@ namespace BanTin
                 chanels.Add(this);
         }
 
-        public void channelAddBanTin(BanTin banTinDaTao) {
-            news.Add(banTinDaTao);
+        public void channelAddBanTin(BanTin banTinDaTao, string period) {
+            if (period == "sang")
+            {
+                if (sang == null)
+                {
+                    sang = new List<BanTin>();
+                    sang.Add(banTinDaTao);
+                }
+                else
+                    sang.Add(banTinDaTao);
+
+            }
+            else if (period == "toi")
+            {
+                if (toi == null)
+                {
+                    toi = new List<BanTin>();
+                    toi.Add(banTinDaTao);
+                }
+                else
+                    toi.Add(banTinDaTao);
+            }
+            else
+            {
+                Console.WriteLine("Lam on nhap lai");
+                return;
+            }
+
         }
 
         public void printAll()
         {
             Console.WriteLine("Kenh " + name + " gom cac ban tin :");
-            foreach (var banTin in news)
+            Console.WriteLine("Ban tin buoi sang: ");
+            if(sang == null)
+                Console.WriteLine("khong co ban tin buoi sang ");
+            else
             {
-                banTin.getName();
+                foreach (var banTin in sang)
+                    banTin.getName();
+            }
+
+            Console.WriteLine("Ban tin buoi toi: ");
+            if (toi == null)
+                Console.WriteLine("khong co ban tin buoi toi ");
+            else
+            {
+                foreach (var banTin in toi)
+                    banTin.getName();
             }
         }
 

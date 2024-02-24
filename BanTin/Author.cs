@@ -20,7 +20,12 @@ namespace BanTin
             this.name = name;
             this.company = company;
             this.email = email;
-            this.numOfNews = news.Count;
+            // xet so luong ban tin cua tac gia
+            if (news != null ) 
+                this.numOfNews = news.Count;
+            else 
+                this.numOfNews = 0;
+            // xet danh sach tat ca cac tac gia
             if (authors == null)
                 authors = new List<Author>();
             else
@@ -39,16 +44,22 @@ namespace BanTin
                 Console.WriteLine(banTin.ToString());
             }
     }
-
-        public Author()
+        static public void printAllAuthor()
         {
-            this.name = name;
-            this.news = new List<BanTin>();
+            foreach (var author in authors)
+            {
+                author.getName();
+            }
+        }
+
+        public void getName() {
+            Console.WriteLine("Tác giả: " + name);
         }
 
         public void setAuthor(BanTin banTinDaTao)
         {
             news.Add(banTinDaTao);
+            banTinDaTao.getAuthorName(this.name);
             numOfNews = news.Count;
         }
 

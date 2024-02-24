@@ -17,12 +17,14 @@ namespace BanTin
         private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
         private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
         private string categoryName { get; set; }
+        private string authorName { get; set; }
         public static List<BanTin> listBanTins = new List<BanTin>();
-
+        public static List<Channel> listChanel = new List<Channel>();
 
         public BanTin(string name, double time, string noiDung)
         {
             categoryName = " Chua dat the loai ";
+            authorName = " Chua dat ten tac gia ";
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
@@ -37,6 +39,10 @@ namespace BanTin
         public void getCategoryName( string categoryName) { 
             this.categoryName = categoryName;
         }
+        public void getAuthorName(string authorName)
+        {
+            this.authorName = authorName;
+        }
         public void getName() {
             Console.WriteLine("Ban Tin : " + name);
         }
@@ -47,6 +53,8 @@ namespace BanTin
             {
                 Console.WriteLine("Tên: " + bantin.name);
                 Console.WriteLine("Thời gian: " + bantin.time);
+                Console.WriteLine("Ten tac gia: " + bantin.authorName);
+                Console.WriteLine("The loai: " + bantin.categoryName);
                 Console.WriteLine();
             }
         }
