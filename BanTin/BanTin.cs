@@ -43,8 +43,8 @@ namespace BanTin
         {
             this.authorName = authorName;
         }
-        public void getName() {
-            Console.WriteLine("Ban Tin : " + name);
+        public string getName() {
+            return name;
         }
  
         public static void printAll()

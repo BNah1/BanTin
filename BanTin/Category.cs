@@ -23,9 +23,16 @@ namespace BanTin
             categories.Add(this);
         }
 
-        public void setCategory(BanTin banTinDaTao) {
-            news.Add(banTinDaTao);
-            banTinDaTao.getCategoryName(this.name);
+        public void setCategory(string banTinName) {
+            foreach (var banTin in news)
+            {
+                if (banTin.getName() == banTinName)
+                {
+                    news.Add(banTin);
+                    banTin.getCategoryName(this.name);
+                    break;
+                }
+            }
         }
 
         public void removeCategory(BanTin banTinDaTao)
