@@ -31,36 +31,61 @@ namespace BanTin
             else
                 chanels.Add(this);
         }
-
-        public void channelAddBanTin(BanTin banTinDaTao, string period) {
-            if (period == "sang")
+        public void channelAddBanTin(string banTinName, string period)
+        {
+            bool check = false;
+            BanTin foundBanTin = null;
+            foreach (var banTin in BanTin.getListBanTins())
             {
-                if (sang == null)
+                if (banTin.getName() == banTinName)
                 {
-                    sang = new List<BanTin>();
-                    sang.Add(banTinDaTao);
+                    check = true;
+                    foundBanTin = banTin;
+                    break;
+                }
+            }
+            if (check && foundBanTin != null)
+            {
+                if (period == "sang")
+                {
+                    if (sang == null)
+                    {
+                        sang = new List<BanTin>();
+                        sang.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name);
+                    }
+                    else
+                    {
+                        sang.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name);
+                    }
+
+
+                }
+                else if (period == "toi")
+                {
+                    if (toi == null)
+                    {
+                        toi = new List<BanTin>();
+                        toi.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name);
+                    }
+                    else
+                    {
+                        toi.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name);
+                    }
+
                 }
                 else
-                    sang.Add(banTinDaTao);
-
-            }
-            else if (period == "toi")
-            {
-                if (toi == null)
                 {
-                    toi = new List<BanTin>();
-                    toi.Add(banTinDaTao);
+                    Console.WriteLine("Lam on nhap lai");
+                    return;
                 }
-                else
-                    toi.Add(banTinDaTao);
-            }
-            else
-            {
-                Console.WriteLine("Lam on nhap lai");
-                return;
             }
 
         }
+
 
         public void printAll()
         {
@@ -70,8 +95,10 @@ namespace BanTin
                 Console.WriteLine("khong co ban tin buoi sang ");
             else
             {
+                int i = 1;
                 foreach (var banTin in sang)
-                    banTin.getName();
+                    Console.WriteLine(i  +". "+banTin.getName());
+                        i++;
             }
 
             Console.WriteLine("Ban tin buoi toi: ");
@@ -79,11 +106,53 @@ namespace BanTin
                 Console.WriteLine("khong co ban tin buoi toi ");
             else
             {
+                int i = 1;
                 foreach (var banTin in toi)
-                    banTin.getName();
+                    Console.WriteLine(i + ". " + banTin.getName());
+                    i++;
             }
         }
 
+        //public void channelAddBanTin(BanTin banTinDaTao, string period) {
+
+        //    if (period == "sang")
+        //    {
+        //        if (sang == null)
+        //        {
+        //            sang = new List<BanTin>();
+        //            sang.Add(banTinDaTao);
+        //            banTinDaTao.getListChanels().Add(this.name);
+        //        }
+        //        else 
+        //        {
+        //            sang.Add(banTinDaTao);
+        //            banTinDaTao.getListChanels().Add(this.name);
+        //        }
+
+
+        //    }
+        //    else if (period == "toi")
+        //    {
+        //        if (toi == null)
+        //        {
+        //            toi = new List<BanTin>();
+        //            toi.Add(banTinDaTao);
+        //            banTinDaTao.getListChanels().Add(this.name);
+        //        }
+        //        else 
+        //        {
+        //            toi.Add(banTinDaTao);
+        //            banTinDaTao.getListChanels().Add(this.name);
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Lam on nhap lai");
+        //        return;
+        //    }
+
+        //}
 
     }
 }

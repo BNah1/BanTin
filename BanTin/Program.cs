@@ -13,11 +13,34 @@ namespace BanTin
             {
 
             
-            nhapDuLieu();
-            nhapBanTin();
+            Test();
             
             }
+        public static void Test()
+        {
+            // tạo bản tin thử
+            Category thethao = new Category("thethao");
+            Category giaitri = new Category("giaitri");
+            Category thoisu = new Category("thoisu");
+            Category dubaothoitiet = new Category("dubaothoitiet");
+            Author nguyenA = new Author("nguyenA", "Dai VTV", "nguyenA@gmail.com");
+            Channel MTV = new Channel("MTV", 5);
 
+            BanTin banTin1 = new BanTin("Ban tin 1", 10.5, "aaaaaaaaaaaaa");
+
+            BanTin banTin2 = new BanTin("Ban tin 2", 11.5, "bbbbbbbbbbbbb");
+
+            thethao.setCategory("Ban tin 2");
+            giaitri.printAllBanTin();
+            thethao.printAllBanTin();
+            MTV.channelAddBanTin("Ban tin 1","sang");
+            MTV.printAll();
+            Console.WriteLine(banTin1.getListChanels());
+            //thethao.printAllBanTin();
+            //banTin2.getCategoryName();
+
+
+        }
 
         public static void nhapBanTin()
         {
@@ -67,7 +90,7 @@ namespace BanTin
                         switch (choice1)
                         {
                             case 1:
-                                Category.categories.Add(new Category(categoryName));                                
+                                Category addCategory = new Category(categoryName);
                                 Console.WriteLine("Da tao thanh cong " + categoryName);
                                 break;
                             case 2:
@@ -101,7 +124,7 @@ namespace BanTin
                     }
                 }
 
-                BanTin.listBanTins.Add(new BanTin(name, time, noiDung));
+                BanTin.getListBanTins().Add(new BanTin(name, time, noiDung));
 
                 //BanTin.listBanTins.Add(new BanTin(name, time, noiDung, belongstoCategory, belongstoAuthor));
 
@@ -128,7 +151,7 @@ namespace BanTin
 
         public static Category GetCategoryByName(string categoryName)
         {
-            foreach (Category category in Category.categories)
+            foreach (Category category in Category.getCategories())
             {
                 if (category.name == categoryName)
                 {
@@ -177,9 +200,8 @@ namespace BanTin
 
 
             Category.printAllCategory();
-            giaitri.removeCategory(banTin5);
-            MTV.channelAddBanTin(banTin5,"sang");
-            MTV.channelAddBanTin(banTin4, "sang");
+            MTV.channelAddBanTin("Bản tin 1", "sang");
+            MTV.channelAddBanTin("Bản tin 2", "sang");
             MTV.printAll();
             giaitri.printAllBanTin();
             

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace BanTin 
+namespace BanTin
 {
     internal class BanTin : SetTimeStart
     {
@@ -17,9 +17,10 @@ namespace BanTin
         private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
         private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
         private string categoryName { get; set; }
+        private string chanelName { get; set; }
         private string authorName { get; set; }
-        public static List<BanTin> listBanTins = new List<BanTin>();
-        public static List<Channel> listChanel = new List<Channel>();
+        private static List<BanTin> listBanTins = new List<BanTin>();
+        private List<string> listChanels = new List<string>();
 
         public BanTin(string name, double time, string noiDung)
         {
@@ -28,7 +29,7 @@ namespace BanTin
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-           
+
             if (listBanTins == null)
             {
                 listBanTins = new List<BanTin>();
@@ -36,17 +37,41 @@ namespace BanTin
             listBanTins.Add(this);
         }
 
-        public void getCategoryName( string categoryName) { 
-            this.categoryName = categoryName;
+        public List<string> getListChanels() { 
+            return listChanels;
         }
+
+        public static List<BanTin> getListBanTins()
+        {
+            return BanTin.listBanTins;
+        }
+
+        public string getChanelName() {
+            return chanelName;
+        }
+
+
+        public string  getCategoryName()
+        {
+            foreach (var banTin in Category.getCategories())
+            {
+                if (banTin.name == this.name)
+                {
+                    categoryName = banTin.name;
+                }
+            }
+            return categoryName;
+        }
+
         public void getAuthorName(string authorName)
         {
             this.authorName = authorName;
         }
-        public string getName() {
+        public string getName()
+        {
             return name;
         }
- 
+
         public static void printAll()
         {
             foreach (BanTin bantin in listBanTins)
@@ -64,10 +89,11 @@ namespace BanTin
             return "Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung + "\n" +
                    "Thời lượng: " + time + "\n" +
-                   "Bắt đầu vào: " + timeStart + "\n"; 
+                   "Bắt đầu vào: " + timeStart + "\n";
         }
 
-        public DateTime setTimeStart(string timeString) {
+        public DateTime setTimeStart(string timeString)
+        {
             timeStart = DateTime.ParseExact(timeString, "H:mm:ss", null);
             TimeSpan duration = TimeSpan.FromSeconds(time);
             timeEnd = timeStart.Add(duration);

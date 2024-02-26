@@ -6,62 +6,97 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Category 
+    internal class Category
     {
         private static int i = 1;
         public string name { get; set; }
-        public List<BanTin> news { get; set; }
-        public static List<Category> categories { get; set; }
+        private List<BanTin> news { get; set; }
+        private static List<Category> categories { get; set; }
 
-        public Category( string name) {
+
+        public Category(string name)
+        {
             this.name = name;
-            this.news = new List<BanTin>();
+            //kiem tra list BanTin
+            if (news == null)
+                news = new List<BanTin>();
+
             if (categories == null)
             {
                 categories = new List<Category>();
+                categories.Add(this);
             }
             categories.Add(this);
         }
 
-        public void setCategory(string banTinName) {
-            foreach (var banTin in news)
+        public List<BanTin> getNews()
+        {
+            return news;
+        }
+        public static List<Category> getCategories()
+        {
+            return categories;
+        }
+
+
+
+        public void printAllBanTin()
+        {
+            Console.WriteLine("The loai " + name + " gom cac ban tin :");
+            if (news == null || news.Count == 0)
+                Console.WriteLine("khong co du lieu");
+            else
+                foreach (var banTin in news)
+                {
+                    Console.WriteLine(banTin.getName());
+                }
+        }
+
+
+
+        public void setCategory(string banTinName)
+        {
+            bool check = false;
+            BanTin foundBanTin = null;
+            foreach (var banTin in BanTin.getListBanTins())
             {
                 if (banTin.getName() == banTinName)
                 {
-                    news.Add(banTin);
-                    banTin.getCategoryName(this.name);
+                    check = true;
+                    foundBanTin = banTin;
+                    break;
+                }
+            }
+            if (check && foundBanTin != null)
+            {
+                news.Add(foundBanTin);
+            }
+                
+        }
+
+        public void removeCategory(string banTinName)
+        {
+            foreach (var banTin in BanTin.getListBanTins())
+            {
+                if (banTin.getName() == banTinName)
+                {
+                    news.Remove(banTin);
                     break;
                 }
             }
         }
 
-        public void removeCategory(BanTin banTinDaTao)
-        {
-            news.Remove(banTinDaTao);
-        }
 
-        public void getName()
-        {
-            Console.WriteLine("The loai "+ i +" : "+ name);
-            i++;
-        }
         static public void printAllCategory()
         {
             foreach (var category in categories)
             {
-                category.getName();
+                Console.WriteLine("The loai " + i + " : " + category.name);
+                i++;
             }
         }
 
-        public void printAllBanTin() {
-            if (news == null)
-                Console.WriteLine("khong co du lieu");
-            else          
-            foreach (var banTin in news)
-            {
-                banTin.getName();               
-            }                
-         }
+
 
     }
 }
