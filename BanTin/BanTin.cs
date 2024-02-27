@@ -16,7 +16,8 @@ namespace BanTin
         private DateTime timeStart { get; set; }
         private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
         private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
-        private string categoryName { get; set; }
+
+        string categoryName { get; set; }
         private string chanelName { get; set; }
         private string authorName { get; set; }
         private static List<BanTin> listBanTins = new List<BanTin>();
@@ -29,15 +30,11 @@ namespace BanTin
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-
-            if (listBanTins == null)
-            {
-                listBanTins = new List<BanTin>();
-            }
             listBanTins.Add(this);
         }
 
-        public List<string> getListChanels() { 
+        public List<string> getListChanels()
+        {
             return listChanels;
         }
 
@@ -46,12 +43,17 @@ namespace BanTin
             return BanTin.listBanTins;
         }
 
-        public string getChanelName() {
-            return chanelName;
+        public void setChanelName(string input)
+        {
+            chanelName = input;
         }
 
+        public void setCategoryName(string input)
+        {
+            categoryName = input;
+        }
 
-        public string  getCategoryName()
+        public string getCategoryName()
         {
             foreach (var banTin in Category.getCategories())
             {
@@ -63,10 +65,16 @@ namespace BanTin
             return categoryName;
         }
 
-        public void getAuthorName(string authorName)
+        public void setAuthorName(string input)
         {
-            this.authorName = authorName;
+            this.authorName = input;
         }
+
+        public string getAuthorName()
+        {
+            return this.authorName;
+        }
+
         public string getName()
         {
             return name;

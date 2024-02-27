@@ -31,10 +31,18 @@ namespace BanTin
 
         public List<BanTin> getNews()
         {
+            if (news == null)
+            {
+                news = new List<BanTin>();
+            }
             return news;
         }
         public static List<Category> getCategories()
         {
+            if (categories == null)
+            {
+                categories = new List<Category>();
+            }
             return categories;
         }
 
@@ -70,8 +78,9 @@ namespace BanTin
             if (check && foundBanTin != null)
             {
                 news.Add(foundBanTin);
+                foundBanTin.setCategoryName(this.name);
             }
-                
+
         }
 
         public void removeCategory(string banTinName)

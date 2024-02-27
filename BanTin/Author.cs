@@ -12,8 +12,8 @@ namespace BanTin
         public string name;
         private string email;
         private int numOfNews;
-        public List<BanTin> news { get; set; }
-        public static List<Author> authors { get; set; }
+        private List<BanTin> news { get; set; }
+        private static List<Author> authors { get; set; }
 
         public Author(string name, string company, string email)
         {
@@ -21,9 +21,9 @@ namespace BanTin
             this.company = company;
             this.email = email;
             // xet so luong ban tin cua tac gia
-            if (news != null ) 
+            if (news != null)
                 this.numOfNews = news.Count;
-            else 
+            else
                 this.numOfNews = 0;
             // xet danh sach tat ca cac tac gia
             if (authors == null)
@@ -43,7 +43,7 @@ namespace BanTin
             {
                 Console.WriteLine(banTin.ToString());
             }
-    }
+        }
         static public void printAllAuthor()
         {
             foreach (var author in authors)
@@ -52,14 +52,33 @@ namespace BanTin
             }
         }
 
-        public void getName() {
+        public List<BanTin> getNews()
+        {
+            if (news == null)
+            {
+                news = new List<BanTin>();
+            }
+            return news;
+        }
+
+        public static List<Author> getAuthors()
+        {
+            if (authors == null)
+            {
+                authors = new List<Author>();
+            }
+            return authors;
+        }
+
+        public void getName()
+        {
             Console.WriteLine("Tác giả: " + name);
         }
 
         public void setAuthor(BanTin banTinDaTao)
         {
             news.Add(banTinDaTao);
-            banTinDaTao.getAuthorName(this.name);
+            banTinDaTao.setAuthorName(this.name);
             numOfNews = news.Count;
         }
 

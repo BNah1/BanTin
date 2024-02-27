@@ -14,11 +14,11 @@ namespace BanTin
         private List<BanTin> toi;
         private Schedule schedule;
 
-    public static List<Channel> chanels { get; set; }
+        public static List<Channel> chanels { get; set; }
         public Channel(string name, int limitNews)
         {
-            
-                
+
+
 
             this.name = name;
             if (limitNews < 10 && limitNews > 3)
@@ -53,11 +53,13 @@ namespace BanTin
                         sang = new List<BanTin>();
                         sang.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
+                        foundBanTin.setChanelName(this.name);
                     }
                     else
                     {
                         sang.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
+                        foundBanTin.setChanelName(this.name);
                     }
 
 
@@ -69,11 +71,13 @@ namespace BanTin
                         toi = new List<BanTin>();
                         toi.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
+                        foundBanTin.setChanelName(this.name);
                     }
                     else
                     {
                         toi.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
+                        foundBanTin.setChanelName(this.name);
                     }
 
                 }
@@ -91,14 +95,14 @@ namespace BanTin
         {
             Console.WriteLine("Kenh " + name + " gom cac ban tin :");
             Console.WriteLine("Ban tin buoi sang: ");
-            if(sang == null)
+            if (sang == null)
                 Console.WriteLine("khong co ban tin buoi sang ");
             else
             {
                 int i = 1;
                 foreach (var banTin in sang)
-                    Console.WriteLine(i  +". "+banTin.getName());
-                        i++;
+                    Console.WriteLine(i + ". " + banTin.getName());
+                i++;
             }
 
             Console.WriteLine("Ban tin buoi toi: ");
@@ -109,7 +113,7 @@ namespace BanTin
                 int i = 1;
                 foreach (var banTin in toi)
                     Console.WriteLine(i + ". " + banTin.getName());
-                    i++;
+                i++;
             }
         }
 
