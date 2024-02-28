@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Channel : ShowBanTin
+    internal class Channel 
     {
         private string name;
         private int limitNews;
@@ -17,9 +17,6 @@ namespace BanTin
         public static List<Channel> chanels { get; set; }
         public Channel(string name, int limitNews)
         {
-
-
-
             this.name = name;
             if (limitNews < 10 && limitNews > 3)
                 this.limitNews = limitNews;
@@ -31,6 +28,8 @@ namespace BanTin
             else
                 chanels.Add(this);
         }
+
+        // thêm bản tin vào channel
         public void channelAddBanTin(string banTinName, string period)
         {
             bool check = false;
