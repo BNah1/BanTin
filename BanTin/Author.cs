@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Author : ShowBanTin
+    internal class Author
     {
         private string company;
         public string name;

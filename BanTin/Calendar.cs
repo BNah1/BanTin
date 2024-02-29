@@ -10,7 +10,8 @@ namespace BanTin
     {
         private int year;
         private int month;
-        private List<DateTime> days;
+        private int day;
+        private List<CalendarDay> days;
 
         public Calendar(int year, int month)
         {
@@ -19,14 +20,23 @@ namespace BanTin
             this.days = GenerateCalendarDays(year, month);
         }
 
-        public List<DateTime> GetDays()
+        public List<CalendarDay> GetDays()
         {
             return days;
         }
 
-        private List<DateTime> GenerateCalendarDays(int year, int month)
+        public int getYear() { 
+            return year;
+        }
+        public int getMonth()
         {
-            List<DateTime> calendarDays = new List<DateTime>();
+            return month;
+        }
+
+
+        private List<CalendarDay> GenerateCalendarDays(int year, int month)
+        {
+            List<CalendarDay> calendarDays = new List<CalendarDay>();
 
             // Tạo một DateTime đại diện cho ngày đầu tiên của tháng
             DateTime firstDayOfMonth = new DateTime(year, month, 1);
@@ -37,10 +47,13 @@ namespace BanTin
             // Lặp qua tất cả các ngày từ ngày đầu tiên đến ngày cuối cùng của tháng và thêm vào danh sách
             for (DateTime currentDate = firstDayOfMonth; currentDate <= lastDayOfMonth; currentDate = currentDate.AddDays(1))
             {
-                calendarDays.Add(currentDate);
+                // Tạo một đối tượng CalendarDay mới với giá trị ngày và tham chiếu tới đối tượng Calendar gốc
+                CalendarDay calendarDay = new CalendarDay(currentDate.Day, this);
+                calendarDays.Add(calendarDay);
             }
 
             return calendarDays;
         }
+
     }
 }

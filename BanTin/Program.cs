@@ -15,7 +15,7 @@ namespace BanTin
         }
 
         public static void createCalendar()
-        {   
+        {
             // tao lich cac ngay trong nam 2024
             List<Calendar> calendarOf2024 = new List<Calendar>();
             for (int i = 0; i < 12; i++)
@@ -23,10 +23,10 @@ namespace BanTin
                 Calendar calendar = new Calendar(2024, i + 1);
                 calendarOf2024.Add(calendar);
 
-                List<DateTime> Days = calendar.GetDays();
-                foreach (DateTime day in Days)
+                List<CalendarDay> days = calendar.GetDays();
+                foreach (CalendarDay day in days)
                 {
-                    Console.WriteLine(day.ToString("dd/MM/yyyy"));
+                    Console.WriteLine(day.ToString());
                 }
             }
         }

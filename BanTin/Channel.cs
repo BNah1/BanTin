@@ -29,6 +29,10 @@ namespace BanTin
                 chanels.Add(this);
         }
 
+        public string getName() { 
+            return name;
+        }
+
         // thêm bản tin vào channel
         public void channelAddBanTin(string banTinName, string period)
         {
