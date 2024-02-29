@@ -15,3 +15,19 @@ Chức năng:
 5. Thể loại:
   + Tạo mới
   + Quản lý bản tin của thể loại đó
+
+Các class:
++Author
++BanTin
++Calendar
++CalendarDay
++Channel
++QuangCao
++Category
+
+//////
++Phóng Viên
++Livetrựctiếp
++Interface Period -<> sang/toi
+
+
