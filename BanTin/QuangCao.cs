@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class QuangCao : SetTimeStart
+    internal class QuangCao : New
     {
 
         private string name { get; set; }
@@ -25,6 +25,7 @@ namespace BanTin
                 this.time = time;
             else
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
+            New.getList().Add(this);
         }
 
         public void setTimePeriod(string period)
@@ -57,6 +58,17 @@ namespace BanTin
             return timeStart;
         }
 
-
+        public static void printAll()
+        {
+            foreach (var item in New.getList())
+            {   
+                if (item is QuangCao qc)
+                {
+                    Console.WriteLine("Tên: " + qc.name);
+                    Console.WriteLine("Thời gian: " + qc.time);
+                    Console.WriteLine();
+                }
+            }
+        }
     }
 }

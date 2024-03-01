@@ -6,9 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal interface SetTimeStart
+    internal interface People
     {
-        void setTimePeriod(string period);
-        DateTime setTimeStart(string timeS);
     }
 }

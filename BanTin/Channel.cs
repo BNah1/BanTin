@@ -10,11 +10,11 @@ namespace BanTin
     {
         private string name;
         private int limitNews;
-        private List<BanTin> sang;
-        private List<BanTin> toi;
-        private Schedule schedule;
+        private List<New> sang;
+        private List<New> toi;
+        private List<Anchor> listAnchors;
 
-        public static List<Channel> chanels { get; set; }
+        private static List<Channel> chanels { get; set; }
         public Channel(string name, int limitNews)
         {
             this.name = name;
@@ -27,18 +27,32 @@ namespace BanTin
                 chanels = new List<Channel>();
             else
                 chanels.Add(this);
+            this.listAnchors = new List<Anchor>();
+        }
+        
+        public List<Anchor> getListAnchors() {
+            return listAnchors;
+        }
+
+        public void addAnchor(string nameAnchor) {
+            foreach(var anchor in chanels) { }
         }
 
         public string getName() { 
             return name;
         }
 
+        public static List<Channel> getChanels()
+        {
+            return chanels;
+        }
+
         // thêm bản tin vào channel
         public void channelAddBanTin(string banTinName, string period)
         {
             bool check = false;
-            BanTin foundBanTin = null;
-            foreach (var banTin in BanTin.getListBanTins())
+            New foundBanTin = null;
+            foreach (var banTin in New.getList())
             {
                 if (banTin.getName() == banTinName)
                 {
@@ -53,7 +67,7 @@ namespace BanTin
                 {
                     if (sang == null)
                     {
-                        sang = new List<BanTin>();
+                        sang = new List<New>();
                         sang.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
                         foundBanTin.setChanelName(this.name);
@@ -71,7 +85,7 @@ namespace BanTin
                 {
                     if (toi == null)
                     {
-                        toi = new List<BanTin>();
+                        toi = new List<New>();
                         toi.Add(foundBanTin);
                         foundBanTin.getListChanels().Add(this.name);
                         foundBanTin.setChanelName(this.name);

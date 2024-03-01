@@ -10,8 +10,8 @@ namespace BanTin
     class Program
     {
         static void Main(string[] args)
-        {   
-            createCalendar();
+        {
+            Test();
         }
 
         public static void createCalendar()
@@ -42,7 +42,7 @@ namespace BanTin
             Channel MTV = new Channel("MTV", 5);
 
             BanTin banTin1 = new BanTin("Ban tin 1", 10.5, "aaaaaaaaaaaaa");
-
+            QuangCao quangcao1 = new QuangCao("quang cao 1", 10, "1q3123123");
             BanTin banTin2 = new BanTin("Ban tin 2", 11.5, "bbbbbbbbbbbbb");
 
             thethao.setCategory("Ban tin 2");
@@ -50,11 +50,10 @@ namespace BanTin
             thethao.printAllBanTin();
             MTV.channelAddBanTin("Ban tin 1", "sang");
             MTV.printAll();
-            Console.WriteLine(banTin1.getListChanels());
-            //thethao.printAllBanTin();
-            //banTin2.getCategoryName();
+            Console.WriteLine("       ");
             BanTin.printAll();
-
+            QuangCao.printAll();
+            
         }
 
         public static void createBanTin()

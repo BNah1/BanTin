@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace BanTin
 {
-    internal class BanTin : SetTimeStart
+    internal class BanTin : New
     {
         private string name { get; set; }
         private string noiDung { get; set; }
@@ -20,17 +20,18 @@ namespace BanTin
         string categoryName { get; set; }
         private string chanelName { get; set; }
         private string authorName { get; set; }
-        private static List<BanTin> listBanTins = new List<BanTin>();
-        private List<string> listChanels = new List<string>();
+        private List<string> listChanels;
+        private List<string> listDays;   
+        private List<DateTime> listTime;
 
         public BanTin(string name, double time, string noiDung)
         {
-            categoryName = " Chua dat the loai ";
-            authorName = " Chua dat ten tac gia ";
+            categoryName = " chua co du lieu the loai ";
+            authorName = " chua co du lieu tac gia ";
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-            listBanTins.Add(this);
+            New.getList().Add(this);
         }
 
         public List<string> getListChanels()
@@ -38,9 +39,9 @@ namespace BanTin
             return listChanels;
         }
 
-        public static List<BanTin> getListBanTins()
+        public static List<New> getList()
         {
-            return BanTin.listBanTins;
+            return New.getList();
         }
 
         public void setChanelName(string input)
@@ -82,13 +83,16 @@ namespace BanTin
 
         public static void printAll()
         {
-            foreach (BanTin bantin in listBanTins)
+            foreach (var item in New.getList())
             {
-                Console.WriteLine("Tên: " + bantin.name);
-                Console.WriteLine("Thời gian: " + bantin.time);
-                Console.WriteLine("Ten tac gia: " + bantin.authorName);
-                Console.WriteLine("The loai: " + bantin.categoryName);
-                Console.WriteLine();
+                if (item is BanTin bantin)
+                {
+                    Console.WriteLine("Tên: " + bantin.name);
+                    Console.WriteLine("Thời gian: " + bantin.time);
+                    Console.WriteLine("Ten tac gia: " + bantin.authorName);
+                    Console.WriteLine("The loai: " + bantin.categoryName);
+                    Console.WriteLine();
+                }
             }
         }
 

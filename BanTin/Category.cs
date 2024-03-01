@@ -10,7 +10,7 @@ namespace BanTin
     {
         private static int i = 1;
         public string name { get; set; }
-        private List<BanTin> news { get; set; }
+        private List<New> news { get; set; }
         private static List<Category> categories { get; set; }
 
 
@@ -19,7 +19,7 @@ namespace BanTin
             this.name = name;
             //kiem tra list BanTin
             if (news == null)
-                news = new List<BanTin>();
+                news = new List<New>();
 
             if (categories == null)
             {
@@ -29,11 +29,11 @@ namespace BanTin
             categories.Add(this);
         }
 
-        public List<BanTin> getNews()
+        public List<New> getNews()
         {
             if (news == null)
             {
-                news = new List<BanTin>();
+                news = new List<New>();
             }
             return news;
         }
@@ -66,16 +66,17 @@ namespace BanTin
         {
             bool check = false;
             BanTin foundBanTin = null;
-            foreach (var banTin in BanTin.getListBanTins())
+            foreach (var banTin in New.getList())
             {
                 if (banTin.getName() == banTinName)
                 {
                     check = true;
-                    foundBanTin = banTin;
+                    foundBanTin = (BanTin)banTin;
                     break;
                 }
             }
-            if (check && foundBanTin != null)
+            
+            if (check && foundBanTin != null || foundBanTin is BanTin)
             {
                 news.Add(foundBanTin);
                 foundBanTin.setCategoryName(this.name);
@@ -85,7 +86,7 @@ namespace BanTin
 
         public void removeCategory(string banTinName)
         {
-            foreach (var banTin in BanTin.getListBanTins())
+            foreach (var banTin in New.getList())
             {
                 if (banTin.getName() == banTinName)
                 {

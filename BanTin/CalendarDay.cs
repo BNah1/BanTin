@@ -11,13 +11,12 @@ namespace BanTin
     {   
         public int Day { get; }
         public Calendar Calendar { get; }
-
         private List<Channel> listChannels;
         public CalendarDay(int day, Calendar calendar)
         {
             Day = day;
             Calendar = calendar;
-            listChannels = new List<Channel>();
+            this.listChannels = Channel.getChanels();
         }
 
         public List<Channel> getListChannels() {
