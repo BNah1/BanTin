@@ -13,6 +13,9 @@ namespace BanTin
         private double time { get; set; }
         private string noidung { get; set; }
         private string reporterName { get; set; }
+        private List<string> listChannels;
+        private List<string> listDays;
+        private List<DateTime> listTime;
 
         public LiveStream(string name, double time, string noidung)
         {
@@ -25,6 +28,22 @@ namespace BanTin
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
             New.getList().Add(this);
         }
-    
+
+        public List<string> getListChannels()
+        {
+            return listChannels;
+        }
+
+        public List<string> getListDays()
+        {
+            return listDays;
+        }
+
+        public static List<New> getListNew()
+        {
+            return New.getList();
+        }
+
+
     }
 }

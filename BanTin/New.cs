@@ -18,7 +18,18 @@ namespace BanTin
         {
             return listBanTins;
         }
-
+        public List<string> getListDays()
+        {
+            return null;
+        }
+        public List<string> getListChannel()
+        {
+            return null;
+        }
+        public List<string> getListTime()
+        {
+            return null;
+        }
         public string getName() {
             return null;
         }

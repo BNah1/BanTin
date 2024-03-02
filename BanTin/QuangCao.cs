@@ -12,10 +12,9 @@ namespace BanTin
         private string name { get; set; }
         private double time { get; set; }
         private string noidung { get; set; }
-        private DateTime timeStart { get; set; }
-        private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
-        private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
-        private DateTime timeEnd { get; set; }
+        private List<string> listChannels;
+        private List<string> listDays;
+        private List<DateTime> listTime;
 
         public QuangCao(string name, double time, string noidung)
         {
@@ -27,36 +26,50 @@ namespace BanTin
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
             New.getList().Add(this);
         }
-
-        public void setTimePeriod(string period)
+        public List<string> getListChannels()
         {
-            if (period == "sang")
-            {
-                timeStart = timeStartMorning;
-                TimeSpan duration1 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration1);
-            }
-            else if (period == "toi")
-            {
-                timeStart = timeStartNight;
-                TimeSpan duration2 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration2);
-            }
-            else
-            {
-                timeStart = DateTime.MinValue;
-                TimeSpan duration1 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration1);
-            }
+            return listChannels;
         }
 
-        public DateTime setTimeStart(string timeS)
+        public List<string> getListDays()
         {
-            timeStart = DateTime.ParseExact(timeS, "H:mm:ss", null);
-            TimeSpan duration = TimeSpan.FromSeconds(time);
-            timeEnd = timeStart.Add(duration);
-            return timeStart;
+            return listDays;
         }
+
+        public static List<New> getListNew()
+        {
+            return New.getList();
+        }
+
+        //public void setTimePeriod(string period)
+        //{
+        //    if (period == "sang")
+        //    {
+        //        timeStart = timeStartMorning;
+        //        TimeSpan duration1 = TimeSpan.FromSeconds(time);
+        //        timeEnd = timeStart.Add(duration1);
+        //    }
+        //    else if (period == "toi")
+        //    {
+        //        timeStart = timeStartNight;
+        //        TimeSpan duration2 = TimeSpan.FromSeconds(time);
+        //        timeEnd = timeStart.Add(duration2);
+        //    }
+        //    else
+        //    {
+        //        timeStart = DateTime.MinValue;
+        //        TimeSpan duration1 = TimeSpan.FromSeconds(time);
+        //        timeEnd = timeStart.Add(duration1);
+        //    }
+        //}
+
+        //public DateTime setTimeStart(string timeS)
+        //{
+        //    timeStart = DateTime.ParseExact(timeS, "H:mm:ss", null);
+        //    TimeSpan duration = TimeSpan.FromSeconds(time);
+        //    timeEnd = timeStart.Add(duration);
+        //    return timeStart;
+        //}
 
         public static void printAll()
         {

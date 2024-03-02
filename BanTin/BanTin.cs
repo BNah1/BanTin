@@ -12,17 +12,12 @@ namespace BanTin
         private string name { get; set; }
         private string noiDung { get; set; }
         private double time { get; set; }
-        private DateTime timeEnd { get; set; }
-        private DateTime timeStart { get; set; }
-        private DateTime timeStartMorning { get; set; } = DateTime.Today + new TimeSpan(7, 0, 0);
-        private DateTime timeStartNight { get; set; } = DateTime.Today + new TimeSpan(18, 0, 0);
-
         string categoryName { get; set; }
-        private string chanelName { get; set; }
         private string authorName { get; set; }
-        private List<string> listChanels;
+        private List<string> listTime;
+        private List<string> listChannels;
         private List<string> listDays;   
-        private List<DateTime> listTime;
+
 
         public BanTin(string name, double time, string noiDung)
         {
@@ -34,19 +29,23 @@ namespace BanTin
             New.getList().Add(this);
         }
 
-        public List<string> getListChanels()
+        public List<string> getListTime()
         {
-            return listChanels;
+            return listTime;
         }
 
-        public static List<New> getList()
+        public List<string> getListDays()
+        {
+            return listDays;
+        }
+        public List<string> getListChannel()
+        {
+            return listChannels;
+        }
+
+        public static List<New> getListNew()
         {
             return New.getList();
-        }
-
-        public void setChanelName(string input)
-        {
-            chanelName = input;
         }
 
         public void setCategoryName(string input)
@@ -100,38 +99,7 @@ namespace BanTin
         {
             return "Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung + "\n" +
-                   "Thời lượng: " + time + "\n" +
-                   "Bắt đầu vào: " + timeStart + "\n";
-        }
-
-        public DateTime setTimeStart(string timeString)
-        {
-            timeStart = DateTime.ParseExact(timeString, "H:mm:ss", null);
-            TimeSpan duration = TimeSpan.FromSeconds(time);
-            timeEnd = timeStart.Add(duration);
-            return timeStart;
-        }
-
-        public void setTimePeriod(string period)
-        {
-            if (period == "sang")
-            {
-                timeStart = timeStartMorning;
-                TimeSpan duration1 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration1);
-            }
-            else if (period == "toi")
-            {
-                timeStart = timeStartNight;
-                TimeSpan duration2 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration2);
-            }
-            else
-            {
-                timeStart = DateTime.MinValue;
-                TimeSpan duration1 = TimeSpan.FromSeconds(time);
-                timeEnd = timeStart.Add(duration1);
-            }
+                   "Thời lượng: " + time + "\n"; 
         }
 
     }

@@ -239,20 +239,7 @@ namespace BanTin
             Console.WriteLine("1.Sang");
             Console.WriteLine("2.Toi");
             string inputPeriod = Console.ReadLine();
-            switch (inputPeriod)
-            {
-                case "1":
-                    banTin1.setTimePeriod("sang");
-                    break;
 
-                case "2":
-                    banTin1.setTimePeriod("toi");
-                    break;
-
-                default:
-                    Console.WriteLine("Lựa chọn không hợp lệ nhập lại");
-                    break;
-            }
             Console.WriteLine(banTin1.ToString());
 
 

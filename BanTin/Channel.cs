@@ -24,12 +24,27 @@ namespace BanTin
                 Console.WriteLine("So luong ban tin toi da cho 1 kenh la 10 va toi thieu la 3 ");
 
             if (chanels == null)
+            {
                 chanels = new List<Channel>();
+                chanels.Add(this);
+            }     
             else
                 chanels.Add(this);
             this.listAnchors = new List<Anchor>();
+            this.toi = new List<New>();
+            this.sang = new List<New>();
         }
         
+        public List<New> getListPeriod(string iPeriod)
+        {
+            if (iPeriod == "sang")
+                return this.sang;
+            else if(iPeriod == "toi")
+                return this.toi;
+            return null;
+        }
+
+
         public List<Anchor> getListAnchors() {
             return listAnchors;
         }
@@ -65,38 +80,21 @@ namespace BanTin
             {
                 if (period == "sang")
                 {
-                    if (sang == null)
-                    {
-                        sang = new List<New>();
                         sang.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name + " sáng");
                         foundBanTin.getListChanels().Add(this.name);
                         foundBanTin.setChanelName(this.name);
-                    }
-                    else
-                    {
-                        sang.Add(foundBanTin);
-                        foundBanTin.getListChanels().Add(this.name);
-                        foundBanTin.setChanelName(this.name);
-                    }
-
-
                 }
+
                 else if (period == "toi")
                 {
-                    if (toi == null)
-                    {
-                        toi = new List<New>();
+                    if (toi == null) 
+                    { 
                         toi.Add(foundBanTin);
+                        foundBanTin.getListChanels().Add(this.name + " tối");
                         foundBanTin.getListChanels().Add(this.name);
                         foundBanTin.setChanelName(this.name);
                     }
-                    else
-                    {
-                        toi.Add(foundBanTin);
-                        foundBanTin.getListChanels().Add(this.name);
-                        foundBanTin.setChanelName(this.name);
-                    }
-
                 }
                 else
                 {
