@@ -62,39 +62,32 @@ namespace BanTin
             return chanels;
         }
 
-        // thêm bản tin vào channel
+       // thêm bản tin vào channel
         public void channelAddBanTin(string banTinName, string period)
         {
-            bool check = false;
             New foundBanTin = null;
-            foreach (var banTin in New.getList())
+            foreach (var banTin in New.getListNew())
             {
                 if (banTin.getName() == banTinName)
                 {
-                    check = true;
                     foundBanTin = banTin;
                     break;
-                }
+                }                    
             }
-            if (check && foundBanTin != null)
+            if (foundBanTin != null)
             {
                 if (period == "sang")
                 {
-                        sang.Add(foundBanTin);
-                        foundBanTin.getListChanels().Add(this.name + " sáng");
-                        foundBanTin.getListChanels().Add(this.name);
-                        foundBanTin.setChanelName(this.name);
+                    sang.Add(foundBanTin);
+                    foundBanTin.getListChannels().Add(this.name);
+                    foundBanTin.setChanelName(this.name);
                 }
 
                 else if (period == "toi")
                 {
-                    if (toi == null) 
-                    { 
                         toi.Add(foundBanTin);
-                        foundBanTin.getListChanels().Add(this.name + " tối");
-                        foundBanTin.getListChanels().Add(this.name);
+                        foundBanTin.getListChannels().Add(this.name);
                         foundBanTin.setChanelName(this.name);
-                    }
                 }
                 else
                 {
@@ -105,12 +98,11 @@ namespace BanTin
 
         }
 
-
         public void printAll()
         {
             Console.WriteLine("Kenh " + name + " gom cac ban tin :");
             Console.WriteLine("Ban tin buoi sang: ");
-            if (sang == null)
+            if (sang.Count == 0)
                 Console.WriteLine("khong co ban tin buoi sang ");
             else
             {
@@ -121,7 +113,7 @@ namespace BanTin
             }
 
             Console.WriteLine("Ban tin buoi toi: ");
-            if (toi == null)
+            if (toi.Count == 0)
                 Console.WriteLine("khong co ban tin buoi toi ");
             else
             {

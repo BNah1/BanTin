@@ -41,10 +41,10 @@ namespace BanTin
                 return;
             }
 
-            foreach (var iNew in New.getList()) {
+            foreach (var iNew in New.getListNew()) {
                 if (iNew.getName() == nameNew)
                 {
-                    foreach (var channel in iNew.getListChannel())
+                    foreach (var channel in iNew.getListChannels())
                     {
                         if (nameChannel == channel)
                         {

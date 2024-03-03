@@ -26,7 +26,11 @@ namespace BanTin
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
-            New.getList().Add(this);
+            listTime = new List<string>();
+            listChannels = new List<string>();
+            listDays = new List<string>();
+            New.getListNew().Add(this);
+            
         }
 
         public List<string> getListTime()
@@ -38,14 +42,14 @@ namespace BanTin
         {
             return listDays;
         }
-        public List<string> getListChannel()
+        public List<string> getListChannels()
         {
             return listChannels;
         }
 
         public static List<New> getListNew()
         {
-            return New.getList();
+            return New.getListNew();
         }
 
         public void setCategoryName(string input)
@@ -82,7 +86,7 @@ namespace BanTin
 
         public static void printAll()
         {
-            foreach (var item in New.getList())
+            foreach (var item in New.getListNew())
             {
                 if (item is BanTin bantin)
                 {

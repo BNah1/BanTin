@@ -12,13 +12,24 @@ namespace BanTin
         private int month;
         private int day;
         private List<CalendarDay> days;
+        private static List<Calendar> canlendar2024;
 
         public Calendar(int year, int month)
         {
             this.year = year;
             this.month = month;
             this.days = GenerateCalendarDays(year, month);
+            if (canlendar2024 == null) {
+                canlendar2024 = new List<Calendar> { };
+                canlendar2024.Add(this);   
+            }
+            canlendar2024.Add(this);
         }
+        public static List<Calendar> GetCanlendar2024()
+        {
+            return canlendar2024;
+        }
+
 
         public List<CalendarDay> GetDays()
         {

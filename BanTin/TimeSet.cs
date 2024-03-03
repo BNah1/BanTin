@@ -32,28 +32,6 @@ namespace BanTin
             return timeStart;
         }
 
-
-
-        //public void setTimePeriod(string period)
-        //{
-        //    if (period == "sang")
-        //    {
-        //        timeStart = timeStartMorning;
-        //        TimeSpan duration1 = TimeSpan.FromSeconds(time);
-        //        timeEnd = timeStart.Add(duration1);
-        //    }
-        //    else if (period == "toi")
-        //    {
-        //        timeStart = timeStartNight;
-        //        TimeSpan duration2 = TimeSpan.FromSeconds(time);
-        //        timeEnd = timeStart.Add(duration2);
-        //    }
-        //    else
-        //    {
-        //        timeStart = DateTime.MinValue;
-        //        TimeSpan duration1 = TimeSpan.FromSeconds(time);
-        //        timeEnd = timeStart.Add(duration1);
-        //    }
-        //}
+       
     }
 }

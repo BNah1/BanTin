@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.InteropServices;
 using BanTin;
@@ -11,9 +12,11 @@ namespace BanTin
     {
         static void Main(string[] args)
         {
+            createCalendar();
             Test();
         }
 
+        // Hàm khởi tạo
         public static void createCalendar()
         {
             // tao lich cac ngay trong nam 2024
@@ -24,12 +27,12 @@ namespace BanTin
                 calendarOf2024.Add(calendar);
 
                 List<CalendarDay> days = calendar.GetDays();
-                foreach (CalendarDay day in days)
-                {
-                    Console.WriteLine(day.ToString());
-                }
             }
         }
+
+
+
+        // Phương thức chức năng
 
         public static void Test()
         {
@@ -55,7 +58,6 @@ namespace BanTin
             QuangCao.printAll();
             
         }
-
         public static void createBanTin()
         {
             Console.WriteLine("Nhap ten cua ban tin :");
@@ -67,10 +69,6 @@ namespace BanTin
             BanTin bantin = new BanTin(inputName, inputTime, inputInfo);
 
         }
-
-
-
-
         public static void nhapBanTin()
         {
             bool continueInput = true;
@@ -177,33 +175,30 @@ namespace BanTin
 
             }
         }
-
-        public static Category GetCategoryByName(string categoryName)
+        public static CalendarDay getDay( string inputDay, string inputMonth, string inputYear)
         {
-            foreach (Category category in Category.getCategories())
-            {
-                if (category.name == categoryName)
+            int day = int.Parse(inputDay);
+            int month = int.Parse(inputMonth);
+            int year = int.Parse(inputYear);
+
+                // Lặp qua danh sách các Calendar để tìm đối tượng phù hợp
+                foreach (Calendar calendar in Calendar.GetCanlendar2024())
                 {
-                    return category;
+                    // Lấy danh sách các CalendarDay từ đối tượng Calendar
+                    List<CalendarDay> calendarDays = calendar.GetDays();
+
+                    // Lặp qua danh sách các CalendarDay để tìm đối tượng phù hợp
+                    foreach (CalendarDay calendarDay in calendarDays)
+                    {
+                    if (calendarDay.Day == day && calendarDay.Calendar.getYear() == year && calendarDay.Calendar.getMonth() == month)
+                    {
+                            return calendarDay;
+                        }
+                    }
                 }
+                Console.WriteLine("du lieu khong hop le , vui long nhap lai");
+                return null; // Trả về null nếu không tìm thấy đối tượng phù hợp
             }
-
-            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
-        }
-
-        public static Author getAuthorByName(string authorName)
-        {
-            foreach (Author author in Author.getAuthors())
-            {
-                if (author.name == authorName)
-                {
-                    return author;
-                }
-            }
-
-            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
-        }
-
         public static void nhapDuLieu()
         {
             // tạo bản tin thử
@@ -261,8 +256,32 @@ namespace BanTin
 
 
 
+        // Phương thức hỗ trợ
 
+        public static Author getAuthorByName(string authorName)
+        {
+            foreach (Author author in Author.getAuthors())
+            {
+                if (author.name == authorName)
+                {
+                    return author;
+                }
+            }
 
+            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
+        }
+        public static Category GetCategoryByName(string categoryName)
+        {
+            foreach (Category category in Category.getCategories())
+            {
+                if (category.name == categoryName)
+                {
+                    return category;
+                }
+            }
+
+            return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
+        }
 
         public void Nhap()
         {

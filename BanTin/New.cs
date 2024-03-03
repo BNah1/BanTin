@@ -9,12 +9,8 @@ namespace BanTin
     internal interface New
     {
         private static List<New> listBanTins = new List<New>();
-        public List<string> getListChanels()
-        {
-            return null;
-        }
 
-        public static List<New> getList()
+        public static List<New> getListNew()
         {
             return listBanTins;
         }
@@ -22,7 +18,7 @@ namespace BanTin
         {
             return null;
         }
-        public List<string> getListChannel()
+        public List<string> getListChannels()
         {
             return null;
         }
