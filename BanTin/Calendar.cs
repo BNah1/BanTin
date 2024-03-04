@@ -25,13 +25,13 @@ namespace BanTin
             }
             canlendar2024.Add(this);
         }
-        public static List<Calendar> GetCanlendar2024()
+        public static List<Calendar> getCanlendar2024()
         {
             return canlendar2024;
         }
 
 
-        public List<CalendarDay> GetDays()
+        public List<CalendarDay> getDays()
         {
             return days;
         }

@@ -14,7 +14,7 @@ namespace BanTin
         private List<New> toi;
         private List<Anchor> listAnchors;
 
-        private static List<Channel> chanels { get; set; }
+        private static List<Channel> chanels = new List<Channel>();
         public Channel(string name, int limitNews)
         {
             this.name = name;
@@ -23,13 +23,7 @@ namespace BanTin
             else
                 Console.WriteLine("So luong ban tin toi da cho 1 kenh la 10 va toi thieu la 3 ");
 
-            if (chanels == null)
-            {
-                chanels = new List<Channel>();
-                chanels.Add(this);
-            }     
-            else
-                chanels.Add(this);
+            chanels.Add(this);
             this.listAnchors = new List<Anchor>();
             this.toi = new List<New>();
             this.sang = new List<New>();

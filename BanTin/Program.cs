@@ -26,7 +26,7 @@ namespace BanTin
                 Calendar calendar = new Calendar(2024, i + 1);
                 calendarOf2024.Add(calendar);
 
-                List<CalendarDay> days = calendar.GetDays();
+                List<CalendarDay> days = calendar.getDays();
             }
         }
 
@@ -46,17 +46,16 @@ namespace BanTin
 
             BanTin banTin1 = new BanTin("Ban tin 1", 10.5, "aaaaaaaaaaaaa");
             QuangCao quangcao1 = new QuangCao("quang cao 1", 10, "1q3123123");
-            BanTin banTin2 = new BanTin("Ban tin 2", 11.5, "bbbbbbbbbbbbb");
+            BanTin banTin2 = new BanTin("Ban tin 2", 120, "bbbbbbbbbbbbb");
 
             thethao.setCategory("Ban tin 2");
-            giaitri.printAllBanTin();
-            thethao.printAllBanTin();
             MTV.channelAddBanTin("Ban tin 1", "sang");
-            MTV.printAll();
             Console.WriteLine("       ");
-            BanTin.printAll();
-            QuangCao.printAll();
-            
+            banTin2.setTime("sang", "MTV", 3, 3);
+            banTin2.print();
+
+
+
         }
         public static void createBanTin()
         {
@@ -182,10 +181,10 @@ namespace BanTin
             int year = int.Parse(inputYear);
 
                 // Lặp qua danh sách các Calendar để tìm đối tượng phù hợp
-                foreach (Calendar calendar in Calendar.GetCanlendar2024())
+                foreach (Calendar calendar in Calendar.getCanlendar2024())
                 {
                     // Lấy danh sách các CalendarDay từ đối tượng Calendar
-                    List<CalendarDay> calendarDays = calendar.GetDays();
+                    List<CalendarDay> calendarDays = calendar.getDays();
 
                     // Lặp qua danh sách các CalendarDay để tìm đối tượng phù hợp
                     foreach (CalendarDay calendarDay in calendarDays)
