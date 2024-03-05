@@ -9,13 +9,14 @@ namespace BanTin
 {
     internal class BanTin : New
     {
-        private string name { get; set; }
+        private string name;
         private string noiDung { get; set; }
         private double time { get; set; }
         string categoryName { get; set; }
         private string authorName { get; set; }
+
         private List<string> listChannels;
-        private List<string> listDays;   
+        private List<string> listDays;
         private List<TimeSet> listTime;
 
 
@@ -30,7 +31,7 @@ namespace BanTin
             listChannels = new List<string>();
             listDays = new List<string>();
             New.getListNew().Add(this);
-            
+
         }
 
         public List<TimeSet> getListTime()
@@ -59,11 +60,11 @@ namespace BanTin
 
         public string getCategoryName()
         {
-            foreach (var banTin in Category.getCategories())
+            foreach (Category iCategory in Category.getCategories())
             {
-                if (banTin.name == this.name)
+                if (iCategory.name == this.name)
                 {
-                    categoryName = banTin.name;
+                    categoryName = iCategory.name;
                 }
             }
             return categoryName;
@@ -86,7 +87,7 @@ namespace BanTin
 
         public static void printAll()
         {
-            foreach (var item in New.getListNew())
+            foreach (New item in New.getListNew())
             {
                 if (item is BanTin bantin)
                 {
@@ -100,10 +101,12 @@ namespace BanTin
         }
 
 
-        public void print() {
-            foreach (var item in listTime) {
+        public void print()
+        {
+            foreach (TimeSet item in listTime)
+            {
                 Console.WriteLine(item.ToString());
-            }   
+            }
         }
 
         public override string ToString()
@@ -130,13 +133,18 @@ namespace BanTin
                 Console.WriteLine("Du lieu khong dung");
                 return;
             }
-            foreach (var iCalendar in Calendar.getCanlendar2024()) { 
-                if( iCalendar.getMonth() == inputMonth) 
+            foreach (Calendar iCalendar in Calendar.getCanlendar2024())
+            {
+                if (iCalendar.getMonth() == inputMonth)
                 {
-                    foreach(var iCalendarDay in iCalendar.getDays()){
-                        if (inputDay == iCalendarDay.getDay()) {
-                            foreach (var iChannel in iCalendarDay.getListChannels()) {
-                                if (iChannel.getName() == nameChannel) {
+                    foreach (CalendarDay iCalendarDay in iCalendar.getDays())
+                    {
+                        if (inputDay == iCalendarDay.getDay())
+                        {
+                            foreach (Channel iChannel in iCalendarDay.getListChannels())
+                            {
+                                if (iChannel.getName() == nameChannel)
+                                {
                                     iChannel.getListPeriod(period).Add(this);
                                     int index = iChannel.getListPeriod(period).IndexOf(this); // Lấy chỉ mục của tin tức trong danh sách
                                     if (index > 0)
@@ -148,8 +156,14 @@ namespace BanTin
                                     this.listTime.Add(iTime);
                                     iTime.setChannelOfTimeSet(nameChannel);
                                     iTime.setBanTinOfTimeSet(this.name);
-                                    iTime.setDayOfTimeSet(inputDay+"/"+inputMonth+"/"+"2024");
-                                    iTime.setTimeStart(currentTime.ToString());
+                                    iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");
+                                    // đặt timeStart cho class TimeSet
+                                    DateTime iTimeStart;
+                                    iTimeStart = new DateTime(iCalendarDay.Calendar.getYear(), iCalendarDay.Calendar.getMonth(), iCalendarDay.getDay())
+                                        .Add(currentTime)
+                                        .AddSeconds(this.time);
+                                    iTime.setTimeStart(iTimeStart);
+
                                 }
                                 else
                                 {
@@ -160,13 +174,69 @@ namespace BanTin
                         }
                     }
                 }
-            }                  
+            }
 
         }
-     }
+
+    //    public void SetTime(string period, string nameChannel, int inputDay, int inputMonth)
+    //    {
+    //        Dictionary<string, TimeSpan> periodMap = new Dictionary<string, TimeSpan>
+    //{
+    //    { "sang", new TimeSpan(8, 0, 0) },
+    //    { "toi", new TimeSpan(18, 0, 0) }
+    //};
+
+    //        if (!periodMap.ContainsKey(period))
+    //        {
+    //            Console.WriteLine("Du lieu khong dung");
+    //            return;
+    //        }
+
+    //        var calendar2024 = Calendar.getCanlendar2024();
+    //        var selectedCalendar = calendar2024.FirstOrDefault(c => c.getMonth() == inputMonth);
+
+    //        if (selectedCalendar != null)
+    //        {
+    //            var selectedDay = selectedCalendar.getDays().FirstOrDefault(d => d.getDay() == inputDay);
+
+    //            if (selectedDay != null)
+    //            {
+    //                var selectedChannel = selectedDay.getListChannels().FirstOrDefault(c => c.getName() == nameChannel);
+
+    //                if (selectedChannel != null)
+    //                {
+    //                    selectedChannel.getListPeriod(period).Add(this);
+
+    //                    int index = selectedChannel.getListPeriod(period).IndexOf(this);
+    //                    if (index > 0)
+    //                    {
+    //                        periodMap[period] = periodMap[period].Add(TimeSpan.FromSeconds(index));
+    //                    }
+
+    //                    var timeSet = new TimeSet(time, period, nameChannel, this.name);
+    //                    this.listTime.Add(timeSet);
+    //                    timeSet.setChannelOfTimeSet(nameChannel);
+    //                    timeSet.setBanTinOfTimeSet(this.name);
+    //                    timeSet.setDayOfTimeSet($"{inputDay}/{inputMonth}/2024");
+
+    //                    DateTime timeStart = new DateTime(selectedCalendar.getYear(), selectedCalendar.getMonth(), selectedDay.getDay())
+    //                        .Add(periodMap[period])
+    //                        .AddSeconds(this.time);
+
+    //                    timeSet.setTimeStart(timeStart);
+    //                }
+    //                else
+    //                {
+    //                    Console.WriteLine("Khong co du lieu kenh hoac kenh chua duoc tao");
+    //                }
+    //            }
+    //        }
+    //    }
+
+    }
 }
 
-    
+
 
 
 

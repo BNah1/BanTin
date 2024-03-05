@@ -44,7 +44,7 @@ namespace BanTin
         }
 
         public void addAnchor(string nameAnchor) {
-            foreach(var anchor in chanels) { }
+            foreach(Anchor anchor in listAnchors) { }
         }
 
         public string getName() { 
@@ -60,7 +60,7 @@ namespace BanTin
         public void channelAddBanTin(string banTinName, string period)
         {
             New foundBanTin = null;
-            foreach (var banTin in New.getListNew())
+            foreach (New banTin in New.getListNew())
             {
                 if (banTin.getName() == banTinName)
                 {
@@ -101,7 +101,7 @@ namespace BanTin
             else
             {
                 int i = 1;
-                foreach (var banTin in sang)
+                foreach (New banTin in sang)
                     Console.WriteLine(i + ". " + banTin.getName());
                 i++;
             }
@@ -112,7 +112,7 @@ namespace BanTin
             else
             {
                 int i = 1;
-                foreach (var banTin in toi)
+                foreach (New banTin in toi)
                     Console.WriteLine(i + ". " + banTin.getName());
                 i++;
             }

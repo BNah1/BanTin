@@ -76,7 +76,7 @@ namespace BanTin
 
         public static void printAll()
         {
-            foreach (var item in New.getListNew())
+            foreach (New item in New.getListNew())
             {   
                 if (item is QuangCao qc)
                 {

@@ -25,8 +25,8 @@ namespace BanTin
             this.nameBanTin = nameBanTin;
         }
 
-        public void setChannelOfTimeSet(string input) 
-        { 
+        public void setChannelOfTimeSet(string input)
+        {
             nameChannel = input;
         }
         public string getChannelOfTimeSet()
@@ -48,19 +48,16 @@ namespace BanTin
 
         public override string ToString()
         {
-            return "Thoi luong: " + time +"s"+  "\n" +
+            return "Thoi luong: " + time + "s" + "\n" +
                    "Khung chieu: " + period + "\n" +
-                   "Thời gian bat dau: " + timeStart + "\n" +
-                   "Thời gian chiếu " + day + "\n";
+                   "Thời gian bat dau: " + timeStart + "\n";
         }
 
-        public void setTimeStart(string timeString)
+        public void setTimeStart(DateTime input)
         {
-            timeStart = DateTime.ParseExact(timeString, "H:mm:ss", null);
-            TimeSpan duration = TimeSpan.FromSeconds(time);
-            timeEnd = timeStart.Add(duration);
+            this.timeStart = input;
         }
 
-       
+
     }
 }

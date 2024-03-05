@@ -13,5 +13,14 @@ namespace BanTin
         private string numOfNews;
         private List<LiveStream> listNews;
         private string company;
+
+        public Reporter(string name, string mail, string numOfNews, List<LiveStream> listNews, string company)
+        {
+            this.name = name;
+            this.mail = mail;
+            this.numOfNews = numOfNews;
+            this.listNews = new List<LiveStream> { };
+            this.company = company;
+        }
     }
 }

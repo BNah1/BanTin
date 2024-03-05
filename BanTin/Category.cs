@@ -54,7 +54,7 @@ namespace BanTin
             if (news == null || news.Count == 0)
                 Console.WriteLine("khong co du lieu");
             else
-                foreach (var banTin in news)
+                foreach (New banTin in news)
                 {
                     Console.WriteLine(banTin.getName());
                 }
@@ -66,7 +66,7 @@ namespace BanTin
         {
             bool check = false;
             BanTin foundBanTin = null;
-            foreach (var banTin in New.getListNew())
+            foreach (New banTin in New.getListNew())
             {
                 if (banTin.getName() == banTinName)
                 {
@@ -86,7 +86,7 @@ namespace BanTin
 
         public void removeCategory(string banTinName)
         {
-            foreach (var banTin in New.getListNew())
+            foreach (New banTin in New.getListNew())
             {
                 if (banTin.getName() == banTinName)
                 {
@@ -99,7 +99,7 @@ namespace BanTin
 
         static public void printAllCategory()
         {
-            foreach (var category in categories)
+            foreach (Category category in categories)
             {
                 Console.WriteLine("The loai " + i + " : " + category.name);
                 i++;
