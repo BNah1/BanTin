@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Threading.Channels;
 using BanTin;
 
 namespace BanTin
@@ -19,6 +21,7 @@ namespace BanTin
         // Hàm khởi tạo
         public static void createCalendar()
         {
+            Console.OutputEncoding = System.Text.Encoding.UTF8;
             // tao lich cac ngay trong nam 2024
             List<Calendar> calendarOf2024 = new List<Calendar>();
             for (int i = 0; i < 12; i++)
@@ -44,29 +47,75 @@ namespace BanTin
             Author nguyenA = new Author("nguyenA", "Dai VTV", "nguyenA@gmail.com");
             Channel MTV = new Channel("MTV", 5);
 
-            BanTin banTin1 = new BanTin("Ban tin 1", 10.5, "aaaaaaaaaaaaa");
+            BanTin banTin1 = new BanTin("Ban tin 1", 240, "aaaaaaaaaaaaa");
             QuangCao quangcao1 = new QuangCao("quang cao 1", 10, "1q3123123");
-            BanTin banTin2 = new BanTin("Ban tin 2", 120, "bbbbbbbbbbbbb");
+            BanTin banTin2 = new BanTin("Ban tin 2", 140, "bbbbbbbbbbbbb");
+            BanTin banTin3 = new BanTin("Ban tin 3", 140, "ccccccccccc");
 
             thethao.setCategory("Ban tin 2");
-            MTV.channelAddBanTin("Ban tin 1", "sang");
             Console.WriteLine("       ");
-            banTin2.setTime("sang", "MTV", 3, 3);
+            banTin2.setTime("sang", "MTV", 10, 3);
+            banTin3.setTime("sang", "MTV", 10, 3);
+            banTin1.setTime("sang", "MTV", 10, 3);
+            banTin1.print();
             banTin2.print();
-
-
+            banTin3.print();
 
         }
-        public static void createBanTin()
+        public static void QuanLiBanTin()
         {
-            Console.WriteLine("Nhap ten cua ban tin :");
-            string inputName = Console.ReadLine();
-            Console.WriteLine("Nhap thoi luong cua ban tin :");
-            double inputTime = Double.Parse(Console.ReadLine());
-            Console.WriteLine("Nhap noi dung cua ban tin :");
-            string inputInfo = Console.ReadLine();
-            BanTin bantin = new BanTin(inputName, inputTime, inputInfo);
+            while (true)
+            {
+                Console.WriteLine("Menu:");
+                Console.WriteLine("1. Thêm bản tin");
+                Console.WriteLine("2. Đặt thể loại");
+                Console.WriteLine("3. Đặt tác giả");
+                Console.WriteLine("4. Chọn kênh");
+                Console.WriteLine("5. Đặt thời gian chiếu");
+                Console.WriteLine("0. Thoát");
 
+                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Bạn đã chọn Thêm bản tin");
+                        nhapBanTin();
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Bạn đã chọn Đặt thể loại");
+                        // Gọi phương thức đặt thể loại ở đây
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Bạn đã chọn Đặt tác giả");
+                        // Gọi phương thức đặt tác giả ở đây
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Bạn đã chọn Chọn kênh");
+                        // Gọi phương thức chọn kênh ở đây
+                        break;
+
+                    case "5":
+                        Console.WriteLine("Bạn đã chọn Đặt thời gian chiếu");
+                        // Gọi phương thức đặt thời gian chiếu ở đây
+                        break;
+
+                    case "0":
+                        Console.WriteLine("Tạm biệt!");
+                        Environment.Exit(0);
+                        break;
+
+                    default:
+                        Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
+                        break;
+                }
+
+                Console.WriteLine(); // In một dòng trắng để tạo định dạng
+            }
         }
         public static void nhapBanTin()
         {
@@ -74,11 +123,11 @@ namespace BanTin
 
             while (continueInput)
             {
-                Console.WriteLine("Ten ban tin :");
+                Console.WriteLine("Tên bản tin :");
                 string name = Console.ReadLine();
-                Console.WriteLine("Thoi luong ban tin :");
+                Console.WriteLine("Thời lượng bản tin :");
                 double time = double.Parse(Console.ReadLine());
-                Console.WriteLine("Noi dung ban tin :");
+                Console.WriteLine("Nội dung bản tin :");
                 string noiDung = Console.ReadLine();
                 BanTin bantinNew = new BanTin(name, time, noiDung);
 
@@ -86,21 +135,23 @@ namespace BanTin
                 bool validCategory = false;
                 while (!validCategory)
                 {
-                    Console.WriteLine("The loai cua ban tin :");
+                    Console.WriteLine("Thể loại của bản tin :");
                     string categoryName = Console.ReadLine();
                     belongstoCategory = GetCategoryByName(categoryName);
 
                     if (belongstoCategory == null)
                     {
-                        Console.WriteLine("Thể loại không tồn tại. Vui long chon cac lua chon sau ");
-                        Console.WriteLine("1.Tao the loai moi");
-                        Console.WriteLine("2.Nhap lai");
+                        Console.WriteLine("Thể loại không tồn tại. Vui lòng chọn các lựa chọn sau ");
+                        Console.WriteLine("1.Tạo thể loại mới ");
+                        Console.WriteLine("2.Nhập lại");
                         int choice1 = int.Parse(Console.ReadLine());
                         switch (choice1)
                         {
                             case 1:
-                                Category addCategory = new Category(categoryName);
-                                Console.WriteLine("Da tao thanh cong " + categoryName);
+                                Console.WriteLine("Nhập tên thể loại muốn tạo :");
+                                string nameCategory = Console.ReadLine();
+                                Category addCategory = new Category(nameCategory);
+                                Console.WriteLine("Đã tạo thành công " + categoryName);
                                 bantinNew.setCategoryName(categoryName);
                                 break;
                             case 2:
@@ -120,25 +171,26 @@ namespace BanTin
                 bool validAuthor = false;
                 while (!validAuthor)
                 {
-                    Console.WriteLine("Tac gia cua ban tin :");
+                    Console.WriteLine("Tác giả của bản tin :");
                     string authorName = Console.ReadLine();
                     belongstoAuthor = getAuthorByName(authorName);
 
                     if (belongstoAuthor == null)
                     {
                         Console.WriteLine("Tác giả không tồn tại. Vui lòng nhập lại tên tác giả.");
-                        Console.WriteLine("1.Tao tac gia moi");
-                        Console.WriteLine("2.Nhap lai");
+                        Console.WriteLine("1.Tạo tác giả mới");
+                        Console.WriteLine("2.Nhập lại ");
                         int choice1 = int.Parse(Console.ReadLine());
                         switch (choice1)
                         {
                             case 1:
-                                Console.WriteLine("Nhap ten cong ty :");
+                                Console.WriteLine("Nhập thông tin để tạo mới tác giả :");
+                                Console.WriteLine("Nhập tên công ty :");
                                 string inputCompany = Console.ReadLine();
-                                Console.WriteLine("Nhap email :");
+                                Console.WriteLine("Nhập email :");
                                 string inputEmail = Console.ReadLine();
                                 Author addAuthor = new Author(authorName, inputCompany, inputEmail);
-                                Console.WriteLine("Da tao thanh cong " + authorName);
+                                Console.WriteLine("Đã tạo thành công " + authorName);
                                 bantinNew.setAuthorName(authorName);
                                 break;
                             case 2:
@@ -174,30 +226,6 @@ namespace BanTin
 
             }
         }
-        public static CalendarDay getDay( string inputDay, string inputMonth, string inputYear)
-        {
-            int day = int.Parse(inputDay);
-            int month = int.Parse(inputMonth);
-            int year = int.Parse(inputYear);
-
-                // Lặp qua danh sách các Calendar để tìm đối tượng phù hợp
-                foreach (Calendar calendar in Calendar.getCanlendar2024())
-                {
-                    // Lấy danh sách các CalendarDay từ đối tượng Calendar
-                    List<CalendarDay> calendarDays = calendar.getDays();
-
-                    // Lặp qua danh sách các CalendarDay để tìm đối tượng phù hợp
-                    foreach (CalendarDay calendarDay in calendarDays)
-                    {
-                    if (calendarDay.Day == day && calendarDay.Calendar.getYear() == year && calendarDay.Calendar.getMonth() == month)
-                    {
-                            return calendarDay;
-                        }
-                    }
-                }
-                Console.WriteLine("du lieu khong hop le , vui long nhap lai");
-                return null; // Trả về null nếu không tìm thấy đối tượng phù hợp
-            }
         public static void nhapDuLieu()
         {
             // tạo bản tin thử

@@ -31,7 +31,7 @@ namespace BanTin
             listChannels = new List<string>();
             listDays = new List<string>();
         }
-
+        public double getTime() { return time; }
         public List<string> getListChannels()
         {
             return listChannels;

@@ -14,6 +14,10 @@ namespace BanTin
         {
             return listBanTins;
         }
+        public double getTime()
+        {
+            return 0;
+        }
         public List<string> getListDays()
         {
             return null;

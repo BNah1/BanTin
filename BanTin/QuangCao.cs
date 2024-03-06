@@ -38,7 +38,7 @@ namespace BanTin
         {
             return listDays;
         }
-
+        public double getTime() { return time; }
         public static List<New> getListNew()
         {
             return New.getListNew();

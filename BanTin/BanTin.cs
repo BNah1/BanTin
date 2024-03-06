@@ -39,6 +39,8 @@ namespace BanTin
             return listTime;
         }
 
+        public double getTime() { return time; }
+
         public List<string> getListDays()
         {
             return listDays;
@@ -106,7 +108,7 @@ namespace BanTin
             Console.WriteLine("Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung);
             foreach (TimeSet item in listTime)
-            {                
+            {
                 Console.WriteLine(item.ToString());
             }
         }
@@ -136,7 +138,7 @@ namespace BanTin
                 return;
             }
             foreach (Calendar iCalendar in Calendar.getCanlendar2024())
-            { 
+            {
                 if (iCalendar.getMonth() == inputMonth)
                 {
                     foreach (CalendarDay iCalendarDay in iCalendar.getDays())
@@ -147,23 +149,26 @@ namespace BanTin
                             {
                                 if (iChannel.getName() == nameChannel)
                                 {
-                                    iChannel.getListPeriod(period).Add(this);
-                                    int index = iChannel.getListPeriod(period).IndexOf(this); // Lấy chỉ mục của tin tức trong danh sách
-                                    if (index > 0)
-                                    {
-                                        TimeSpan timeToAdd = TimeSpan.FromSeconds(index);
-                                        currentTime = currentTime.Add(timeToAdd);
-                                    }
                                     TimeSet iTime = new TimeSet(time, period, nameChannel, this.name);
                                     this.listTime.Add(iTime);
                                     iTime.setChannelOfTimeSet(nameChannel);
                                     iTime.setBanTinOfTimeSet(this.name);
                                     iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");
+
                                     // đặt timeStart cho class TimeSet
+                                    double xTime;
+                                    iChannel.getListPeriod(period).Add(this);
+                                    int index = iChannel.getListPeriod(period).IndexOf(this); // Lấy chỉ mục của tin tức trong danh sách
+                                    if (index > 0)
+                                    {
+                                        xTime = iChannel.getListPeriod(period)[index - 1].getTime();
+                                        TimeSpan timeToAdd = TimeSpan.FromSeconds(xTime);
+                                        currentTime = currentTime.Add(timeToAdd);
+                                    }                                                                       
                                     DateTime iTimeStart;
+
                                     iTimeStart = new DateTime(iCalendarDay.Calendar.getYear(), iCalendarDay.Calendar.getMonth(), iCalendarDay.getDay())
-                                        .Add(currentTime)
-                                        .AddSeconds(this.time);
+                                        .Add(currentTime);
                                     iTime.setTimeStart(iTimeStart);
 
                                 }
@@ -180,60 +185,60 @@ namespace BanTin
 
         }
 
-    //    public void SetTime(string period, string nameChannel, int inputDay, int inputMonth)
-    //    {
-    //        Dictionary<string, TimeSpan> periodMap = new Dictionary<string, TimeSpan>
-    //{
-    //    { "sang", new TimeSpan(8, 0, 0) },
-    //    { "toi", new TimeSpan(18, 0, 0) }
-    //};
+        //    public void SetTime(string period, string nameChannel, int inputDay, int inputMonth)
+        //    {
+        //        Dictionary<string, TimeSpan> periodMap = new Dictionary<string, TimeSpan>
+        //{
+        //    { "sang", new TimeSpan(8, 0, 0) },
+        //    { "toi", new TimeSpan(18, 0, 0) }
+        //};
 
-    //        if (!periodMap.ContainsKey(period))
-    //        {
-    //            Console.WriteLine("Du lieu khong dung");
-    //            return;
-    //        }
+        //        if (!periodMap.ContainsKey(period))
+        //        {
+        //            Console.WriteLine("Du lieu khong dung");
+        //            return;
+        //        }
 
-    //        var calendar2024 = Calendar.getCanlendar2024();
-    //        var selectedCalendar = calendar2024.FirstOrDefault(c => c.getMonth() == inputMonth);
+        //        var calendar2024 = Calendar.getCanlendar2024();
+        //        var selectedCalendar = calendar2024.FirstOrDefault(c => c.getMonth() == inputMonth);
 
-    //        if (selectedCalendar != null)
-    //        {
-    //            var selectedDay = selectedCalendar.getDays().FirstOrDefault(d => d.getDay() == inputDay);
+        //        if (selectedCalendar != null)
+        //        {
+        //            var selectedDay = selectedCalendar.getDays().FirstOrDefault(d => d.getDay() == inputDay);
 
-    //            if (selectedDay != null)
-    //            {
-    //                var selectedChannel = selectedDay.getListChannels().FirstOrDefault(c => c.getName() == nameChannel);
+        //            if (selectedDay != null)
+        //            {
+        //                var selectedChannel = selectedDay.getListChannels().FirstOrDefault(c => c.getName() == nameChannel);
 
-    //                if (selectedChannel != null)
-    //                {
-    //                    selectedChannel.getListPeriod(period).Add(this);
+        //                if (selectedChannel != null)
+        //                {
+        //                    selectedChannel.getListPeriod(period).Add(this);
 
-    //                    int index = selectedChannel.getListPeriod(period).IndexOf(this);
-    //                    if (index > 0)
-    //                    {
-    //                        periodMap[period] = periodMap[period].Add(TimeSpan.FromSeconds(index));
-    //                    }
+        //                    int index = selectedChannel.getListPeriod(period).IndexOf(this);
+        //                    if (index > 0)
+        //                    {
+        //                        periodMap[period] = periodMap[period].Add(TimeSpan.FromSeconds(index));
+        //                    }
 
-    //                    var timeSet = new TimeSet(time, period, nameChannel, this.name);
-    //                    this.listTime.Add(timeSet);
-    //                    timeSet.setChannelOfTimeSet(nameChannel);
-    //                    timeSet.setBanTinOfTimeSet(this.name);
-    //                    timeSet.setDayOfTimeSet($"{inputDay}/{inputMonth}/2024");
+        //                    var timeSet = new TimeSet(time, period, nameChannel, this.name);
+        //                    this.listTime.Add(timeSet);
+        //                    timeSet.setChannelOfTimeSet(nameChannel);
+        //                    timeSet.setBanTinOfTimeSet(this.name);
+        //                    timeSet.setDayOfTimeSet($"{inputDay}/{inputMonth}/2024");
 
-    //                    DateTime timeStart = new DateTime(selectedCalendar.getYear(), selectedCalendar.getMonth(), selectedDay.getDay())
-    //                        .Add(periodMap[period])
-    //                        .AddSeconds(this.time);
+        //                    DateTime timeStart = new DateTime(selectedCalendar.getYear(), selectedCalendar.getMonth(), selectedDay.getDay())
+        //                        .Add(periodMap[period])
+        //                        .AddSeconds(this.time);
 
-    //                    timeSet.setTimeStart(timeStart);
-    //                }
-    //                else
-    //                {
-    //                    Console.WriteLine("Khong co du lieu kenh hoac kenh chua duoc tao");
-    //                }
-    //            }
-    //        }
-    //    }
+        //                    timeSet.setTimeStart(timeStart);
+        //                }
+        //                else
+        //                {
+        //                    Console.WriteLine("Khong co du lieu kenh hoac kenh chua duoc tao");
+        //                }
+        //            }
+        //        }
+        //    }
 
     }
 }
