@@ -50,7 +50,7 @@ namespace BanTin
         {
             return "Thoi luong: " + time + "s" + "\n" +
                    "Khung chieu: " + period + "\n" +
-                   "Thời gian bat dau: " + timeStart + "\n";
+                   "Thời gian bat dau: " + timeStart + " tại kênh " + nameChannel;
         }
 
         public void setTimeStart(DateTime input)

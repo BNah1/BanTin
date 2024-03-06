@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Anchor : People
+    internal class Anchor : Author , People
     {
         private string name;
         private string mail;
@@ -17,13 +17,18 @@ namespace BanTin
         private List<string> listDays;
         private static List<Anchor> listAnchorsOfChannel; 
 
-        public Anchor(string name, string mail, string company) { 
+        public Anchor(string name, string company, string mail) : base(name, company, mail)
+        {
             this.name = name;
             this.mail = mail;
             this.company = company;
             this.numOfDays = 0;
             this.listDays = new List<string>();
             this.listChannels = new List<string>();
+
+            if (listAnchorsOfChannel == null)
+                listAnchorsOfChannel = new List<Anchor>();
+
             listAnchorsOfChannel.Add(this);
         }
             

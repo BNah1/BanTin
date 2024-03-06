@@ -103,8 +103,10 @@ namespace BanTin
 
         public void print()
         {
+            Console.WriteLine("Tên bản tin: " + name + "\n" +
+                   "Nội dung: " + noiDung);
             foreach (TimeSet item in listTime)
-            {
+            {                
                 Console.WriteLine(item.ToString());
             }
         }
@@ -134,7 +136,7 @@ namespace BanTin
                 return;
             }
             foreach (Calendar iCalendar in Calendar.getCanlendar2024())
-            {
+            { 
                 if (iCalendar.getMonth() == inputMonth)
                 {
                     foreach (CalendarDay iCalendarDay in iCalendar.getDays())

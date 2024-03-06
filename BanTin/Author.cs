@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Author : People
+    internal class Author : People 
     {
         private string company;
         public string name;
-        private string email;
+        private string mail;
         private int numOfNews;
         private List<BanTin> news { get; set; }
         private static List<Author> authors { get; set; }
 
-        public Author(string name, string company, string email)
+        public Author(string name, string company, string mail)
         {
             this.name = name;
             this.company = company;
-            this.email = email;
+            this.mail = mail;
             // xet so luong ban tin cua tac gia
             if (news != null)
                 this.numOfNews = news.Count;
@@ -36,7 +36,7 @@ namespace BanTin
         {
             Console.WriteLine("Tên tác giả: " + name);
             Console.WriteLine("Thuộc : " + company);
-            Console.WriteLine("Email : " + email);
+            Console.WriteLine("Email : " + mail);
             Console.WriteLine("Số lượng bài báo : " + numOfNews);
             Console.WriteLine("Các bài báo của tác giả " + name + " :");
             foreach (var banTin in news)
@@ -44,7 +44,7 @@ namespace BanTin
                 Console.WriteLine(banTin.ToString());
             }
         }
-        static public void printAllAuthor()
+        static public void printAllPeople()
         {
             foreach (var author in authors)
             {
