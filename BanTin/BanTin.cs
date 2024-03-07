@@ -176,7 +176,6 @@ namespace BanTin
 
                                     // Điều chỉnh currentTime dựa trên xTime đã tích lũy
                                     TimeSpan xtimeToAdd = TimeSpan.FromSeconds(xTime);
-                                    currentTime = new TimeSpan(8, 0, 0); // Reset the currentTime for a new channel and day
                                     currentTime = currentTime.Add(xtimeToAdd);
                                     // Tạo timeStart cho New
                                     DateTime iTimeStart = new DateTime(

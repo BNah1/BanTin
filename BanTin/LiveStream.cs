@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class LiveStream : New
+    internal class LiveStream : BanTin, New
     {
 
         private string name { get; set; }
@@ -15,9 +15,9 @@ namespace BanTin
         private string reporterName { get; set; }
         private List<string> listChannels;
         private List<string> listDays;
-        private List<string> listTime;
+        private List<TimeSet> listTime;
 
-        public LiveStream(string name, double time, string noidung)
+        public LiveStream(string name, double time, string noidung) : base(name, time, noidung)
         {
             this.reporterName = " chua co du lieu phong vien ";
             this.name = name;
@@ -27,7 +27,7 @@ namespace BanTin
             else
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
             New.getListNew().Add(this);
-            listTime = new List<string>();
+            listTime = new List<TimeSet>();
             listChannels = new List<string>();
             listDays = new List<string>();
         }

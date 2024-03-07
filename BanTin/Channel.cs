@@ -14,7 +14,11 @@ namespace BanTin
         private List<New> toi;
         private List<Anchor> listAnchors;
 
-        private static List<Channel> chanels = new List<Channel>();
+        private static List<Channel> channels = new List<Channel>();
+
+        internal List<New> Sang { get => sang; set => sang = value; }
+        internal List<New> Toi { get => toi; set => toi = value; }
+
         public Channel(string name, int limitNews)
         {
             this.name = name;
@@ -26,12 +30,12 @@ namespace BanTin
                 return;
             } 
 
-            chanels.Add(this);
+            channels.Add(this);
             this.listAnchors = new List<Anchor>();
             this.toi = new List<New>();
             this.sang = new List<New>();
         }
-        
+
         public List<New> getListPeriod(string iPeriod)
         {
             if (iPeriod == "sang")
@@ -54,7 +58,7 @@ namespace BanTin
 
         public static List<Channel> getChanels()
         {
-            return chanels;
+            return channels;
         }
 
        // thêm bản tin vào channel
@@ -92,10 +96,10 @@ namespace BanTin
             }
 
         }
-        public void setTimeAndAddBanTin(BanTin banTin, string period, int inputDay, int inputMonth)
+        public void setTimeAndAddBanTin(New inew, string period, int inputDay, int inputMonth)
         {
-            banTin.setTime(period, this.getName(), inputDay, inputMonth);
-            this.channelAddBanTin(banTin.getName(), period);
+            inew.setTime(period, this.getName(), inputDay, inputMonth);
+            this.channelAddBanTin(inew.getName(), period);
         }
         public void printAll()
         {

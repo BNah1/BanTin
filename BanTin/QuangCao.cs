@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class QuangCao : New
+    internal class QuangCao : BanTin , New 
     {
 
         private string name { get; set; }
@@ -14,9 +14,9 @@ namespace BanTin
         private string noidung { get; set; }
         private List<string> listChannels;
         private List<string> listDays;
-        private List<string> listTime;
+        private List<TimeSet> listTime;
 
-        public QuangCao(string name, double time, string noidung)
+        public QuangCao(string name, double time, string noidung) : base(name, time, noidung)
         {
             this.name = name;
             this.noidung = noidung;
@@ -25,7 +25,7 @@ namespace BanTin
             else
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
             New.getListNew().Add(this);
-            listTime = new List<string>();
+            listTime = new List<TimeSet>();
             listChannels = new List<string>();
             listDays = new List<string>();
         }

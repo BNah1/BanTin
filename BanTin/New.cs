@@ -18,7 +18,10 @@ namespace BanTin
         {
             return 0;
         }
-        public List<string> getListDays()
+        public void setTime(string period, string nameChannel, int inputDay, int inputMonth)
+        { }
+            public void print() { }
+            public List<string> getListDays()
         {
             return null;
         }

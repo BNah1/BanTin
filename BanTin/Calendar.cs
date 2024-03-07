@@ -42,16 +42,17 @@ namespace BanTin
             // Kiểm tra xem danh sách các Calendar có tồn tại hay không
             if (canlendar2024 != null)
             {
-                // Sử dụng LINQ để tìm CalendarDay trong tất cả các Calendar
+                // Duyệt qua từng Calendar trong danh sách
                 foreach (var calendar in canlendar2024)
                 {
-                    var foundDay = calendar.days.FirstOrDefault(calendarDay =>
-                        calendarDay.Day == day &&
-                        calendarDay.Calendar.getMonth() == month);
-
-                    if (foundDay != null)
+                    // Duyệt qua từng CalendarDay trong Calendar
+                    foreach (CalendarDay calendarDay in calendar.days)
                     {
-                        return foundDay;
+                        // Kiểm tra điều kiện tìm kiếm
+                        if (calendarDay.Day == day && calendarDay.Calendar.getMonth() == month)
+                        {
+                            return calendarDay; // Trả về CalendarDay tìm thấy
+                        }
                     }
                 }
             }

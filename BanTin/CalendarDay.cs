@@ -17,24 +17,22 @@ namespace BanTin
         {
             this.Day = day;
             Calendar = calendar;
-            this.listChannels = Channel.getChanels(); // Tạo một danh sách mới để tránh tham chiếu đến danh sách chung
-            
-            //foreach (Channel originalChannel in Channel.getChanels())
-            //{
-            //    // Tạo một kênh mới và thêm vào danh sách cho CalendarDay
-            //    Channel newChannel = new Channel(originalChannel.getName(), originalChannel.getLimitNews());
-            //    this.listChannels.Add(newChannel);
-            //}
+            this.listChannels = new List<Channel>();
+            this.listTimeSets = new List<TimeSet>();
         }
-   
 
+        public void setListChannels(List<Channel> input) 
+        {
+            listChannels = input;
+        }
         public List<Channel> getListChannels()
         {
             // Trả về bản sao của danh sách để ngăn chặn sự thay đổi từ bên ngoài
-            return new List<Channel>(listChannels);
+            return listChannels;
         }
 
         // Thêm bản tin vào kênh của CalendarDay
+
         public void addBanTinToChannel(BanTin banTin, Channel channel, string period)
         {
             channel.channelAddBanTin(banTin.getName(), period);
