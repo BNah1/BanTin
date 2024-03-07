@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
@@ -15,8 +16,10 @@ namespace BanTin
         static void Main(string[] args)
         {
             createCalendar();
-            Test();
+            Test2();
+
         }
+
 
         // Hàm khởi tạo
         public static void createCalendar()
@@ -36,8 +39,72 @@ namespace BanTin
 
 
         // Phương thức chức năng
+        public static void Test2()
+        {
+            // Tạo các kênh
+            Channel vtv1 = new Channel("VTV1", 5);
+            Channel vtv2 = new Channel("VTV2", 5);
 
-        public static void Test()
+            // Tạo các bản tin
+            BanTin banTin1 = new BanTin("BanTin1", 180, "Nội dung bản tin 1");
+            BanTin banTin2 = new BanTin("BanTin2", 150, "Nội dung bản tin 2");
+            BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
+            BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
+
+            foreach (Calendar calendar in Calendar.getCanlendar2024())
+            {
+                if (calendar.getMonth() == 3)
+                {
+                    foreach (CalendarDay calendarDay in calendar.getDays())
+                    {
+                        if (3 == calendarDay.getDay())
+                        {
+                            // Thêm bản tin vào kênh và đặt thời gian
+                            vtv1.setTimeAndAddBanTin(banTin1, "sang", calendarDay.Day, calendar.getMonth());
+                            vtv1.setTimeAndAddBanTin(banTin2, "sang", calendarDay.Day, calendar.getMonth());
+                            vtv1.setTimeAndAddBanTin(banTin3, "sang", calendarDay.Day, calendar.getMonth());
+
+                            vtv1.setTimeAndAddBanTin(banTin2, "toi", calendarDay.Day, calendar.getMonth());
+
+                            vtv2.setTimeAndAddBanTin(banTin2, "sang", calendarDay.Day, calendar.getMonth());
+                            vtv2.setTimeAndAddBanTin(banTin3, "sang", calendarDay.Day, calendar.getMonth());
+                            // In thông tin của CalendarDay
+                            Console.WriteLine($"Thông tin của CalendarDay {calendarDay.getDay()}/{calendar.getMonth()}/{calendar.getYear()}");
+                            foreach (Channel channel in calendarDay.getListChannels())
+                            {
+                                Console.WriteLine($"Kênh: {channel.getName()}");
+                                foreach (BanTin banTin in channel.getListPeriod("sang"))
+                                {
+                                    if (banTin.getListTime().FirstOrDefault() != null)
+                                    {
+                                        Console.WriteLine($"  - Bản tin buổi sáng: {banTin.getName()}, Thời gian bắt đầu: {banTin.getListTime().FirstOrDefault().getTimeStart()}");
+                                    }
+                                }
+                                foreach (BanTin banTin in channel.getListPeriod("toi"))
+                                {
+                                    if (banTin.getListTime().LastOrDefault() != null)
+                                    {
+                                        Console.WriteLine($"  - Bản tin buổi tối: {banTin.getName()}, Thời gian bắt đầu: {banTin.getListTime().LastOrDefault().getTimeStart()}");
+                                    }
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
+            Console.WriteLine("");
+
+        }
+
+
+
+
+
+
+
+
+            public static void Test()
         {
             // tạo bản tin thử
             Category thethao = new Category("the thao");

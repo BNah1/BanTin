@@ -112,31 +112,35 @@ namespace BanTin
                 Console.WriteLine(item.ToString());
             }
         }
-
+        public void addBanTinToCalendarDay(CalendarDay calendarDay, Channel channel, string period, int inputDay, int inputMonth)
+        {
+            setTime(period, channel.getName(), inputDay, inputMonth);
+            calendarDay.addBanTinToChannel(this, channel, period);
+        }
         public override string ToString()
         {
             return "Tên bản tin: " + name + "\n" +
                    "Nội dung: " + noiDung + "\n" +
                    "Thời lượng: " + time + "\n";
         }
-
         public void setTime(string period, string nameChannel, int inputDay, int inputMonth)
         {
             TimeSpan currentTime;
+
             if (period == "sang")
             {
                 currentTime = new TimeSpan(8, 0, 0);
             }
-
             else if (period == "toi")
             {
                 currentTime = new TimeSpan(18, 0, 0);
             }
             else
             {
-                Console.WriteLine("Du lieu khong dung");
+                Console.WriteLine("Dữ liệu không đúng");
                 return;
             }
+
             foreach (Calendar iCalendar in Calendar.getCanlendar2024())
             {
                 if (iCalendar.getMonth() == inputMonth)
@@ -149,96 +153,122 @@ namespace BanTin
                             {
                                 if (iChannel.getName() == nameChannel)
                                 {
+                                    double xTime = 0;
+
+                                    // Duyệt qua tất cả các phần tử New trong ListPeriod
+                                    foreach (New newElement in iChannel.getListPeriod(period))
+                                    {
+                                        // Kiểm tra xem New hiện tại có phải là New đang được xử lý không
+                                        if (newElement == this)
+                                        {
+                                            break; // Dừng duyệt khi bạn đến New hiện tại
+                                        }
+
+                                        // Cộng dồn thời gian từ các New trước đó
+                                        xTime += newElement.getTime();
+                                    }
+
+                                    // Khởi tạo TimeSet
                                     TimeSet iTime = new TimeSet(time, period, nameChannel, this.name);
-                                    this.listTime.Add(iTime);
                                     iTime.setChannelOfTimeSet(nameChannel);
                                     iTime.setBanTinOfTimeSet(this.name);
                                     iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");
 
-                                    // đặt timeStart cho class TimeSet
-                                    double xTime;
-                                    iChannel.getListPeriod(period).Add(this);
-                                    int index = iChannel.getListPeriod(period).IndexOf(this); // Lấy chỉ mục của tin tức trong danh sách
-                                    if (index > 0)
-                                    {
-                                        xTime = iChannel.getListPeriod(period)[index - 1].getTime();
-                                        TimeSpan timeToAdd = TimeSpan.FromSeconds(xTime);
-                                        currentTime = currentTime.Add(timeToAdd);
-                                    }                                                                       
-                                    DateTime iTimeStart;
+                                    // Điều chỉnh currentTime dựa trên xTime đã tích lũy
+                                    TimeSpan xtimeToAdd = TimeSpan.FromSeconds(xTime);
+                                    currentTime = new TimeSpan(8, 0, 0); // Reset the currentTime for a new channel and day
+                                    currentTime = currentTime.Add(xtimeToAdd);
+                                    // Tạo timeStart cho New
+                                    DateTime iTimeStart = new DateTime(
+                                        iCalendarDay.Calendar.getYear(),
+                                        iCalendarDay.Calendar.getMonth(),
+                                        iCalendarDay.getDay()
+                                    ).Add(currentTime);
 
-                                    iTimeStart = new DateTime(iCalendarDay.Calendar.getYear(), iCalendarDay.Calendar.getMonth(), iCalendarDay.getDay())
-                                        .Add(currentTime);
                                     iTime.setTimeStart(iTimeStart);
-
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Khong co du lieu kenh hoac kenh chua duoc tao");
-                                    return;
+                                    this.listTime.Add(iTime);
                                 }
                             }
                         }
                     }
                 }
             }
-
         }
 
-        //    public void SetTime(string period, string nameChannel, int inputDay, int inputMonth)
-        //    {
-        //        Dictionary<string, TimeSpan> periodMap = new Dictionary<string, TimeSpan>
+        //public void setTime(string period, string nameChannel, int inputDay, int inputMonth)
         //{
-        //    { "sang", new TimeSpan(8, 0, 0) },
-        //    { "toi", new TimeSpan(18, 0, 0) }
-        //};
+        //    TimeSpan currentTime;
 
-        //        if (!periodMap.ContainsKey(period))
+        //    if (period == "sang")
+        //    {
+        //        currentTime = new TimeSpan(8, 0, 0);
+        //    }
+        //    else if (period == "toi")
+        //    {
+        //        currentTime = new TimeSpan(18, 0, 0);
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine("Dữ liệu không đúng");
+        //        return;
+        //    }
+
+        //    foreach (Calendar iCalendar in Calendar.getCanlendar2024())
+        //    {
+        //        if (iCalendar.getMonth() == inputMonth)
         //        {
-        //            Console.WriteLine("Du lieu khong dung");
-        //            return;
-        //        }
-
-        //        var calendar2024 = Calendar.getCanlendar2024();
-        //        var selectedCalendar = calendar2024.FirstOrDefault(c => c.getMonth() == inputMonth);
-
-        //        if (selectedCalendar != null)
-        //        {
-        //            var selectedDay = selectedCalendar.getDays().FirstOrDefault(d => d.getDay() == inputDay);
-
-        //            if (selectedDay != null)
+        //            foreach (CalendarDay iCalendarDay in iCalendar.getDays())
         //            {
-        //                var selectedChannel = selectedDay.getListChannels().FirstOrDefault(c => c.getName() == nameChannel);
-
-        //                if (selectedChannel != null)
+        //                if (inputDay == iCalendarDay.getDay())
         //                {
-        //                    selectedChannel.getListPeriod(period).Add(this);
-
-        //                    int index = selectedChannel.getListPeriod(period).IndexOf(this);
-        //                    if (index > 0)
+        //                    foreach (Channel iChannel in iCalendarDay.getListChannels())
         //                    {
-        //                        periodMap[period] = periodMap[period].Add(TimeSpan.FromSeconds(index));
+        //                        if (iChannel.getName() == nameChannel)
+        //                        {
+        //                            double xTime = 0;
+
+        //                            // Duyệt qua tất cả các phần tử New trong ListPeriod
+        //                            foreach (New newElement in iChannel.getListPeriod(period))
+        //                            {
+        //                                // Kiểm tra xem New hiện tại có phải là New đang được xử lý không
+        //                                if (newElement == this)
+        //                                {
+        //                                    break; // Dừng duyệt khi bạn đến New hiện tại
+        //                                }
+
+        //                                // Cộng dồn thời gian từ các New trước đó
+        //                                xTime += newElement.getTime();
+        //                            }
+
+        //                            // Khởi tạo TimeSet
+        //                            TimeSet iTime = new TimeSet(time, period, nameChannel, this.name);
+        //                            iTime.setChannelOfTimeSet(nameChannel);
+        //                            iTime.setBanTinOfTimeSet(this.name);
+        //                            iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");
+
+        //                            // Điều chỉnh currentTime dựa trên xTime đã tích lũy
+        //                            TimeSpan xtimeToAdd = TimeSpan.FromSeconds(xTime);
+        //                            currentTime = currentTime.Add(xtimeToAdd);
+        //                            // Tạo timeStart cho New
+        //                            DateTime iTimeStart = new DateTime(
+        //                                iCalendarDay.Calendar.getYear(),
+        //                                iCalendarDay.Calendar.getMonth(),
+        //                                iCalendarDay.getDay()
+        //                            ).Add(currentTime);
+
+        //                            iTime.setTimeStart(iTimeStart);
+        //                            this.listTime.Add(iTime);
+        //                        }
         //                    }
-
-        //                    var timeSet = new TimeSet(time, period, nameChannel, this.name);
-        //                    this.listTime.Add(timeSet);
-        //                    timeSet.setChannelOfTimeSet(nameChannel);
-        //                    timeSet.setBanTinOfTimeSet(this.name);
-        //                    timeSet.setDayOfTimeSet($"{inputDay}/{inputMonth}/2024");
-
-        //                    DateTime timeStart = new DateTime(selectedCalendar.getYear(), selectedCalendar.getMonth(), selectedDay.getDay())
-        //                        .Add(periodMap[period])
-        //                        .AddSeconds(this.time);
-
-        //                    timeSet.setTimeStart(timeStart);
-        //                }
-        //                else
-        //                {
-        //                    Console.WriteLine("Khong co du lieu kenh hoac kenh chua duoc tao");
         //                }
         //            }
         //        }
         //    }
+        //}
+
+
+
+
 
     }
 }

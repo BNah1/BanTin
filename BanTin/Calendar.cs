@@ -36,6 +36,30 @@ namespace BanTin
             return days;
         }
 
+        // Phương thức để lấy CalendarDay dựa trên month và day
+        public static CalendarDay getCalendarDay(int day, int month)
+        {
+            // Kiểm tra xem danh sách các Calendar có tồn tại hay không
+            if (canlendar2024 != null)
+            {
+                // Sử dụng LINQ để tìm CalendarDay trong tất cả các Calendar
+                foreach (var calendar in canlendar2024)
+                {
+                    var foundDay = calendar.days.FirstOrDefault(calendarDay =>
+                        calendarDay.Day == day &&
+                        calendarDay.Calendar.getMonth() == month);
+
+                    if (foundDay != null)
+                    {
+                        return foundDay;
+                    }
+                }
+            }
+
+            // Trường hợp không tìm thấy
+            return null;
+        }
+
         public int getYear() { 
             return year;
         }

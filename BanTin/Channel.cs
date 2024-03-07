@@ -18,10 +18,13 @@ namespace BanTin
         public Channel(string name, int limitNews)
         {
             this.name = name;
-            if (limitNews < 10 && limitNews > 3)
+            if (limitNews < 10 && limitNews >= 3)
                 this.limitNews = limitNews;
-            else
+            else 
+            {
                 Console.WriteLine("So luong ban tin toi da cho 1 kenh la 10 va toi thieu la 3 ");
+                return;
+            } 
 
             chanels.Add(this);
             this.listAnchors = new List<Anchor>();
@@ -38,6 +41,8 @@ namespace BanTin
             return null;
         }
 
+        public int getLimitNews() { return limitNews; }
+        public string getName() { return name; }
 
         public List<Anchor> getListAnchors() {
             return listAnchors;
@@ -45,10 +50,6 @@ namespace BanTin
 
         public void addAnchor(string nameAnchor) {
             foreach(Anchor anchor in listAnchors) { }
-        }
-
-        public string getName() { 
-            return name;
         }
 
         public static List<Channel> getChanels()
@@ -91,7 +92,11 @@ namespace BanTin
             }
 
         }
-
+        public void setTimeAndAddBanTin(BanTin banTin, string period, int inputDay, int inputMonth)
+        {
+            banTin.setTime(period, this.getName(), inputDay, inputMonth);
+            this.channelAddBanTin(banTin.getName(), period);
+        }
         public void printAll()
         {
             Console.WriteLine("Kenh " + name + " gom cac ban tin :");

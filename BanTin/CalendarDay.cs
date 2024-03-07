@@ -12,17 +12,34 @@ namespace BanTin
         public int Day { get; }
         public Calendar Calendar { get; }
         private List<Channel> listChannels;
+        private List<TimeSet> listTimeSets;
         public CalendarDay(int day, Calendar calendar)
         {
             this.Day = day;
             Calendar = calendar;
-            this.listChannels = Channel.getChanels();
+            this.listChannels = Channel.getChanels(); // Tạo một danh sách mới để tránh tham chiếu đến danh sách chung
+            
+            //foreach (Channel originalChannel in Channel.getChanels())
+            //{
+            //    // Tạo một kênh mới và thêm vào danh sách cho CalendarDay
+            //    Channel newChannel = new Channel(originalChannel.getName(), originalChannel.getLimitNews());
+            //    this.listChannels.Add(newChannel);
+            //}
+        }
+   
+
+        public List<Channel> getListChannels()
+        {
+            // Trả về bản sao của danh sách để ngăn chặn sự thay đổi từ bên ngoài
+            return new List<Channel>(listChannels);
         }
 
-        public List<Channel> getListChannels() {
-            return listChannels;
+        // Thêm bản tin vào kênh của CalendarDay
+        public void addBanTinToChannel(BanTin banTin, Channel channel, string period)
+        {
+            channel.channelAddBanTin(banTin.getName(), period);
+            listTimeSets.Add(new TimeSet(banTin.getTime(), period, channel.getName(), banTin.getName()));
         }
-
 
 
         public int getDay() {
