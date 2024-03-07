@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Channels;
 using BanTin;
 using static System.Net.Mime.MediaTypeNames;
@@ -37,6 +38,8 @@ namespace BanTin
             }
         }
 
+
+        // chưa tạo đuợc
         public static void addChannelsToDay()
         {
             foreach (Calendar x in Calendar.getCanlendar2024())
@@ -111,27 +114,16 @@ namespace BanTin
             }
         }
 
-        // Phương thức chức năng
+
+ 
         public static void Test2()
         {
-            // làm sao để tạo kênh vtv1 sao đó tạo bản sao ra cho tất cả các ngày đều có vtv1 nhưng là độc lập 
-            // Phải xét điều kiện trước input(inputnameChannel, inputday, inputmonth)
-            // trùng với Calendar day + month rồi xet inputnameChannel trong CalendarDay listChannels
-            // rồi mới setTimeAndAddBanTin(inputnameChannel, inputday, inputmonth) tránh việc bị trùng dữ liệu
+            // Tao kenh VTV1 o tat ca cac ngay
+            addChannel("VTV1", 5);
+            addChannel("VTV2", 5);
+            addChannel("VTV3", 5);
+            addChannel("VTV4", 5);
 
-            // Tạo các kênh
-            Channel vtv1 = new Channel("VTV1", 5);
-            Channel vtv2 = new Channel("VTV2", 5);
-            addChannelsToDay();
-            // Thêm kênh vào ngày 3/3
-            //addChannelsToDay(3, 3);
-            //addChannelsToDay(4, 3);
-
-
-            //Calendar.getCalendarDay(3, 3).getListChannels().Add(vtv1);
-            //Calendar.getCalendarDay(3, 3).getListChannels().Add(vtv2);
-            //Calendar.getCalendarDay(4, 3).getListChannels().Add(vtv1);
-            //Calendar.getCalendarDay(4, 3).getListChannels().Add(vtv2);
 
             foreach (Channel c in Calendar.getCalendarDay(3, 3).getListChannels()) { 
                 Console.WriteLine(c.getName());
@@ -143,29 +135,24 @@ namespace BanTin
             BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
             BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
             // Thêm bản tin vào kênh và đặt thời gian
-            //vtv1.setTimeAndAddBanTin(banTin1, "sang", 3, 3);
-            //vtv1.setTimeAndAddBanTin(banTin2, "sang", 3, 3);
-            //vtv1.setTimeAndAddBanTin(banTin3, "sang", 3, 3);
-
-            //vtv2.setTimeAndAddBanTin(banTin2, "sang", 3, 3);
-            //vtv2.setTimeAndAddBanTin(banTin3, "sang", 3, 3);
 
             setTimeAndBanTinForChannel("VTV1", "BanTin1", "sang", 3, 3);
-            //setTimeAndBanTinForChannel("VTV1", "BanTin2", "sang", 3, 3);
-            //setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV1", "BanTin2", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
 
-            //setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
-            //setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
 
 
             //In thông tin của CalendarDay
-            foreach (Channel iChannel in Calendar.getCalendarDay(4, 3).getListChannels())
+            Console.WriteLine("Ban tin ngày" + " gồm: ");
+            foreach (Channel iChannel in Calendar.getCalendarDay(3, 3).getListChannels())
             {
                 Console.WriteLine(iChannel.getName() + " gồm: ");
                 Console.WriteLine("Bản tin buổi sáng: ");
                 foreach (New iNew in iChannel.Sang)
                 {
-                    Console.WriteLine(iNew.getName());
+                    iNew.print();
                 }
             }
 
@@ -211,6 +198,76 @@ namespace BanTin
             banTin3.print();
 
         }
+
+
+        public static void nhapDuLieu()
+        {
+            // tạo bản tin thử
+            Category thethao = new Category("thethao");
+            Category giaitri = new Category("giaitri");
+            Category thoisu = new Category("thoisu");
+            Category dubaothoitiet = new Category("dubaothoitiet");
+            Author nguyenA = new Author("nguyenA", "Dai VTV", "nguyenA@gmail.com");
+            Channel MTV = new Channel("MTV", 5);
+            Channel vtv1 = new Channel("vtv1", 5);
+            Channel vtv2 = new Channel("vtv2", 5);
+            Channel vtv3 = new Channel("vtv3", 5);
+
+
+            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1");
+
+            BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1");
+
+            BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1");
+
+            BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1");
+
+            BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1");
+
+
+            Category.printAllCategory();
+            MTV.channelAddBanTin("Bản tin 1", "sang");
+            MTV.channelAddBanTin("Bản tin 2", "sang");
+            MTV.printAll();
+            giaitri.printAllBanTin();
+
+            Console.WriteLine("Nhap thoi diem ma ban muon them ban tin vao :");
+            Console.WriteLine("1.Sang");
+            Console.WriteLine("2.Toi");
+            string inputPeriod = Console.ReadLine();
+
+            Console.WriteLine(banTin1.ToString());
+
+
+
+            //string timeStart = "3:29:59";
+            //DateTime startTime = DateTime.ParseExact(timeStart, "H:mm:ss", null);
+            //DateTime startTime1 = DateTime.ParseExact(timeStart, "H:mm:ss", null);
+
+            //double time = 120; // Giây
+            //TimeSpan duration = TimeSpan.FromSeconds(time);
+
+            //DateTime endTime = startTime.Add(duration);
+
+            //string timeEnd = endTime.ToString("H:mm:ss");
+            //Console.WriteLine("Thời gian kết thúc: " + timeEnd);
+            //Console.WriteLine("Thời gian kết thúc: " + time);
+
+        }
+
+        // Phương thức chức năng
+        // Tạo mới 1 Channel ( đồng thời thêm vào các ngày luôn )
+        public static void addChannel(string nameofChannel, int numberOfNews)
+        {
+            foreach (Calendar iCalendar in Calendar.getCanlendar2024())
+            {
+                foreach (CalendarDay calendarDay in iCalendar.getDays())
+                {
+                    calendarDay.getListChannels().Add(new Channel(nameofChannel, numberOfNews));
+                }
+            }
+        }
+        // Tạo mới 1 BanTin
         public static void QuanLiBanTin()
         {
             while (true)
@@ -219,8 +276,7 @@ namespace BanTin
                 Console.WriteLine("1. Thêm bản tin");
                 Console.WriteLine("2. Đặt thể loại");
                 Console.WriteLine("3. Đặt tác giả");
-                Console.WriteLine("4. Chọn kênh");
-                Console.WriteLine("5. Đặt thời gian chiếu");
+                Console.WriteLine("4. Đặt thời gian chiếu");
                 Console.WriteLine("0. Thoát");
 
                 Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
@@ -244,15 +300,9 @@ namespace BanTin
                         break;
 
                     case "4":
-                        Console.WriteLine("Bạn đã chọn Chọn kênh");
+                        Console.WriteLine("Bạn đã chọn Đặt thời gian chiếu");
                         // Gọi phương thức chọn kênh ở đây
                         break;
-
-                    case "5":
-                        Console.WriteLine("Bạn đã chọn Đặt thời gian chiếu");
-                        // Gọi phương thức đặt thời gian chiếu ở đây
-                        break;
-
                     case "0":
                         Console.WriteLine("Tạm biệt!");
                         Environment.Exit(0);
@@ -374,60 +424,6 @@ namespace BanTin
                 }
 
             }
-        }
-        public static void nhapDuLieu()
-        {
-            // tạo bản tin thử
-            Category thethao = new Category("thethao");
-            Category giaitri = new Category("giaitri");
-            Category thoisu = new Category("thoisu");
-            Category dubaothoitiet = new Category("dubaothoitiet");
-            Author nguyenA = new Author("nguyenA", "Dai VTV", "nguyenA@gmail.com");
-            Channel MTV = new Channel("MTV", 5);
-            Channel vtv1 = new Channel("vtv1", 5);
-            Channel vtv2 = new Channel("vtv2", 5);
-            Channel vtv3 = new Channel("vtv3", 5);
-
-
-            BanTin banTin1 = new BanTin("Bản tin 1", 10.5, "Nội dung bản tin 1");
-
-            BanTin banTin2 = new BanTin("Bản tin 2", 10.5, "Nội dung bản tin 1");
-
-            BanTin banTin3 = new BanTin("Bản tin 3", 10.5, "Nội dung bản tin 1");
-
-            BanTin banTin4 = new BanTin("Bản tin 4", 10.5, "Nội dung bản tin 1");
-
-            BanTin banTin5 = new BanTin("Bản tin 5", 10.5, "Nội dung bản tin 1");
-
-
-            Category.printAllCategory();
-            MTV.channelAddBanTin("Bản tin 1", "sang");
-            MTV.channelAddBanTin("Bản tin 2", "sang");
-            MTV.printAll();
-            giaitri.printAllBanTin();
-
-            Console.WriteLine("Nhap thoi diem ma ban muon them ban tin vao :");
-            Console.WriteLine("1.Sang");
-            Console.WriteLine("2.Toi");
-            string inputPeriod = Console.ReadLine();
-
-            Console.WriteLine(banTin1.ToString());
-
-
-
-            //string timeStart = "3:29:59";
-            //DateTime startTime = DateTime.ParseExact(timeStart, "H:mm:ss", null);
-            //DateTime startTime1 = DateTime.ParseExact(timeStart, "H:mm:ss", null);
-
-            //double time = 120; // Giây
-            //TimeSpan duration = TimeSpan.FromSeconds(time);
-
-            //DateTime endTime = startTime.Add(duration);
-
-            //string timeEnd = endTime.ToString("H:mm:ss");
-            //Console.WriteLine("Thời gian kết thúc: " + timeEnd);
-            //Console.WriteLine("Thời gian kết thúc: " + time);
-
         }
 
 
