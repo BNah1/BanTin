@@ -1,3 +1,5 @@
+Quản lý bản tin truyền hình:
+
 Chức năng:
 1. Quản lý bản tin:
   + Thêm bản tin 
@@ -17,25 +19,25 @@ Chức năng:
   +Chọn ngày
   +Chọn khung thời gian
 
-Các class:
-interface New:
-+BanTin
-+QuangCao
-+LiveStream
-
-interface PeoPle:
-+Anchor
-+Author
-+Reporter
-
-Quản lý thời gian:
-+Calendar
-+CalendarDay
-+SetTime
-
-Quản lý kênh / thể loại:
-+Category
-+Channel
+  Các class:
+  interface New:
+  +BanTin
+  +QuangCao
+  +LiveStream
+  
+  interface PeoPle:
+  +Anchor
+  +Author
+  +Reporter
+  
+  Quản lý thời gian:
+  +Calendar
+  +CalendarDay
+  +SetTime
+  
+  Quản lý kênh / thể loại:
+  +Category
+  +Channel
 
 
 
