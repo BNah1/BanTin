@@ -26,27 +26,9 @@ namespace BanTin
                 this.time = time;
             else
                 Console.WriteLine("thoi luong quang cao khong duoc qua 60s");
-            New.getListNew().Add(this);
             listTime = new List<TimeSet>();
             listChannels = new List<string>();
             listDays = new List<string>();
         }
-        public double getTime() { return time; }
-        public List<string> getListChannels()
-        {
-            return listChannels;
-        }
-
-        public List<string> getListDays()
-        {
-            return listDays;
-        }
-
-        public static List<New> getListNew()
-        {
-            return New.getListNew();
-        }
-
-
     }
 }

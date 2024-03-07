@@ -134,11 +134,22 @@ namespace BanTin
             BanTin banTin2 = new BanTin("BanTin2", 150, "Nội dung bản tin 2");
             BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
             BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
+            QuangCao quangcao2 = new QuangCao("QuangCao1", 30, "bbbb");
+            LiveStream live1 = new LiveStream("Live", 50, "bbbb");
             // Thêm bản tin vào kênh và đặt thời gian
 
+
+            foreach (New inew in New.getListNew()) {
+                    Console.WriteLine(inew.getName());
+
+            }
+            Console.WriteLine("--------------");
             setTimeAndBanTinForChannel("VTV1", "BanTin1", "sang", 3, 3);
             setTimeAndBanTinForChannel("VTV1", "BanTin2", "sang", 3, 3);
             setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV1", "QuangCao1", "sang", 3, 3);
+            setTimeAndBanTinForChannel("VTV1", "Live", "sang", 3, 3);
+
 
             setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
             setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
@@ -152,7 +163,7 @@ namespace BanTin
                 Console.WriteLine("Bản tin buổi sáng: ");
                 foreach (New iNew in iChannel.Sang)
                 {
-                    iNew.print();
+                    Console.WriteLine(iNew.getName());
                 }
             }
 
@@ -161,6 +172,7 @@ namespace BanTin
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("");
+            live1.print();
             //banTin2.print();
             //banTin3.print();
 

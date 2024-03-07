@@ -127,46 +127,7 @@ namespace BanTin
             }
         }
 
-        //public void channelAddBanTin(BanTin banTinDaTao, string period) {
-
-        //    if (period == "sang")
-        //    {
-        //        if (sang == null)
-        //        {
-        //            sang = new List<BanTin>();
-        //            sang.Add(banTinDaTao);
-        //            banTinDaTao.getListChanels().Add(this.name);
-        //        }
-        //        else 
-        //        {
-        //            sang.Add(banTinDaTao);
-        //            banTinDaTao.getListChanels().Add(this.name);
-        //        }
-
-
-        //    }
-        //    else if (period == "toi")
-        //    {
-        //        if (toi == null)
-        //        {
-        //            toi = new List<BanTin>();
-        //            toi.Add(banTinDaTao);
-        //            banTinDaTao.getListChanels().Add(this.name);
-        //        }
-        //        else 
-        //        {
-        //            toi.Add(banTinDaTao);
-        //            banTinDaTao.getListChanels().Add(this.name);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Lam on nhap lai");
-        //        return;
-        //    }
-
-        //}
+      
 
     }
 }

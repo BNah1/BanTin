@@ -111,6 +111,7 @@ namespace BanTin
             {
                 Console.WriteLine(item.ToString());
             }
+            Console.WriteLine("-----");
         }
         public void addBanTinToCalendarDay(CalendarDay calendarDay, Channel channel, string period, int inputDay, int inputMonth)
         {
