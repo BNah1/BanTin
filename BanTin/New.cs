@@ -29,7 +29,7 @@ namespace BanTin
         {
             return null;
         }
-        public List<string> getListTime()
+        public List<TimeSet> getListTime()
         {
             return null;
         }

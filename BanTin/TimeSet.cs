@@ -17,6 +17,11 @@ namespace BanTin
         private string day;
         private DateTime timeStart;
         private DateTime timeEnd { get; set; }
+        public string Period { get => period; set => period = value; }
+        public string NameChannel { get => nameChannel; set => nameChannel = value; }
+        public string NameBanTin { get => nameBanTin; set => nameBanTin = value; }
+        public string Day { get => day; set => day = value; }
+
         public TimeSet(double time, string period, string nameChannel, string nameBanTin)
         {
             this.time = time;

@@ -157,14 +157,19 @@ namespace BanTin
 
 
             //In thông tin của CalendarDay
-            Console.WriteLine("Ban tin ngày" + " gồm: ");
+            Console.WriteLine("Ban tin ngày 3/3 "  + " gồm: ");
             foreach (Channel iChannel in Calendar.getCalendarDay(3, 3).getListChannels())
-            {
-                Console.WriteLine(iChannel.getName() + " gồm: ");
-                Console.WriteLine("Bản tin buổi sáng: ");
+            {      
+                Console.WriteLine("-----");
+                Console.WriteLine(iChannel.getName() + " : ");
                 foreach (New iNew in iChannel.Sang)
                 {
                     Console.WriteLine(iNew.getName());
+                    foreach (TimeSet x in iNew.getListTime())
+                    {
+                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
+                            Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
+                    }
                 }
             }
 
@@ -173,7 +178,7 @@ namespace BanTin
             Console.WriteLine("");
             Console.WriteLine("");
             Console.WriteLine("");
-            live1.print();
+            //live1.print();
             //banTin2.print();
             //banTin3.print();
 
