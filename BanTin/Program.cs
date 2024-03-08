@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Globalization;
@@ -437,8 +438,66 @@ namespace BanTin
 
             }
         }
+        //đổi vị trí 2 bản tin trong 1 kênh
+        public static void SwapBanTin()
+        {
+            Console.WriteLine("Nhập tên bản tin muốn đổi vị trí: ");
+            Console.WriteLine("Bản Tin 1: ");
+            string nameNew1 = Console.ReadLine();
+            Console.WriteLine("Bản Tin 2: ");
+            string nameNew2 = Console.ReadLine();
+            Console.WriteLine("Nhập tên của kênh: ");
+            string nameChannel = Console.ReadLine();
+            Console.WriteLine("Chiếu vào buổi : ");
+            string period = Console.ReadLine();
+            Console.WriteLine("Ngày: ");
+            int day = int.Parse(Console.ReadLine());
+            Console.WriteLine("Tháng: ");
+            int month = int.Parse(Console.ReadLine());
 
+            int index1 = -1;
+            int index2 = -1;
+            foreach (Calendar iCalendar in Calendar.getCanlendar2024())
+            {
+                if (iCalendar.getMonth() == month)
+                {
+                    foreach (CalendarDay iCalendarDay in iCalendar.getDays())
+                    {
+                        if (iCalendarDay.getDay() == day)
+                        {
+                            foreach (Channel iChannel in iCalendarDay.getListChannels())
+                            {
+                                if (iChannel.getName() == nameChannel)
+                                {
+                                    foreach (New inew in iChannel.getListPeriod(period))
+                                    {
+                                        if (inew.getName() == nameNew1)
+                                        {
+                                            index1 = iChannel.getListPeriod(period).IndexOf(inew);
+                                        }
+                                        if (inew.getName() == nameNew2)
+                                        {
+                                            index2 = iChannel.getListPeriod(period).IndexOf(inew);
+                                        }
 
+                                        if (index1 != -1 && index2 != -1)
+                                        {
+                                            New temp = iChannel.getListPeriod(period)[index1];
+                                            iChannel.getListPeriod(period)[index1] = iChannel.getListPeriod(period)[index2];
+                                            iChannel.getListPeriod(period)[index2] = temp;
+                                            Console.WriteLine("Đã đổi vị trí của New1 và New2 trong danh sách.");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+                                    
+           
 
         // Phương thức hỗ trợ
 
