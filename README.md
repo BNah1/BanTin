@@ -2,13 +2,13 @@
 
 ## Các lớp
 
-### Giao diện New
+### interface New
 
 - BanTin
 - QuangCao
 - LiveStream
 
-### Giao diện PeoPle
+### interface PeoPle
 
 - Anchor
 - Author
@@ -30,17 +30,22 @@
 **1. Quản lý bản tin**
    - Thêm bản tin
    - Đặt thể loại / tác giả
+
 **2. Quản lý kênh**
    - Thêm kênh
    - Danh sách kênh
+
 **3. Quản lý thời gian biểu**
    - Đặt thời gian
+
 **4. Quản lý tác giả**
    - Tạo mới
    - Quản lý bản tin của tác giả
+
 **5. Thể loại**
    - Tạo mới
    - Quản lý bản tin của thể loại đó
+
 **6. Xuất kết quả theo thời gian**
    - Chọn ngày
    - Chọn khung thời gian
