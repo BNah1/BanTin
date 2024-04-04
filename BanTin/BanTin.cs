@@ -22,25 +22,34 @@ namespace BanTin
 
         public BanTin(string name, double time, string noiDung)
         {
-            categoryName = " chua co du lieu the loai ";
-            authorName = " chua co du lieu tac gia ";
+            categoryName = " Chưa có dữ liệu thể loại ";
+            authorName = " Chưa có dữ liệu tác giả ";
             this.name = name;
             this.time = time;
             this.noiDung = noiDung;
             listTime = new List<TimeSet>();
             listChannels = new List<string>();
             listDays = new List<string>();
-            New.getListNew().Add(this);
-
+            getListNew().Add(this);
         }
 
+        public void setNoiDung(string input) 
+        {
+            this.noiDung = input;
+        }
+        public string getNoiDung() { return noiDung; }
         public List<TimeSet> getListTime()
         {
             return listTime;
         }
 
-        public double getTime() { return time; }
+        public void setChanelName(string input) 
+        { 
+            listChannels.Add(input);
+        }
 
+        public double getTime() { return time; }
+        public void setTime(double input) { this.time = input; }
         public List<string> getListDays()
         {
             return listDays;
@@ -49,10 +58,9 @@ namespace BanTin
         {
             return listChannels;
         }
-
         public static List<New> getListNew()
         {
-            return New.getListNew();
+            return New.listBanTins;
         }
 
         public void setCategoryName(string input)
@@ -81,7 +89,7 @@ namespace BanTin
         {
             return this.authorName;
         }
-
+        public void setName(string name) { this.name = name; }
         public string getName()
         {
             return name;
@@ -89,16 +97,11 @@ namespace BanTin
 
         public static void printAll()
         {
-            foreach (New item in New.getListNew())
+            foreach (New item in getListNew())
             {
-                if (item is BanTin bantin)
-                {
-                    Console.WriteLine("Tên: " + bantin.name);
-                    Console.WriteLine("Thời gian: " + bantin.time);
-                    Console.WriteLine("Ten tac gia: " + bantin.authorName);
-                    Console.WriteLine("The loai: " + bantin.categoryName);
-                    Console.WriteLine(" Các khoảng thời gian bản tin trình chiếu: ");
-                }
+                    Console.WriteLine("Tên: " + item.getName);
+                    Console.WriteLine("Thời gian: " + item.getTime);
+                    Console.WriteLine("Nội dung: " + item.getNoiDung);              
             }
         }
 
@@ -106,7 +109,7 @@ namespace BanTin
         public void print()
         {
             Console.WriteLine("Tên bản tin: " + name + "\n" +
-                   "Nội dung: " + noiDung);
+                   "Nội dung: " + noiDung + "\n" + "Thời lượng: " + time);
             foreach (TimeSet item in listTime)
             {
                 Console.WriteLine(item.ToString());
@@ -116,7 +119,7 @@ namespace BanTin
         public void addBanTinToCalendarDay(CalendarDay calendarDay, Channel channel, string period, int inputDay, int inputMonth)
         {
             setTime(period, channel.getName(), inputDay, inputMonth);
-            calendarDay.addBanTinToChannel(this, channel, period);
+            calendarDay.addBanTinToChannel(this, channel, period, inputDay, inputMonth);
         }
         public override string ToString()
         {
@@ -170,7 +173,7 @@ namespace BanTin
                                     }
 
                                     // Khởi tạo TimeSet
-                                    TimeSet iTime = new TimeSet(time, period, nameChannel, this.name);
+                                    TimeSet iTime = new TimeSet(time, period,inputDay, inputMonth, nameChannel, this.name);
                                     iTime.setChannelOfTimeSet(nameChannel);
                                     iTime.setBanTinOfTimeSet(this.name);
                                     iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");

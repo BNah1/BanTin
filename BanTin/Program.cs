@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Globalization;
 using System.Linq;
@@ -18,9 +19,9 @@ namespace BanTin
     {
         static void Main(string[] args)
         {
-            createCalendar();         
+            createCalendar();
             Test2();
-
+            SwapBanTin();
         }
 
 
@@ -94,7 +95,7 @@ namespace BanTin
                 {
                     if (channel.getName() == nameofChannel)
                     {
-                        List<New> news = New.getListNew();
+                        List<New> news = New.listBanTins;
                         foreach (New newsItem in news)
                         {
                             if (nameofnew == newsItem.getName())
@@ -140,7 +141,7 @@ namespace BanTin
             // Thêm bản tin vào kênh và đặt thời gian
 
 
-            foreach (New inew in New.getListNew()) {
+            foreach (New inew in New.listBanTins) {
                     Console.WriteLine(inew.getName());
 
             }
@@ -183,12 +184,6 @@ namespace BanTin
             //banTin3.print();
 
         }
-
-
-
-
-
-
 
 
         public static void Test()
@@ -290,13 +285,12 @@ namespace BanTin
         {
             while (true)
             {
-                Console.WriteLine("Menu:");
+                Console.WriteLine("Quản lý bản tin: ");
                 Console.WriteLine("1. Thêm bản tin");
-                Console.WriteLine("2. Đặt thể loại");
-                Console.WriteLine("3. Đặt tác giả");
+                Console.WriteLine("2. Sửa bản tin");
+                Console.WriteLine("3. Xóa bản tin");
                 Console.WriteLine("4. Đặt thời gian chiếu");
                 Console.WriteLine("0. Thoát");
-
                 Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
                 string choice = Console.ReadLine();
 
@@ -308,19 +302,10 @@ namespace BanTin
                         break;
 
                     case "2":
-                        Console.WriteLine("Bạn đã chọn Đặt thể loại");
-                        // Gọi phương thức đặt thể loại ở đây
+                        Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");        
                         break;
-
-                    case "3":
-                        Console.WriteLine("Bạn đã chọn Đặt tác giả");
-                        // Gọi phương thức đặt tác giả ở đây
-                        break;
-
-                    case "4":
-                        Console.WriteLine("Bạn đã chọn Đặt thời gian chiếu");
-                        // Gọi phương thức chọn kênh ở đây
-                        break;
+                 
+                        
                     case "0":
                         Console.WriteLine("Tạm biệt!");
                         Environment.Exit(0);
@@ -443,68 +428,357 @@ namespace BanTin
 
             }
         }
-        //đổi vị trí 2 bản tin trong 1 kênh
-        public static void SwapBanTin()
+        public static void suaBanTin()
         {
+            foreach (New iNew in New.listBanTins)
+            {
+                Console.WriteLine(iNew.getName());
+            }
+            Console.WriteLine("Tên bản tin: ");
+            string thisNew = Console.ReadLine();
+            Console.WriteLine("Chọn thông tin muốn sửa: ");
+            Console.WriteLine("1. Tên ");
+            Console.WriteLine("2. Nội dung ");
+            Console.WriteLine("3. Nhân sự ");
+            Console.WriteLine("0. Thoát ");
+            string choice2 = Console.ReadLine();
+            switch (choice2)
+            {
+                case "1":
+                    Console.WriteLine("Nhập tên mới cho Bản Tin: ");
+                    try
+                    {
+                        string newName = Console.ReadLine();
+                    foreach (New inNew in New.listBanTins)
+                    {
+                        if (inNew.getName() == thisNew)
+                        { 
+                            inNew.setName(newName);
+                            foreach (TimeSet thoigian in TimeSet.listAllTimeSet ) 
+                            {
+                                if(thoigian.NameBanTin == thisNew)
+                                thoigian.setBanTinOfTimeSet(newName);
+                            }
+                        }
+                            inNew.print();
+                    }
+                }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Lỗi: " + ex.Message);
+                    }
+                    break;
+
+
+                case "2":
+                    Console.WriteLine("Nhập nội dung mới cho Bản Tin: ");
+                    try
+                    {
+                        string newContent = Console.ReadLine();
+                    foreach (New inNew in New.listBanTins)
+                    {
+                        if (inNew.getName() == thisNew)
+                        {
+                            inNew.setName(newContent);
+                            inNew.print();
+                            break;
+                        }
+                    }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Lỗi: " + ex.Message);
+                    }
+                    break;
+
+                case "3":
+                    Console.WriteLine("Nhập thời gian chiếu mới: ");
+                    try
+                    {
+                        double newTime = double.Parse(Console.ReadLine());
+                        foreach (New inNew in New.listBanTins)
+                        {
+                            if (inNew.getName() == thisNew)
+                            {
+                                inNew.setTime(newTime);
+                                foreach (TimeSet thoigian in TimeSet.listAllTimeSet)
+                                {
+                                    if (thoigian.NameBanTin == thisNew)
+                                        thoigian.setTime(newTime);
+                                    inNew.print();
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Lỗi: " + ex.Message);
+                    }
+                    break;
+
+                case "0":
+                    Console.WriteLine("Thoát");
+                    break;
+
+                default:
+                    Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
+                    break;
+            }
+            
+        }
+        //đổi vị trí 2 bản tin trong 1 kênh
+        // Phương thức hỗ trợ
+        public static void SwapBanTin1()
+        {
+            Console.WriteLine("Ngày: ");
+            int day = int.Parse(Console.ReadLine());
+            Console.WriteLine("Tháng: ");
+            int month = int.Parse(Console.ReadLine());
+            Console.WriteLine("Nhập tên của kênh: ");
+            string nameChannel = Console.ReadLine();
+            Console.WriteLine("Chiếu vào buổi : ");
+            string period = Console.ReadLine();
+
+            Console.WriteLine("Bản tin ngày " + day + "/" + month + " gồm: ");
+            CalendarDay calendarDay = Calendar.getCalendarDay(day, month);
+            if (calendarDay == null)
+            {
+                Console.WriteLine("Không tìm thấy thông tin cho ngày này.");
+                return;
+            }
+
+            List<Channel> channels = calendarDay.getListChannels();
+            Channel targetChannel = null;
+            foreach (Channel channel in channels)
+            {
+                if (channel.getName() == nameChannel)
+                {
+                    targetChannel = channel;
+                    break;
+                }
+            }
+            if (targetChannel == null)
+            {
+                Console.WriteLine("Không tìm thấy kênh có tên này.");
+                return;
+            }
+
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (var timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+
             Console.WriteLine("Nhập tên bản tin muốn đổi vị trí: ");
             Console.WriteLine("Bản Tin 1: ");
             string nameNew1 = Console.ReadLine();
             Console.WriteLine("Bản Tin 2: ");
             string nameNew2 = Console.ReadLine();
-            Console.WriteLine("Nhập tên của kênh: ");
-            string nameChannel = Console.ReadLine();
-            Console.WriteLine("Chiếu vào buổi : ");
-            string period = Console.ReadLine();
-            Console.WriteLine("Ngày: ");
-            int day = int.Parse(Console.ReadLine());
-            Console.WriteLine("Tháng: ");
-            int month = int.Parse(Console.ReadLine());
 
+            List<New> newsList = targetChannel.getListPeriod(period);
             int index1 = -1;
             int index2 = -1;
-            foreach (Calendar iCalendar in Calendar.getCanlendar2024())
-            {
-                if (iCalendar.getMonth() == month)
-                {
-                    foreach (CalendarDay iCalendarDay in iCalendar.getDays())
-                    {
-                        if (iCalendarDay.getDay() == day)
-                        {
-                            foreach (Channel iChannel in iCalendarDay.getListChannels())
-                            {
-                                if (iChannel.getName() == nameChannel)
-                                {
-                                    foreach (New inew in iChannel.getListPeriod(period))
-                                    {
-                                        if (inew.getName() == nameNew1)
-                                        {
-                                            index1 = iChannel.getListPeriod(period).IndexOf(inew);
-                                        }
-                                        if (inew.getName() == nameNew2)
-                                        {
-                                            index2 = iChannel.getListPeriod(period).IndexOf(inew);
-                                        }
 
-                                        if (index1 != -1 && index2 != -1)
-                                        {
-                                            New temp = iChannel.getListPeriod(period)[index1];
-                                            iChannel.getListPeriod(period)[index1] = iChannel.getListPeriod(period)[index2];
-                                            iChannel.getListPeriod(period)[index2] = temp;
-                                            Console.WriteLine("Đã đổi vị trí của New1 và New2 trong danh sách.");
-                                        }
-                                    }
-                                }
-                            }
-                        }
+            for (int i = 0; i < newsList.Count; i++)
+            {
+                if (newsList[i].getName() == nameNew1)
+                {
+                    index1 = i;
+                }
+                if (newsList[i].getName() == nameNew2)
+                {
+                    index2 = i;
+                }
+            }
+
+            if (index1 != -1 && index2 != -1)
+            {
+                New tempNews = newsList[index1];
+                TimeSet timeSet1 = null;
+                TimeSet timeSet2 = null;
+
+                foreach (TimeSet timeSet in TimeSet.listAllTimeSet)
+                {
+                    if (timeSet.NameBanTin == nameNew1 && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        timeSet1 = timeSet;
+                    }
+                    if (timeSet.NameBanTin == nameNew2 && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        timeSet2 = timeSet;
+                    }
+                }
+
+                if (timeSet1 != null && timeSet2 != null)
+                {
+                    DateTime tempTimeStart = timeSet1.getTimeStart();
+                    timeSet1.setTimeStart(timeSet2.getTimeStart());
+                    timeSet2.setTimeStart(tempTimeStart);
+
+                    New temp = newsList[index1];
+                    newsList[index1] = newsList[index2];
+                    newsList[index2] = temp;
+
+                    Console.WriteLine("Đã đổi vị trí và timeStart của hai bản tin trong danh sách.");
+                }
+                else
+                {
+                    Console.WriteLine("Không tìm thấy TimeSet cần đổi vị trí.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Không tìm thấy bản tin cần đổi vị trí.");
+            }
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (TimeSet timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
                     }
                 }
             }
         }
+        public static void SwapBanTin()
+        {
+            Console.WriteLine("Ngày: ");
+            int day = int.Parse(Console.ReadLine());
+            Console.WriteLine("Tháng: ");
+            int month = int.Parse(Console.ReadLine());
+            Console.WriteLine("Nhập tên của kênh: ");
+            string nameChannel = Console.ReadLine();
+            Console.WriteLine("Chiếu vào buổi : ");
+            string period = Console.ReadLine();
 
-                                    
-           
+            Console.WriteLine("Bản tin ngày " + day + "/" + month + " gồm: ");
+            CalendarDay calendarDay = Calendar.getCalendarDay(day, month);
+            if (calendarDay == null)
+            {
+                Console.WriteLine("Không tìm thấy thông tin cho ngày này.");
+                return;
+            }
 
-        // Phương thức hỗ trợ
+            List<Channel> channels = calendarDay.getListChannels();
+            Channel targetChannel = null;
+            foreach (Channel channel in channels)
+            {
+                if (channel.getName() == nameChannel)
+                {
+                    targetChannel = channel;
+                    break;
+                }
+            }
+            if (targetChannel == null)
+            {
+                Console.WriteLine("Không tìm thấy kênh có tên này.");
+                return;
+            }
+
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (var timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+
+            Console.WriteLine("Nhập tên bản tin muốn đổi vị trí: ");
+            Console.WriteLine("Bản Tin 1: ");
+            string nameNew1 = Console.ReadLine();
+            Console.WriteLine("Bản Tin 2: ");
+            string nameNew2 = Console.ReadLine();
+
+            List<New> newsList = targetChannel.getListPeriod(period);
+            int index1 = -1;
+            int index2 = -1;
+
+            for (int i = 0; i < newsList.Count; i++)
+            {
+                if (newsList[i].getName() == nameNew1)
+                {
+                    index1 = i;
+                }
+                if (newsList[i].getName() == nameNew2)
+                {
+                    index2 = i;
+                }
+            }
+
+            if (index1 != -1 && index2 != -1)
+            {
+                New tempNews = newsList[index1];
+                    New temp = newsList[index1];
+                    newsList[index1] = newsList[index2];
+                    newsList[index2] = temp;
+
+                DateTime iTimeStart;
+
+                for (int currentIndex = 0; currentIndex < targetChannel.getListPeriod(period).Count; currentIndex++)
+                {
+                    New newsItem = targetChannel.getListPeriod(period)[currentIndex];
+                    New previousNewsItem = currentIndex > 0 ? targetChannel.getListPeriod(period)[currentIndex - 1] : null;
+                    string newsItemName = newsItem.getName();
+                    string previousNewsItemName = previousNewsItem != null ? previousNewsItem.getName() : null;
+
+                    if (period == "sang")
+                    {
+                        iTimeStart = new DateTime(2024, month, day, 8, 00, 00);
+                    }
+                    else
+                    {
+                        iTimeStart = new DateTime(2024, month, day, 16, 00, 00);
+                    }
+
+                    double jtime = 0;
+
+                    foreach (TimeSet sTime in TimeSet.listAllTimeSet)
+                    {
+                        if (previousNewsItemName == sTime.NameBanTin && nameChannel == sTime.NameChannel && day == sTime.getDay() && month == sTime.getMonth())
+                        {
+                            iTimeStart = sTime.getTimeStart();
+                            jtime = sTime.getTime();
+                        }
+                    }
+
+                    foreach (TimeSet sTime in TimeSet.listAllTimeSet)
+                    {
+                        if (newsItemName == sTime.NameBanTin && nameChannel == sTime.NameChannel && day == sTime.getDay() && month == sTime.getMonth())
+                            sTime.setTimeStart(iTimeStart.AddSeconds(jtime));
+                    }
+                }
+                Console.WriteLine("Đã đổi vị trí và timeStart của hai bản tin trong danh sách.");
+            }
+            
+            else
+            {
+                Console.WriteLine("Không tìm thấy bản tin cần đổi vị trí.");
+            }
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (TimeSet timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+        }
 
         public static Author getAuthorByName(string authorName)
         {
@@ -531,105 +805,57 @@ namespace BanTin
             return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
         }
 
-        public void Nhap()
+        public void Menu()
         {
-            //    bool exit = false;
-            //    while (!exit)
-            //    {
-            //        Console.WriteLine("---- Quan ly ban tin truyen hinh ----");
-            //        Console.WriteLine("---- 1. Quản lý bản tin ");
-            //        Console.WriteLine("---- 2. Quản lý tác giả ");
-            //        Console.WriteLine("---- 3. Quản lý kênh ");
-            //        Console.WriteLine("---- 4. Quản lý quảng cáo ");
-            //        Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
-            //        Console.WriteLine("---- 6. Quản lý thể loại ");
-            //        Console.WriteLine("---- 7. Thoat ");
-            //        Console.WriteLine("--------------------------------------");
+            bool exit = false;
+            while (!exit)
+            {
+                Console.WriteLine("---- Quan ly ban tin truyen hinh ----");
+                Console.WriteLine("---- 1. Quản lý bản tin ");
+                Console.WriteLine("---- 2. Quản lý tác giả ");
+                Console.WriteLine("---- 3. Quản lý kênh ");
+                Console.WriteLine("---- 4. Quản lý quảng cáo ");
+                Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
+                Console.WriteLine("---- 6. Quản lý thể loại ");
+                Console.WriteLine("---- 7. Thoát ");
+                Console.WriteLine("--------------------------------------");
 
 
-            //        Console.WriteLine("Nhập lựa chọn của bạn:");
-            //        string choice = Console.ReadLine();
-            //        switch (choice)
-            //        {
-            //            case "1":
-            //                Console.WriteLine("--- Quản lý bản tin --- ");
-            //                Console.WriteLine("---- 1. Tạo bản tin mới ");
-            //                Console.WriteLine("---- 2. Chỉnh sửa bản tin ");
-            //                Console.WriteLine("---- 3. Đổi thể loại ");
-            //                Console.WriteLine("---- 4. Đổi kênh ");
-            //                Console.WriteLine("---- 5. Quay lại ");
+                Console.WriteLine("Nhập lựa chọn của bạn:");
+                string choice = Console.ReadLine();
+                switch (choice)
+                {
+                    case "1":
+                        QuanLiBanTin();
+                        break;
+                    case "2":
+                        // Xử lý lựa chọn 2
+                        break;
+                    case "3":
+                        // Xử lý lựa chọn 3
+                        break;
+                    case "4":
+                        // Xử lý lựa chọn 4
+                        break;
+                    case "5":
+                        // Xử lý lựa chọn 5
+                        break;
+                    case "6":
+                        // Xử lý lựa chọn 6
+                        break;
+                    case "7":
+                        exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp
+                        Console.WriteLine("Thoát chương trình");
+                        break;
+                    default:
+                        Console.WriteLine("Lựa chọn không hợp lệ");
+                        break;
+                }
 
-
-            //                string subChoice1 = Console.ReadLine();
-            //                switch (subChoice1)
-            //                {
-            //                    case "1":
-            //                        Console.WriteLine("Tạo bản tin mới");
-            //                        // Thực hiện hành động tạo bản tin mới
-            //                        break;
-            //                    case "2":
-            //                        Console.WriteLine("Chỉnh sửa bản tin");
-            //                        // Thực hiện hành động chỉnh sửa bản tin
-            //                        break;
-            //                    case "3":
-            //                        Console.WriteLine("Đổi thể loại");
-            //                        // Thực hiện hành động đổi thể loại
-            //                        break;
-            //                    case "4":
-            //                        Console.WriteLine("Đổi kênh");
-            //                        // Thực hiện hành động đổi kênh
-            //                        break;
-            //                    case "5":
-            //                        Console.WriteLine("Quay lại menu chính");
-            //                        // Thoát khỏi switch và quay lại menu chính
-            //                        break;
-            //                    default:
-            //                        Console.WriteLine("Lựa chọn không hợp lệ");
-            //                        break;
-            //                }
-            //                break;
-            //            case "2":
-            //                // Xử lý lựa chọn 2
-            //                break;
-            //            case "3":
-            //                // Xử lý lựa chọn 3
-            //                break;
-            //            case "4":
-            //                // Xử lý lựa chọn 4
-            //                break;
-            //            case "5":
-            //                // Xử lý lựa chọn 5
-            //                break;
-            //            case "6":
-            //                // Xử lý lựa chọn 6
-            //                break;
-            //            case "7":
-            //                exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp
-            //                Console.WriteLine("Thoát chương trình");
-            //                break;
-            //            default:
-            //                Console.WriteLine("Lựa chọn không hợp lệ");
-            //                break;
-            //        }
-
-            //        Console.WriteLine();
-            //    }
-            //            case "2":
-            //        Console.WriteLine("Bạn đã chọn lựa chọn 2");
-            //        // Thực hiện hành động tương ứng với lựa chọn 2
-            //        break;
-            //    case "3":
-            //        Console.WriteLine("Thoát chương trình");
-            //        exit = true;
-            //        break;
-            //    default:
-            //        Console.WriteLine("Lựa chọn không hợp lệ");
-            //        break;
-            //    }
-
-            //    Console.WriteLine();
-            //}
+            
+            Console.WriteLine();
         }
+    }
 
     }
 

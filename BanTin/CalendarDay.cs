@@ -33,10 +33,10 @@ namespace BanTin
 
         // Thêm bản tin vào kênh của CalendarDay
 
-        public void addBanTinToChannel(BanTin banTin, Channel channel, string period)
+        public void addBanTinToChannel(BanTin banTin, Channel channel, string period, int day , int month)
         {
             channel.channelAddBanTin(banTin.getName(), period);
-            listTimeSets.Add(new TimeSet(banTin.getTime(), period, channel.getName(), banTin.getName()));
+            listTimeSets.Add(new TimeSet(banTin.getTime(), period, day ,month, channel.getName(), banTin.getName()));
         }
 
 

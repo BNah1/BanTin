@@ -66,7 +66,7 @@ namespace BanTin
         {
             bool check = false;
             BanTin foundBanTin = null;
-            foreach (New banTin in New.getListNew())
+            foreach (New banTin in New.listBanTins)
             {
                 if (banTin.getName() == banTinName)
                 {
@@ -86,7 +86,7 @@ namespace BanTin
 
         public void removeCategory(string banTinName)
         {
-            foreach (New banTin in New.getListNew())
+            foreach (New banTin in New.listBanTins)
             {
                 if (banTin.getName() == banTinName)
                 {

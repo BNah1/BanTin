@@ -14,7 +14,6 @@ namespace BanTin
         private int numOfNews;
         private List<BanTin> news { get; set; }
         private static List<Author> authors { get; set; }
-
         public Author(string name, string company, string mail)
         {
             this.name = name;

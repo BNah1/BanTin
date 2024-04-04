@@ -65,7 +65,7 @@ namespace BanTin
         public void channelAddBanTin(string banTinName, string period)
         {
             New foundBanTin = null;
-            foreach (New banTin in New.getListNew())
+            foreach (New banTin in New.listBanTins)
             {
                 if (banTin.getName() == banTinName)
                 {
