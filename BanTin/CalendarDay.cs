@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class CalendarDay
-    {   
+    public class CalendarDay
+    {
         public int Day { get; }
-        public Calendar Calendar { get; }
+        public Calendar Calendar { get; set; }
         private List<Channel> listChannels;
         private List<TimeSet> listTimeSets;
         public CalendarDay(int day, Calendar calendar)
@@ -21,7 +21,7 @@ namespace BanTin
             this.listTimeSets = new List<TimeSet>();
         }
 
-        public void setListChannels(List<Channel> input) 
+        public void setListChannels(List<Channel> input)
         {
             listChannels = input;
         }
@@ -33,23 +33,26 @@ namespace BanTin
 
         // Thêm bản tin vào kênh của CalendarDay
 
-        public void addBanTinToChannel(BanTin banTin, Channel channel, string period, int day , int month)
+        public void addBanTinToChannel(BanTin banTin, Channel channel, string period, int day, int month)
         {
             channel.channelAddBanTin(banTin.getName(), period);
-            listTimeSets.Add(new TimeSet(banTin.getTime(), period, day ,month, channel.getName(), banTin.getName()));
+            listTimeSets.Add(new TimeSet(banTin.getTime(), period, day, month, channel.getName(), banTin.getName()));
         }
 
 
-        public int getDay() {
+        public int getDay()
+        {
             return Day;
-        }    
-        public void printAll() {
-            foreach (Channel channel in listChannels) {
+        }
+        public void printAll()
+        {
+            foreach (Channel channel in listChannels)
+            {
                 Console.WriteLine(channel.getName + " :");
                 channel.printAll();
                 Console.WriteLine(listChannels);
             }
-            
+
         }
 
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Channel 
+    public class Channel
     {
         private string name;
         private int limitNews;
@@ -24,11 +24,11 @@ namespace BanTin
             this.name = name;
             if (limitNews < 10 && limitNews >= 3)
                 this.limitNews = limitNews;
-            else 
+            else
             {
                 Console.WriteLine("So luong ban tin toi da cho 1 kenh la 10 va toi thieu la 3 ");
                 return;
-            } 
+            }
 
             channels.Add(this);
             this.listAnchors = new List<Anchor>();
@@ -40,7 +40,7 @@ namespace BanTin
         {
             if (iPeriod == "sang")
                 return this.sang;
-            else if(iPeriod == "toi")
+            else if (iPeriod == "toi")
                 return this.toi;
             return null;
         }
@@ -48,12 +48,14 @@ namespace BanTin
         public int getLimitNews() { return limitNews; }
         public string getName() { return name; }
 
-        public List<Anchor> getListAnchors() {
+        public List<Anchor> getListAnchors()
+        {
             return listAnchors;
         }
 
-        public void addAnchor(string nameAnchor) {
-            foreach(Anchor anchor in listAnchors) { }
+        public void addAnchor(string nameAnchor)
+        {
+            foreach (Anchor anchor in listAnchors) { }
         }
 
         public static List<Channel> getChanels()
@@ -61,7 +63,7 @@ namespace BanTin
             return channels;
         }
 
-       // thêm bản tin vào channel
+        // thêm bản tin vào channel
         public void channelAddBanTin(string banTinName, string period)
         {
             New foundBanTin = null;
@@ -71,7 +73,7 @@ namespace BanTin
                 {
                     foundBanTin = banTin;
                     break;
-                }                    
+                }
             }
             if (foundBanTin != null)
             {
@@ -84,9 +86,9 @@ namespace BanTin
 
                 else if (period == "toi")
                 {
-                        toi.Add(foundBanTin);
-                        foundBanTin.getListChannels().Add(this.name);
-                        foundBanTin.setChanelName(this.name);
+                    toi.Add(foundBanTin);
+                    foundBanTin.getListChannels().Add(this.name);
+                    foundBanTin.setChanelName(this.name);
                 }
                 else
                 {
@@ -127,7 +129,7 @@ namespace BanTin
             }
         }
 
-      
+
 
     }
 }

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    public interface New
+    internal interface INew
     {
-        public static List<New> listBanTins = new List<New>();
+        public static List<INew> listBanTins = new List<INew>();
         double getTime();
         void setTime(string period, string nameChannel, int inputDay, int inputMonth);
         void print();

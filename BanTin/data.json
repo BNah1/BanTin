@@ -1,0 +1,39 @@
+﻿{
+  "Bantins": [
+    {
+      "Name": "BanTin1",
+      "NoiDung": "Nội dung bản tin 1",
+      "Time": 180,
+      "CategoryName": " Chưa có dữ liệu thể loại ",
+      "AuthorName": " Chưa có dữ liệu tác giả "
+    },
+    {
+      "Name": "BanTin2",
+      "NoiDung": "Nội dung bản tin 2",
+      "Time": 150,
+      "CategoryName": " Chưa có dữ liệu thể loại ",
+      "AuthorName": " Chưa có dữ liệu tác giả "
+    },
+    {
+      "Name": "BanTin3",
+      "NoiDung": "Nội dung bản tin 3",
+      "Time": 120,
+      "CategoryName": " Chưa có dữ liệu thể loại ",
+      "AuthorName": " Chưa có dữ liệu tác giả "
+    },
+    {
+      "Name": "BanTin4",
+      "NoiDung": "Nội dung bản tin 4",
+      "Time": 90,
+      "CategoryName": " Chưa có dữ liệu thể loại ",
+      "AuthorName": " Chưa có dữ liệu tác giả "
+    },
+    {
+      "Name": "BanTin5",
+      "NoiDung": "Nội dung bản tin 4",
+      "Time": 90,
+      "CategoryName": " Chưa có dữ liệu thể loại ",
+      "AuthorName": " Chưa có dữ liệu tác giả "
+    }
+  ]
+}

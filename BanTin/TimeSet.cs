@@ -8,7 +8,7 @@ using System.Xml.Linq;
 
 namespace BanTin
 {
-    internal class TimeSet
+    public class TimeSet
     {
 
         private double time;
@@ -19,14 +19,14 @@ namespace BanTin
         private int month;
         private DateTime timeStart;
         private string calendarShow;
-        public static List<TimeSet> listAllTimeSet = new List<TimeSet>();  
+        public static List<TimeSet> listAllTimeSet = new List<TimeSet>();
         private TimeSpan timeEnd { get; set; }
         public string Period { get => period; set => period = value; }
         public string NameChannel { get => nameChannel; set => nameChannel = value; }
         public string NameBanTin { get => nameBanTin; set => nameBanTin = value; }
         public int Day { get => day; set => day = value; }
 
-        public TimeSet(double time, string period,int day ,int month , string nameChannel, string nameBanTin)
+        public TimeSet(double time, string period, int day, int month, string nameChannel, string nameBanTin)
         {
             this.day = day;
             this.month = month;
@@ -38,12 +38,12 @@ namespace BanTin
             calendarShow = day + "/" + month;
         }
         public void setTime(double input) { this.time = input; }
-        public double getTime() { return time; }    
-        public void setTimeStart(DateTime input) 
+        public double getTime() { return time; }
+        public void setTimeStart(DateTime input)
         {
-        timeStart = input;
+            timeStart = input;
         }
-        public int getDay() { return day; } 
+        public int getDay() { return day; }
         public int getMonth() { return month; }
         public void setChannelOfTimeSet(string input)
         {

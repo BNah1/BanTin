@@ -4,52 +4,79 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace BanTin
 {
-    internal class BanTin : New
+    [Serializable]
+    public class BanTin : New
     {
         private string name;
-        private string noiDung { get; set; }
-        private double time { get; set; }
-        string categoryName { get; set; }
-        private string authorName { get; set; }
+        private string noiDung;
+        private double time;
+        private string categoryName;
+        private string authorName;
+        public string Name { get => name; set => name = value; }
+        public string NoiDung { get => noiDung; set => noiDung = value; }
+        public double Time { get => time; set => time = value; }
+        public string CategoryName { get => categoryName; set => categoryName = value; }
+        public string AuthorName { get => authorName; set => authorName = value; }
 
         private List<string> listChannels;
         private List<string> listDays;
         private List<TimeSet> listTime;
 
-
+        [JsonConstructor]
         public BanTin(string name, double time, string noiDung)
         {
-            categoryName = " Chưa có dữ liệu thể loại ";
-            authorName = " Chưa có dữ liệu tác giả ";
-            this.name = name;
-            this.time = time;
-            this.noiDung = noiDung;
+            CategoryName = " Chưa có dữ liệu thể loại ";
+            AuthorName = " Chưa có dữ liệu tác giả ";
+            this.Name = name;
+            this.Time = time;
+            this.NoiDung = noiDung;
             listTime = new List<TimeSet>();
             listChannels = new List<string>();
             listDays = new List<string>();
             getListNew().Add(this);
         }
 
-        public void setNoiDung(string input) 
+        public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            this.noiDung = input;
+            info.AddValue("name", Name);
+            info.AddValue("noiDung", NoiDung);
+            // info.AddValue("time", time);
+            info.AddValue("categoryName", CategoryName);
+            info.AddValue("authorName", AuthorName);
         }
-        public string getNoiDung() { return noiDung; }
+
+        public BanTin(SerializationInfo info, StreamingContext context)
+        {
+            Name = info.GetString("name");
+            NoiDung = info.GetString("noiDung");
+            Time = info.GetDouble("time");
+            CategoryName = info.GetString("categoryName");
+            AuthorName = info.GetString("authorName");
+        }
+
+        public void setNoiDung(string input)
+        {
+            this.NoiDung = input;
+        }
+        public string getNoiDung() { return NoiDung; }
         public List<TimeSet> getListTime()
         {
             return listTime;
         }
 
-        public void setChanelName(string input) 
-        { 
+        public void setChanelName(string input)
+        {
             listChannels.Add(input);
         }
 
-        public double getTime() { return time; }
-        public void setTime(double input) { this.time = input; }
+        public double getTime() { return Time; }
+        public void setTime(double input) { this.Time = input; }
         public List<string> getListDays()
         {
             return listDays;
@@ -65,51 +92,51 @@ namespace BanTin
 
         public void setCategoryName(string input)
         {
-            categoryName = input;
+            CategoryName = input;
         }
 
         public string getCategoryName()
         {
             foreach (Category iCategory in Category.getCategories())
             {
-                if (iCategory.name == this.name)
+                if (iCategory.name == this.Name)
                 {
-                    categoryName = iCategory.name;
+                    CategoryName = iCategory.name;
                 }
             }
-            return categoryName;
+            return CategoryName;
         }
 
         public void setAuthorName(string input)
         {
-            this.authorName = input;
+            this.AuthorName = input;
         }
 
         public string getAuthorName()
         {
-            return this.authorName;
+            return this.AuthorName;
         }
-        public void setName(string name) { this.name = name; }
+        public void setName(string name) { this.Name = name; }
         public string getName()
         {
-            return name;
+            return Name;
         }
 
         public static void printAll()
         {
             foreach (New item in getListNew())
             {
-                    Console.WriteLine("Tên: " + item.getName);
-                    Console.WriteLine("Thời gian: " + item.getTime);
-                    Console.WriteLine("Nội dung: " + item.getNoiDung);              
+                Console.WriteLine("Tên: " + item.getName);
+                Console.WriteLine("Thời gian: " + item.getTime);
+                Console.WriteLine("Nội dung: " + item.getNoiDung);
             }
         }
 
 
         public void print()
         {
-            Console.WriteLine("Tên bản tin: " + name + "\n" +
-                   "Nội dung: " + noiDung + "\n" + "Thời lượng: " + time);
+            Console.WriteLine("Tên bản tin: " + Name + "\n" +
+                   "Nội dung: " + NoiDung + "\n" + "Thời lượng: " + Time);
             foreach (TimeSet item in listTime)
             {
                 Console.WriteLine(item.ToString());
@@ -123,9 +150,9 @@ namespace BanTin
         }
         public override string ToString()
         {
-            return "Tên bản tin: " + name + "\n" +
-                   "Nội dung: " + noiDung + "\n" +
-                   "Thời lượng: " + time + "\n";
+            return "Tên bản tin: " + Name + "\n" +
+                   "Nội dung: " + NoiDung + "\n" +
+                   "Thời lượng: " + Time + "\n";
         }
         public void setTime(string period, string nameChannel, int inputDay, int inputMonth)
         {
@@ -173,9 +200,9 @@ namespace BanTin
                                     }
 
                                     // Khởi tạo TimeSet
-                                    TimeSet iTime = new TimeSet(time, period,inputDay, inputMonth, nameChannel, this.name);
+                                    TimeSet iTime = new TimeSet(Time, period, inputDay, inputMonth, nameChannel, this.Name);
                                     iTime.setChannelOfTimeSet(nameChannel);
-                                    iTime.setBanTinOfTimeSet(this.name);
+                                    iTime.setBanTinOfTimeSet(this.Name);
                                     iTime.setDayOfTimeSet(inputDay + "/" + inputMonth + "/" + "2024");
 
                                     // Điều chỉnh currentTime dựa trên xTime đã tích lũy

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class Calendar
+    public class Calendar
     {
         private int year;
         private int month;
@@ -19,9 +19,10 @@ namespace BanTin
             this.year = year;
             this.month = month;
             this.days = GenerateCalendarDays(year, month);
-            if (canlendar2024 == null) {
+            if (canlendar2024 == null)
+            {
                 canlendar2024 = new List<Calendar> { };
-                canlendar2024.Add(this);   
+                canlendar2024.Add(this);
             }
             canlendar2024.Add(this);
         }
@@ -61,7 +62,8 @@ namespace BanTin
             return null;
         }
 
-        public int getYear() { 
+        public int getYear()
+        {
             return year;
         }
         public int getMonth()

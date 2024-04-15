@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BanTin
 {
-    internal class LiveStream : BanTin, New
+    public class LiveStream : BanTin, New
     {
 
         private string name { get; set; }
