@@ -92,10 +92,21 @@ namespace BanTin
                         break;
 
                     case "2":
-                        Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                        Console.WriteLine("Bạn đã chọn sửa bản tin");
+                        suaBanTin();
                         break;
 
+                    case "3":
+                        Console.WriteLine("Bạn đã chọn sửa bản tin");
+                        suaBanTin();
+                        break;
 
+                    case "4":
+                        Console.WriteLine("Nhập tên bản tin cần xoá");
+                        string iName = Console.ReadLine();
+                        foreach (New News in New.listBanTins)
+                            New.listBanTins.Remove(News);
+                        break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");
                         Environment.Exit(0);
@@ -357,6 +368,7 @@ namespace BanTin
             }
 
         }
+
         //đổi vị trí 2 bản tin trong 1 kênh
         // Phương thức hỗ trợ
         public static void SwapBanTin()
@@ -488,6 +500,59 @@ namespace BanTin
                     }
                 }
             }
+        }
+        public static void SerializeObjectToJsonFile<T>(T obj, string filePath)
+        {
+            // Serialize đối tượng thành chuỗi JSON
+            string json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+            });
+
+            try
+            {
+                // Ghi chuỗi JSON vào tệp văn bản
+                File.WriteAllText(filePath, json, System.Text.Encoding.UTF8);
+                Console.WriteLine($"Dữ liệu JSON đã được ghi vào file {filePath}");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("Lỗi ghi: " + ex.Message);
+            }
+        }
+
+        public static T DeserializeJsonToObject<T>(string filePath)
+        {
+            try
+            {
+                // Đọc dữ liệu từ tệp JSON
+                string jsonData = File.ReadAllText(filePath);
+
+                // Deserialize dữ liệu từ tệp thành đối tượng có kiểu dữ liệu T
+                T deserializedObject = JsonSerializer.Deserialize<T>(jsonData);
+
+                if (deserializedObject != null)
+                {
+                    // Hiển thị thông tin của đối tượng sau khi deserialize
+                    Console.WriteLine($"Đối tượng đã được deserialize từ tệp {filePath}:");
+                    Console.WriteLine(deserializedObject);
+
+                    // Trả về đối tượng đã deserialize
+                    return deserializedObject;
+                }
+                else
+                {
+                    Console.WriteLine("Dữ liệu deserialized là null.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi đọc dữ liệu từ tệp {filePath}: {ex.Message}");
+            }
+
+            // Trả về một giá trị mặc định nếu có lỗi xảy ra hoặc không deserialize được
+            return default(T);
         }
 
         public static Author getAuthorByName(string authorName)

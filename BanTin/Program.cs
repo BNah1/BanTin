@@ -23,7 +23,6 @@ namespace BanTin
         private static readonly string filePath = "C:\\Users\\PC\\source\\repos\\BanTin\\BanTin\\data.json";
         static void Main(string[] args)
         {
-            
             PhuongThuc.createCalendar();
             Test2();
             foreach (Category iTheLoai in Category.getCategories())
@@ -146,9 +145,9 @@ namespace BanTin
                 Console.WriteLine("---- 1. Quản lý bản tin ");
                 Console.WriteLine("---- 2. Quản lý tác giả ");
                 Console.WriteLine("---- 3. Quản lý kênh ");
-                Console.WriteLine("---- 4. Quản lý quảng cáo ");
+                Console.WriteLine("---- 4. Quản lý ------ ");
                 Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
-                Console.WriteLine("---- 6. Quản lý thể loại ");
+                Console.WriteLine("---- 6. Lưu file vào Json và đọc file ");
                 Console.WriteLine("---- 7. Thoát ");
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("--------------------------------------");
@@ -172,8 +171,31 @@ namespace BanTin
                     case "5":
                         // Xử lý lựa chọn 5
                         break;
-                    case "6":
-                        // Xử lý lựa chọn 6
+                    case "6":         
+                        PhuongThuc.SerializeObjectToJsonFile(banTinList1, filePath);
+
+                        // Deserialize
+                        PhuongThuc.DeserializeJsonToObject<BanTinList>(filePath);
+
+                        // Deserialized
+                        try
+                        {
+                            string newDataFromFile = File.ReadAllText(filePath);
+                            // Deserialize dữ liệu từ file mới thành một danh sách sinh viên mới
+                            BanTinList banTinList2 = JsonSerializer.Deserialize<BanTinList>(newDataFromFile);
+                            Console.Write(banTinList2);
+
+                            // Hiển thị danh sách sinh viên mới
+                            Console.WriteLine("\nDanh sách ban tin sau khi được deserialized:");
+                            foreach (BanTin _bantin in banTinList2.Bantins)
+                            {
+                                Console.WriteLine(_bantin);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine("Lỗi đọc: " + ex.Message);
+                        }
                         break;
                     case "7":
                         exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp
