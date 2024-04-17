@@ -10,12 +10,10 @@ namespace BanTin
     {
         private string name;
         private string mail;
-        private List<LiveStream> listNews;
         private string company;
         private int numOfDays;
-        private List<string> listChannels;
-        private List<string> listDays;
-        private static List<Anchor> listAnchorsOfChannel;
+        private List<string> listChannels = new List<string>();
+        private static List<Anchor> anchors;
 
         public Anchor(string name, string company, string mail) : base(name, company, mail)
         {
@@ -23,18 +21,49 @@ namespace BanTin
             this.mail = mail;
             this.company = company;
             this.numOfDays = 0;
-            this.listDays = new List<string>();
-            this.listChannels = new List<string>();
+            if (anchors == null)
+                anchors = new List<Anchor>();
 
-            if (listAnchorsOfChannel == null)
-                listAnchorsOfChannel = new List<Anchor>();
+            anchors.Add(this);
+            People.listPeople.Add(this);
+        }
 
-            listAnchorsOfChannel.Add(this);
+        public override void removeP()
+        {
+            anchors.Remove(this);
+        }
+
+        static public void printAllPeople()
+        {
+            foreach (Anchor author in anchors)
+            {
+                Console.WriteLine(author.getName());
+            }
+        }
+
+        public void addChannelforAnchor(string input) 
+        {
+            anchors.Add(this);
+        }
+
+        public override void printAll()
+        {
+            Console.WriteLine("Tên tác giả: " + name);
+            Console.WriteLine("Thuộc : " + company);
+            Console.WriteLine("Email : " + mail);
+            Console.WriteLine("Các kênh " + name + "chịu trách nhiệm :");
+            if (listChannels == null || listChannels.Count == 0)
+                Console.WriteLine("khong co du lieu");
+            else
+                foreach (string ichannel in listChannels)
+                {
+                    Console.WriteLine(ichannel);
+                }
         }
 
         public List<Anchor> getListAnchors()
         {
-            return listAnchorsOfChannel;
+            return anchors;
         }
         public List<string> getListChannels()
         {

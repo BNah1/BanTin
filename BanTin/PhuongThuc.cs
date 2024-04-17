@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Linq;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace BanTin
 {
@@ -109,7 +111,7 @@ namespace BanTin
                         break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");
-                        Environment.Exit(0);
+                        Program.Menu();
                         break;
 
                     default:
@@ -120,7 +122,419 @@ namespace BanTin
                 Console.WriteLine(); // In một dòng trắng để tạo định dạng
             }
         }
-        public static void setTimeforNew()
+
+        public static void QuanLiPeople()
+        {
+            while (true)
+            {
+                Console.WriteLine("Quản lý nhân sự: ");
+                Console.WriteLine("1. Thêm nhân sự");
+                Console.WriteLine("2. Sửa nhân sự");
+                Console.WriteLine("3. Xóa nhân sự");
+                Console.WriteLine("4. Hiển thị phạm vi bản tin của nhân sự");
+                Console.WriteLine("0. Thoát");
+                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Bạn đã chọn Thêm nhân sự");
+                        themNhanSu();
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Bạn đã chọn sửa bản tin");
+                        suaNhanSu();
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Bạn đã chọn xoá nhân sự");
+                        bool found = false;
+                        foreach (People check in People.listPeople)
+                        {
+                            Console.WriteLine(check.getName());
+                        }
+                        while (!found)
+                        {
+                            Console.WriteLine("Nhập tên nhân sự muốn xoá ");
+                            string iname = Console.ReadLine();
+
+                            foreach (People check in People.listPeople)
+                            {
+                                if (check.getName() == iname)
+                                {
+                                    People.listPeople.Remove(check);
+                                    check.removeP();
+                                    Console.WriteLine("Xoá thành công " + iname);
+                                    found = true;
+                                    break;
+                                }
+                            }
+
+                            if (!found)
+                            {
+                                Console.WriteLine("Không tìm thấy nhân sự có tên " + iname);
+                                Console.WriteLine("Bạn có muốn tiếp tục xoá nhân sự không? (Y/N)");
+                                string input = Console.ReadLine();
+
+                                if (input.ToUpper() == "N")
+                                {
+                                    Console.WriteLine("Quay lại menu");
+                                    found = true; // Đánh dấu tìm thấy để thoát khỏi vòng lặp
+                                }
+                            }
+                        }
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Bạn đã chọn Hiển thị phạm vi bản tin của nhân sự");
+                        foreach (People check in People.listPeople)
+                        {
+                            Console.WriteLine(check.getName());
+                        }
+                        bool found1 = false;
+                        while (!found1)
+                        {
+                            Console.WriteLine("Nhập tên nhân sự muốn hiển thị bản tin ");
+                            string iname = Console.ReadLine();
+
+                            foreach (People check in People.listPeople)
+                            {
+                                if (check.getName() == iname)
+                                {
+                                    check.printAll();
+                                    break;
+                                }
+                            }
+
+                            if (!found1)
+                            {
+                                Console.WriteLine("Không tìm thấy nhân sự có tên " + iname);
+                                Console.WriteLine("Bạn có muốn tiếp tục không? (Y/N)");
+                                string input = Console.ReadLine();
+
+                                if (input.ToUpper() == "N")
+                                {
+                                    Console.WriteLine("Quay lại menu");
+                                    found = true; // Đánh dấu tìm thấy để thoát khỏi vòng lặp
+                                }
+                            }
+                        }
+                        break;
+                    case "0":
+                        Console.WriteLine("Tạm biệt!");
+                        Program.Menu();
+                        break;
+
+                    default:
+                        Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
+                        break;
+                }
+
+                Console.WriteLine(); // In một dòng trắng để tạo định dạng
+            }
+        }
+
+        public static void suaNhanSu()
+        {
+            int ipeople = 0;
+            do
+            {
+                Console.WriteLine("Nhập loại nhân sự: 1. Tác giả / 2. Người dẫn chương trình / 3. Phóng viên trực tiếp");
+                try
+                {
+                    ipeople = int.Parse(Console.ReadLine());
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Giá trị không hợp lệ. Vui lòng nhập một số nguyên.");
+                    continue;
+                }
+            }
+            while (ipeople < 1 || ipeople > 3);
+
+            if (ipeople == 1)
+            {
+                Author.printAllPeople();
+            }
+            else if (ipeople == 2)
+            {
+                Anchor.printAllPeople();
+            }
+            else
+            {
+                Reporter.printAllPeople();
+            }
+
+            Console.WriteLine("Nhập tên nhân sự muốn thao tác:");
+            string icheck = Console.ReadLine();
+
+            bool isPersonFound = false;
+            foreach (People check in People.listPeople)
+            {
+                if (check != null && check.getName() == icheck)
+                {
+                    isPersonFound = true;
+                    int choice = 0;
+                    do
+                    {
+                        Console.WriteLine("Menu chọn thuộc tính:");
+                        Console.WriteLine("1. Thay đổi tên");
+                        Console.WriteLine("2. Thay đổi công ty");
+                        Console.WriteLine("3. Thay đổi email");
+                        Console.WriteLine("4. Hiển thị tất cả bản tin thuộc về " + icheck + ":");
+                        Console.WriteLine("0. Thoát");
+                        Console.WriteLine("Lựa chọn của bạn:");
+                        try
+                        {
+                            choice = int.Parse(Console.ReadLine());
+                        }
+                        catch (FormatException)
+                        {
+                            Console.WriteLine("Giá trị không hợp lệ. Vui lòng nhập một số nguyên.");
+                            continue;
+                        }
+
+                        switch (choice)
+                        {
+                            case 1:
+                                Console.WriteLine("Nhập tên mới:");
+                                string name = Console.ReadLine();
+                                check.setName(name);
+                                Console.WriteLine("Tên đã được cập nhật thành công.");
+                                break;
+                            case 2:
+                                Console.WriteLine("Nhập công ty mới:");
+                                string company = Console.ReadLine();
+                                check.setCompany(company);
+                                Console.WriteLine("Công ty đã được cập nhật thành công.");
+                                break;
+                            case 3:
+                                Console.WriteLine("Nhập email mới:");
+                                string mail = Console.ReadLine();
+                                check.setMail(mail);
+                                Console.WriteLine("Email đã được cập nhật thành công.");
+                                break;
+                            case 4:
+                                Console.WriteLine("Hiển thị tất cả bản tin thuộc về " + icheck + ":");
+                                // Thực hiện hiển thị bản tin cho nhân sự có tên là icheck
+                                break;
+                            case 0:
+                                Console.WriteLine("Thoát khỏi menu.");
+                                break;
+                            default:
+                                Console.WriteLine("Lựa chọn không hợp lệ, vui lòng chọn lại.");
+                                break;
+                        }
+
+                        Console.WriteLine();
+                    }
+                    while (choice != 0);
+                    break;
+                }
+            }
+
+            if (!isPersonFound)
+            {
+                Console.WriteLine("Nhân sự không tồn tại, vui lòng nhập lại.");
+                suaNhanSu();
+            }
+            QuanLiPeople();
+        }
+
+        public static void themNhanSu()
+        {
+            bool continueInput = true;
+
+            do
+            {
+                Console.WriteLine("Nhập loại nhân sự: 1. Tác giả / 2. Người dẫn chương trình / 3. Phóng viên trực tiếp");
+                int ipeople = int.Parse(Console.ReadLine());
+
+                Console.WriteLine("Nhập tên:");
+                string name = Console.ReadLine();
+
+                Console.WriteLine("Nhập tên công ty:");
+                string company = Console.ReadLine();
+
+                Console.WriteLine("Nhập mail:");
+                string mail = Console.ReadLine();
+
+                foreach (People check in People.listPeople)
+                {
+                    if (name == check.getName())
+                    {
+                        Console.WriteLine("Nhân sự đã tồn tại");
+                        break;
+                    }
+                }
+
+                if (ipeople == 1)
+                {
+                    Author iAuthor = new Author(name, company, mail);
+                    Console.WriteLine("Tạo thành công Tác giả " + name);
+                }
+                else if (ipeople == 2)
+                {
+                    Anchor iAuthor = new Anchor(name, company, mail);
+                    Console.WriteLine("Tạo thành công Người dẫn chương trình " + name);
+                }
+                else if (ipeople == 3)
+                {
+                    Reporter iAuthor = new Reporter(name, company, mail);
+                    Console.WriteLine("Tạo thành công Phóng viên trực tiếp " + name);
+                }
+                else
+                {
+                    Console.WriteLine("Dữ liệu không đúng, mời nhập lại");
+                    continue; // Quay lại vòng lặp để yêu cầu nhập lại thông tin
+                }
+
+                Console.WriteLine("1. Nhập tiếp");
+                Console.WriteLine("2. Thoát");
+                Console.WriteLine("Lựa chọn của bạn:");
+                int choice = int.Parse(Console.ReadLine());
+
+                switch (choice)
+                {
+                    case 1:
+                        continueInput = true;
+                        break;
+                    case 2:
+                        continueInput = false;
+                        break;
+                    default:
+                        Console.WriteLine("Lựa chọn không hợp lệ, mời nhập lại");
+                        continue; // Quay lại vòng lặp để yêu cầu nhập lại lựa chọn
+                }
+            } while (continueInput);
+        }
+        public static void QuanLiSetTime() 
+        {
+
+            while (true)
+            {
+                Console.WriteLine("Quản lý lịch chiếu bản tin truyền hình : ");
+                Console.WriteLine("1. Đặt thời gian cho bản tin ");
+                Console.WriteLine("2. Đổi vị trí của 2 bản tin");
+                Console.WriteLine("3. Xoá lịch chiếu của bản tin truyền hình");
+                Console.WriteLine("4. Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
+                Console.WriteLine("0. Thoát");
+                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Bạn đã chọn Đặt thời gian cho bản tin");
+                        setTimeforNew();
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Bạn đã chọn Đổi vị trí của 2 bản tin");
+                        SwapBanTin();
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Bạn đã chọn xoá lịch chiếu của bản tin truyền hình");
+                        break;
+
+                    case "4":
+                        break;
+                    case "0":
+                        Console.WriteLine("Tạm biệt!");
+                        Program.Menu();
+                        break;
+
+                    default:
+                        Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
+                        break;
+                }
+
+                Console.WriteLine(); // In một dòng trắng để tạo định dạng
+            }
+        }
+
+        public static void inThongTin() 
+        {
+            while (true)
+            {
+                Console.WriteLine("Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn : ");
+                Console.WriteLine("1. Hiển thị lịch chiếu theo ngày ");
+                Console.WriteLine("2. Hiển thị lịch chiếu của bản tin ");
+                Console.WriteLine("3. Hiển thị lịch chiếu theo thể loại ");
+                Console.WriteLine("4. Hiển thị lịch chiếu theo kênh");
+                Console.WriteLine("0. Thoát");
+                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.WriteLine("Bạn đã chọn lịch chiếu theo ngày");
+                        printAsDay();
+                        break;
+
+                    case "2":
+                        Console.WriteLine("Bạn đã chọn lịch chiếu của bản tin");
+                        SwapBanTin();
+                        break;
+
+                    case "3":
+                        Console.WriteLine("Bạn đã chọn lịch chiếu theo thể loại");
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Bạn đã chọn lịch chiếu theo kênh");
+                        break;
+                    case "0":
+                        Console.WriteLine("Tạm biệt!");
+                        QuanLiSetTime();
+                        break;
+
+                    default:
+                        Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
+                        break;
+                }
+
+                Console.WriteLine(); // In một dòng trắng để tạo định dạng
+            }
+        }
+        public static void printAsDay()
+        {
+            Console.WriteLine("Nhập ngày/tháng muốn in lịch : ");
+            Console.WriteLine("Ngày: ");
+            int day = int.Parse(Console.ReadLine());
+            Console.WriteLine("Tháng: ");
+            int month = int.Parse(Console.ReadLine());
+            //In thông tin của CalendarDay
+            Console.WriteLine("Ban tin ngày " + day + "/" + month + " gồm: ");
+            foreach (Channel iChannel in Calendar.getCalendarDay(day, month).getListChannels())
+            {
+                Console.WriteLine("-----");
+                Console.WriteLine(iChannel.getName() + " : ");
+                foreach (New iNew in iChannel.Sang)
+                {
+                    Console.WriteLine(iNew.getName());
+                    foreach (TimeSet x in iNew.getListTime())
+                    {
+                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
+                            Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+                foreach (New iNew in iChannel.Toi)
+                {
+                    Console.WriteLine(iNew.getName());
+                    foreach (TimeSet x in iNew.getListTime())
+                    {
+                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
+                            Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+        }
+            public static void setTimeforNew()
         {
             // Nhập tên kênh
             Console.WriteLine("Nhập tên kênh:");
@@ -175,7 +589,7 @@ namespace BanTin
                 }
                 while (!validCategory)
                 {
-                    Console.WriteLine("Thể loại của bản tin :");                   
+                    Console.WriteLine("Thể loại của bản tin :");
                     string categoryName = Console.ReadLine();
                     belongstoCategory = GetCategoryByName(categoryName);
                     if (belongstoCategory == null)
@@ -210,7 +624,7 @@ namespace BanTin
                 bool validAuthor = false;
                 foreach (Author iTacGia in Author.getAuthors())
                 {
-                    Console.WriteLine(iTacGia.name);
+                    Console.WriteLine(iTacGia.getName);
                 }
                 while (!validAuthor)
                 {
@@ -559,7 +973,7 @@ namespace BanTin
         {
             foreach (Author author in Author.getAuthors())
             {
-                if (author.name == authorName)
+                if (author.getName() == authorName)
                 {
                     return author;
                 }
@@ -579,6 +993,6 @@ namespace BanTin
 
             return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
         }
-    
-}
+
+    }
 }

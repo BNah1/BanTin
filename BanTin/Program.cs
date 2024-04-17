@@ -143,9 +143,9 @@ namespace BanTin
             {
                 Console.WriteLine("---- Quan ly ban tin truyen hinh ----");
                 Console.WriteLine("---- 1. Quản lý bản tin ");
-                Console.WriteLine("---- 2. Quản lý tác giả ");
+                Console.WriteLine("---- 2. Quản lý nhân sự ");
                 Console.WriteLine("---- 3. Quản lý kênh ");
-                Console.WriteLine("---- 4. Quản lý ------ ");
+                Console.WriteLine("---- 4. Quản lý thể loại ");
                 Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
                 Console.WriteLine("---- 6. Lưu file vào Json và đọc file ");
                 Console.WriteLine("---- 7. Thoát ");
@@ -156,11 +156,11 @@ namespace BanTin
                 string choice = Console.ReadLine();
                 switch (choice)
                 {
-                    case "1": 
+                    case "1":
                         PhuongThuc.QuanLiBanTin();
                         break;
                     case "2":
-                        // Xử lý lựa chọn 2
+                        PhuongThuc.QuanLiPeople();
                         break;
                     case "3":
                         // Xử lý lựa chọn 3
@@ -169,37 +169,14 @@ namespace BanTin
                         // Xử lý lựa chọn 4
                         break;
                     case "5":
-                        // Xử lý lựa chọn 5
+                        PhuongThuc.QuanLiSetTime();
                         break;
-                    case "6":         
-                        PhuongThuc.SerializeObjectToJsonFile(banTinList1, filePath);
-
-                        // Deserialize
-                        PhuongThuc.DeserializeJsonToObject<BanTinList>(filePath);
-
-                        // Deserialized
-                        try
-                        {
-                            string newDataFromFile = File.ReadAllText(filePath);
-                            // Deserialize dữ liệu từ file mới thành một danh sách sinh viên mới
-                            BanTinList banTinList2 = JsonSerializer.Deserialize<BanTinList>(newDataFromFile);
-                            Console.Write(banTinList2);
-
-                            // Hiển thị danh sách sinh viên mới
-                            Console.WriteLine("\nDanh sách ban tin sau khi được deserialized:");
-                            foreach (BanTin _bantin in banTinList2.Bantins)
-                            {
-                                Console.WriteLine(_bantin);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine("Lỗi đọc: " + ex.Message);
-                        }
+                    case "6":
                         break;
                     case "7":
                         exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp
                         Console.WriteLine("Thoát chương trình");
+                        Environment.Exit(0);
                         break;
                     default:
                         Console.WriteLine("Lựa chọn không hợp lệ");

@@ -81,7 +81,6 @@ namespace BanTin
                 news.Add(foundBanTin);
                 foundBanTin.setCategoryName(this.name);
             }
-
         }
 
         public void removeCategory(string banTinName)

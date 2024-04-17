@@ -9,7 +9,7 @@ namespace BanTin
     public class Author : People
     {
         private string company;
-        public string name;
+        private string name;
         private string mail;
         private int numOfNews;
         private List<BanTin> news { get; set; }
@@ -29,25 +29,62 @@ namespace BanTin
                 authors = new List<Author>();
             else
                 authors.Add(this);
+            People.listPeople.Add(this);
         }
 
-        public void printAll()
+        public virtual void printAll()
         {
             Console.WriteLine("Tên tác giả: " + name);
             Console.WriteLine("Thuộc : " + company);
             Console.WriteLine("Email : " + mail);
             Console.WriteLine("Số lượng bài báo : " + numOfNews);
             Console.WriteLine("Các bài báo của tác giả " + name + " :");
-            foreach (var banTin in news)
+            if (news == null || news.Count == 0)
+                Console.WriteLine("khong co du lieu");
+            else
+                foreach (New banTin in news)
+                {
+                    Console.WriteLine(banTin.getName());
+                }
+        }
+
+        public virtual void removeP() 
+        { 
+            authors.Remove(this);
+        }
+        public void setName(string input){name = input;}
+
+        public void setCompany(string input){ company = input; }
+
+        public void setMail(string input){ mail = input; }
+
+
+        public static void printAllPeople()
+        {
+            foreach (People author in authors)
             {
-                Console.WriteLine(banTin.ToString());
+                Console.WriteLine(author.getName());
             }
         }
-        static public void printAllPeople()
+
+        public virtual void setCategory(string banTinName)
         {
-            foreach (var author in authors)
+            bool check = false;
+            BanTin foundBanTin = null;
+            foreach (New banTin in New.listBanTins)
             {
-                author.getName();
+                if (banTin.getName() == banTinName)
+                {
+                    check = true;
+                    foundBanTin = (BanTin)banTin;
+                    break;
+                }
+            }
+
+            if (check && foundBanTin != null || foundBanTin is BanTin)
+            {
+                news.Add(foundBanTin);
+                foundBanTin.setAuthorName(this.name);
             }
         }
 
@@ -69,9 +106,9 @@ namespace BanTin
             return authors;
         }
 
-        public void getName()
+        public string getName()
         {
-            Console.WriteLine("Tác giả: " + name);
+            return name;
         }
 
         public void setAuthor(BanTin banTinDaTao)
