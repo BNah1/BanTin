@@ -387,7 +387,7 @@ namespace BanTin
                 Console.WriteLine("1. Đặt thời gian cho bản tin ");
                 Console.WriteLine("2. Đổi vị trí của 2 bản tin");
                 Console.WriteLine("3. Xoá lịch chiếu của bản tin truyền hình");
-                Console.WriteLine("4. Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
+                Console.WriteLine("4. Hiển thị thông tin lịch chiếu bản tin theo ngày ");
                 Console.WriteLine("0. Thoát");
                 Console.Write("Chọn chức năng (nhập số từ 0 đến 4): ");
                 string choice = Console.ReadLine();
@@ -411,7 +411,7 @@ namespace BanTin
 
                     case "4":
                         Console.WriteLine("Bạn đã chọn Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
-                        inThongTin();
+                        printAsDay();
                         break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");
@@ -427,51 +427,7 @@ namespace BanTin
             }
         }
 
-        public static void inThongTin() 
-        {
-            while (true)
-            {
-                Console.WriteLine("Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn : ");
-                Console.WriteLine("1. Hiển thị lịch chiếu theo ngày ");
-                Console.WriteLine("2. Hiển thị lịch chiếu của bản tin ");
-                Console.WriteLine("3. Hiển thị lịch chiếu theo thể loại ");
-                Console.WriteLine("4. Hiển thị lịch chiếu theo kênh");
-                Console.WriteLine("0. Thoát");
-                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
-                string choice = Console.ReadLine();
 
-                switch (choice)
-                {
-                    case "1":
-                        Console.WriteLine("Bạn đã chọn lịch chiếu theo ngày");
-                        printAsDay();
-                        break;
-
-                    case "2":
-                        Console.WriteLine("Bạn đã chọn lịch chiếu của bản tin");
-                        SwapBanTin();
-                        break;
-
-                    case "3":
-                        Console.WriteLine("Bạn đã chọn lịch chiếu theo thể loại");
-                        break;
-
-                    case "4":
-                        Console.WriteLine("Bạn đã chọn lịch chiếu theo kênh");
-                        break;
-                    case "0":
-                        Console.WriteLine("Tạm biệt!");
-                        QuanLiSetTime();
-                        break;
-
-                    default:
-                        Console.WriteLine("Chức năng không hợp lệ. Hãy chọn lại.");
-                        break;
-                }
-
-                Console.WriteLine(); // In một dòng trắng để tạo định dạng
-            }
-        }
         public static void printAsDay()
         {
             Console.WriteLine("Nhập ngày/tháng muốn in lịch : ");

@@ -130,6 +130,7 @@ namespace BanTin
                     Console.WriteLine("Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại.");
                 }
             } while (!loggedIn);
+            Console.WriteLine("Đăng nhập thành công ");
         }
 
         public static void Menu()
