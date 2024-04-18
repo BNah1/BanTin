@@ -388,6 +388,7 @@ namespace BanTin
                 Console.WriteLine("2. Đổi vị trí của 2 bản tin");
                 Console.WriteLine("3. Xoá lịch chiếu của bản tin truyền hình");
                 Console.WriteLine("4. Hiển thị thông tin lịch chiếu bản tin theo ngày ");
+                Console.WriteLine("5. Hiển thị tất cả thông tin lịch chiếu của bản tin ");
                 Console.WriteLine("0. Thoát");
                 Console.Write("Chọn chức năng (nhập số từ 0 đến 4): ");
                 string choice = Console.ReadLine();
@@ -410,8 +411,36 @@ namespace BanTin
                         break;
 
                     case "4":
-                        Console.WriteLine("Bạn đã chọn Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
+                        Console.WriteLine("Bạn đã chọn Hiển thị thông tin lịch chiếu bản tin theo ngày");
                         printAsDay();
+                        break;
+                    case "5":
+                        Console.WriteLine("Bạn đã chọn Hiển thị tất cả thông tin lịch chiếu của bản tin");
+                        foreach (New index in New.listBanTins)
+                        { Console.Write(index.getName() + " "); }
+                        // Nhập tên bản tin
+                        Console.WriteLine("Nhập tên bản tin:");
+                        string nameofnew = Console.ReadLine();
+                        int maxTime2 = 0;
+                        foreach (New newsItem in New.listBanTins)
+                        {
+                            if (nameofnew == newsItem.getName())
+                            {
+                                foreach (TimeSet check in TimeSet.listAllTimeSet) 
+                                {
+                                    if (check.NameBanTin == nameofnew)
+                                        Console.WriteLine(check.ToString());
+                                }
+                                break;
+                            }
+                            if (maxTime2 == 3)
+                            {
+                                QuanLiSetTime();
+                                break;
+                            }
+                         maxTime2++;
+                         Console.WriteLine("Nhập sai hoặc bản tin không tồn tại , vui lòng nhập lại ");
+                        }
                         break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");

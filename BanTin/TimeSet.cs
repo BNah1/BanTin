@@ -70,7 +70,8 @@ namespace BanTin
         {
             return "Thoi luong: " + time + "s" + "\n" +
                    "Khung chieu: " + period + "\n" +
-                   "Thời gian bat dau: " + timeStart + " tại kênh " + nameChannel;
+                   "Thời gian bat dau: " + timeStart + " tại kênh " + nameChannel+
+                   " Ngày: " + day + "/" + month;
         }
 
         public static void deleteTimeSet()
