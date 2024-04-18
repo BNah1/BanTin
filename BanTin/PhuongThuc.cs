@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
@@ -480,6 +481,7 @@ namespace BanTin
             int month = int.Parse(Console.ReadLine());
             //In thông tin của CalendarDay
             Console.WriteLine("Ban tin ngày " + day + "/" + month + " gồm: ");
+            Console.WriteLine("Bản tin sáng : ");
             foreach (Channel iChannel in Calendar.getCalendarDay(day, month).getListChannels())
             {
                 Console.WriteLine("-----");
@@ -489,16 +491,20 @@ namespace BanTin
                     Console.WriteLine(iNew.getName());
                     foreach (TimeSet x in iNew.getListTime())
                     {
-                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
+                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName() && x.Period == "sang")
                             Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
                     }
                 }
+            }
+            Console.WriteLine("Bản tin tối : ");
+            foreach (Channel iChannel in Calendar.getCalendarDay(day, month).getListChannels())
+            {
                 foreach (New iNew in iChannel.Toi)
                 {
                     Console.WriteLine(iNew.getName());
                     foreach (TimeSet x in iNew.getListTime())
                     {
-                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
+                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName() && x.Period == "toi")
                             Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
                     }
                 }
@@ -506,18 +512,62 @@ namespace BanTin
         }
             public static void setTimeforNew()
         {
-            // Nhập tên kênh
-            Console.WriteLine("Nhập tên kênh:");
-            string nameofChannel = Console.ReadLine();
+            
+            Console.WriteLine("Nhập tên kênh: VTV1 , VTV2 , VTV3 :");
+            string nameofChannel = "";
+            int maxTime1 = 0;
+            foreach (Channel check in Channel.getChanels())
+            {
+                nameofChannel = Console.ReadLine();
+                if (nameofChannel == check.getName())
+                {
+                    break;
+                }
+                if (maxTime1 == 3) 
+                {
+                    QuanLiSetTime();
+                    break;
+                }
+                
+                maxTime1++;
+                Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+            }
 
+            foreach (New index in New.listBanTins)
+            { Console.Write(index.getName() + " "); }
             // Nhập tên bản tin
             Console.WriteLine("Nhập tên bản tin:");
-            string nameofnew = Console.ReadLine();
+            string nameofnew = "";
+            int maxTime2 = 0;
+            foreach (New newsItem in New.listBanTins)
+            {
+                nameofnew = Console.ReadLine();
+                if (nameofnew == newsItem.getName())
+                {
+                    break;
+                }
+                if (maxTime2 == 3)
+                {
+                    QuanLiSetTime();
+                    break;
+                }
+                maxTime2++;
+                Console.WriteLine("Nhập sai hoặc bản tin không tồn tại , vui lòng nhập lại ");
+            }
 
             // Nhập thời gian
             Console.WriteLine("Nhập khoảng thời gian (sang/toi):");
-            string period = Console.ReadLine();
+            int a = 0;
+            string period = ""; 
+            do
+            {
+                period = Console.ReadLine();
+                if (period != "sang" || period != "toi")
+                    Console.WriteLine("Nhập sai vui lòng nhập lại ");
+                else { a = 1; }
 
+            } while (a == 1);
+            
             // Nhập ngày và tháng
             Console.WriteLine("Nhập ngày:");
             int day;
@@ -535,7 +585,7 @@ namespace BanTin
 
             // Gọi phương thức setTimeAndBanTinForChannel với dữ liệu đã nhập
             setTimeAndBanTinForChannel(nameofChannel, nameofnew, period, day, month);
-            Console.WriteLine("Đặt lịch thành công");
+
         }
 
         public static void setTimeAndBanTinForChannel(string nameofChannel, string nameofnew, string period, int day, int month)
@@ -568,6 +618,145 @@ namespace BanTin
                 Console.WriteLine("Ngày không hợp lệ!");
             }
         }
+
+        public static void QuanLiKenh()
+        {
+            Console.WriteLine("---- Quản lý kênh ----");
+            Console.WriteLine("---- 1. Đặt người dẫn chương trình ");
+            Console.WriteLine("---- 2. Tổng thời gian mỗi bản tin được phát sóng trong kênh ");
+            Console.WriteLine("---- 3. Thoát ");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("--------------------------------------");
+
+            Console.WriteLine("Nhập lựa chọn của bạn:");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    foreach (Anchor check in Anchor.getListAnchors())
+                    {
+                        Console.WriteLine(check.getName());
+                    }
+                    Console.WriteLine("Nhập tên người dẫn chương trình :");
+                    string nameofAnchor = "";
+                    int maxTime1 = 0;
+                    foreach (Anchor check in Anchor.getListAnchors())
+                    {
+                        nameofAnchor = Console.ReadLine();
+                        if (nameofAnchor == check.getName())
+                        {
+                            nameofAnchor = check.getName();
+                            break;
+                        }
+                        if (maxTime1 == 3)
+                        {
+                            QuanLiKenh();
+                            break;
+                        }
+                        maxTime1++;
+                        Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+                    }
+                    Console.WriteLine("Nhập tên kênh: VTV1 , VTV2 , VTV3 :");
+                    string nameofChannel = "";
+                    int maxTime2 = 0;
+                    foreach (Channel check in Channel.getChanels())
+                    {
+                        nameofChannel = Console.ReadLine();
+                        if (nameofChannel == check.getName())
+                        {
+                            check.setAnchor(nameofAnchor);
+                            break;
+                        }
+                        if (maxTime2 == 3)
+                        {
+                            QuanLiKenh();
+                            break;
+                        }
+
+                        maxTime2++;
+                        Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+                    }
+
+                    break;
+                case "2":
+                    Console.WriteLine("Nhập tên kênh: VTV1 , VTV2 , VTV3 :");
+                    string nameofChannelx = "";
+                    int maxTime2x = 0;
+                    foreach (Channel check in Channel.getChanels())
+                    {
+                        nameofChannelx = Console.ReadLine();
+                        if (nameofChannelx == check.getName())
+                        {
+                            TimeSet.totalTime(check.getName());
+                            break;
+                        }
+                        if (maxTime2x == 3)
+                        {
+                            QuanLiKenh();
+                            break;
+                        }
+
+                        maxTime2x++;
+                        Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+                    }
+                    break;
+                case "3":
+                    Console.WriteLine("Thoát");
+                    Program.Menu();
+                    break;
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ");
+                    break;
+            }
+        }
+
+        public static void QuanLiTheLoai()
+        {
+            Console.WriteLine("---- Quản lý kênh ----");
+            Console.WriteLine("---- 1. Hiển thị danh sách thể loại ");
+            Console.WriteLine("---- 2. Hiển thị các bản tin thuộc thể loại ");
+            Console.WriteLine("---- 3. Thoát ");
+            Console.WriteLine("--------------------------------------");
+            Console.WriteLine("--------------------------------------");
+
+            Console.WriteLine("Nhập lựa chọn của bạn:");
+            string choice = Console.ReadLine();
+            switch (choice)
+            {
+                case "1":
+                    Category.printAllCategory();
+                    break;
+                case "2":
+                    Console.WriteLine("Nhập tên thể loại: ");
+                    string nameofCategory = "";
+                    int maxTime2x = 0;
+                    foreach (Category check in Category.getCategories())
+                    {
+                        nameofCategory = Console.ReadLine();
+                        if (nameofCategory == check.getName())
+                        {
+                            check.printAllBanTin();
+                            break;
+                        }
+                        if (maxTime2x == 3)
+                        {
+                            QuanLiTheLoai();
+                            break;
+                        }
+
+                        maxTime2x++;
+                        Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+                    }
+                    break;
+                case "3":
+                    Console.WriteLine("Thoát");
+                    Program.Menu();
+                    break;
+                default:
+                    Console.WriteLine("Lựa chọn không hợp lệ");
+                    break;
+            }
+        }
         public static void nhapBanTin()
         {
             bool continueInput = true;
@@ -586,7 +775,7 @@ namespace BanTin
                 bool validCategory = false;
                 foreach (Category iTheLoai in Category.getCategories())
                 {
-                    Console.WriteLine(iTheLoai.name);
+                    Console.WriteLine(iTheLoai.getName());
                 }
                 while (!validCategory)
                 {
@@ -625,7 +814,7 @@ namespace BanTin
                 bool validAuthor = false;
                 foreach (Author iTacGia in Author.getAuthors())
                 {
-                    Console.WriteLine(iTacGia.getName);
+                    Console.WriteLine(iTacGia.getName());
                 }
                 while (!validAuthor)
                 {
@@ -695,7 +884,7 @@ namespace BanTin
             Console.WriteLine("Chọn thông tin muốn sửa: ");
             Console.WriteLine("1. Tên ");
             Console.WriteLine("2. Nội dung ");
-            Console.WriteLine("3. Nhân sự ");
+            Console.WriteLine("3. Thời gian ");
             Console.WriteLine("0. Thoát ");
             string choice2 = Console.ReadLine();
             switch (choice2)
@@ -995,5 +1184,153 @@ namespace BanTin
             return null; // Trả về null nếu không tìm thấy đối tượng Category có tên tương ứng
         }
 
+        public delegate void SwapNewsItems(List<New> newsList, int index1, int index2);
+
+        public static void SwapBanTinWithDelegate()
+        {
+            Console.WriteLine("Ngày: ");
+            int day = int.Parse(Console.ReadLine());
+            Console.WriteLine("Tháng: ");
+            int month = int.Parse(Console.ReadLine());
+            Console.WriteLine("Nhập tên của kênh: ");
+            string nameChannel = Console.ReadLine();
+            Console.WriteLine("Chiếu vào buổi : ");
+            string period = Console.ReadLine();
+
+            Console.WriteLine("Bản tin ngày " + day + "/" + month + " gồm: ");
+            CalendarDay calendarDay = Calendar.getCalendarDay(day, month);
+            if (calendarDay == null)
+            {
+                Console.WriteLine("Không tìm thấy thông tin cho ngày này.");
+                return;
+            }
+
+            List<Channel> channels = calendarDay.getListChannels();
+            Channel targetChannel = null;
+            foreach (Channel channel in channels)
+            {
+                if (channel.getName() == nameChannel)
+                {
+                    targetChannel = channel;
+                    break;
+                }
+            }
+            if (targetChannel == null)
+            {
+                Console.WriteLine("Không tìm thấy kênh có tên này.");
+                return;
+            }
+
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (var timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+
+            List<New> newsList = targetChannel.getListPeriod(period);
+
+            Console.WriteLine("Nhập tên bản tin muốn đổi vị trí: ");
+            Console.WriteLine("Bản Tin 1: ");
+            string nameNew1 = Console.ReadLine();
+            Console.WriteLine("Bản Tin 2: ");
+            string nameNew2 = Console.ReadLine();
+
+            int index1 = -1;
+            int index2 = -1;
+
+            for (int i = 0; i < newsList.Count; i++)
+            {
+                if (newsList[i].getName() == nameNew1)
+                {
+                    index1 = i;
+                }
+                if (newsList[i].getName() == nameNew2)
+                {
+                    index2 = i;
+                }
+            }
+
+            if (index1 != -1 && index2 != -1)
+            {
+                SwapNewsItems swapDelegate = SwapNewsItemsInList;
+                swapDelegate(newsList, index1, index2);
+
+                UpdateTimeStartForChannel(targetChannel, nameChannel, period, day, month, newsList);
+
+                Console.WriteLine("Đã đổi vị trí và timeStart của hai bản tin trong danh sách.");
+            }
+            else
+            {
+                Console.WriteLine("Không tìm thấy bản tin cần đổi vị trí.");
+            }
+
+            PrintNewsItems(targetChannel, period);
+        }
+
+        private static void SwapNewsItemsInList(List<New> newsList, int index1, int index2)
+        {
+            New temp = newsList[index1];
+            newsList[index1] = newsList[index2];
+            newsList[index2] = temp;
+        }
+        private static void UpdateTimeStartForChannel(Channel channel, string nameChannel, string period, int day, int month, List<New> newsList)
+        {
+            DateTime iTimeStart;
+
+            for (int currentIndex = 0; currentIndex < channel.getListPeriod(period).Count; currentIndex++)
+            {
+                New newsItem = channel.getListPeriod(period)[currentIndex];
+                New previousNewsItem = currentIndex > 0 ? channel.getListPeriod(period)[currentIndex - 1] : null;
+                string newsItemName = newsItem.getName();
+                string previousNewsItemName = previousNewsItem != null ? previousNewsItem.getName() : null;
+
+                if (period == "sang")
+                {
+                    iTimeStart = new DateTime(2024, month, day, 8, 00, 00);
+                }
+                else
+                {
+                    iTimeStart = new DateTime(2024, month, day, 16, 00, 00);
+                }
+
+                double jtime = 0;
+
+                foreach (TimeSet sTime in TimeSet.listAllTimeSet)
+                {
+                    if (previousNewsItemName == sTime.NameBanTin && nameChannel == sTime.NameChannel && day == sTime.getDay() && month == sTime.getMonth())
+                    {
+                        iTimeStart = sTime.getTimeStart();
+                        jtime = sTime.getTime();
+                    }
+                }
+
+                foreach (TimeSet sTime in TimeSet.listAllTimeSet)
+                {
+                    if (newsItemName == sTime.NameBanTin && nameChannel == sTime.NameChannel && day == sTime.getDay() && month == sTime.getMonth())
+                        sTime.setTimeStart(iTimeStart.AddSeconds(jtime));
+                }
+            }
+        }
+
+        private static void PrintNewsItems(Channel targetChannel, string period)
+        {
+            foreach (New newsItem in targetChannel.getListPeriod(period))
+            {
+                Console.WriteLine(newsItem.getName());
+                foreach (TimeSet timeSet in newsItem.getListTime())
+                {
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    {
+                        Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
+                    }
+                }
+            }
+        }
     }
 }

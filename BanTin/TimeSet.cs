@@ -73,7 +73,7 @@ namespace BanTin
                    "Thời gian bat dau: " + timeStart + " tại kênh " + nameChannel;
         }
 
-        public static void deleteTimeSet() 
+        public static void deleteTimeSet()
         {
 
             // Nhập tên kênh
@@ -104,14 +104,44 @@ namespace BanTin
             }
 
             foreach (TimeSet index in listAllTimeSet)
-            { 
-                if(nameofChannel == index.nameChannel && nameofnew == index.nameBanTin && period == index.period && day == index.day && month == index.month)
+            {
+                if (nameofChannel == index.nameChannel && nameofnew == index.nameBanTin && period == index.period && day == index.day && month == index.month)
                     listAllTimeSet.Remove(index);
                 Console.WriteLine("Xoá thành công");
                 break;
             }
-            
+
+        }
+
+        public static void totalTime(string nameChannel)
+        {
+            // Lọc danh sách các bản tin thuộc kênh 
+            var filteredItems = listAllTimeSet.Where(item => item.NameChannel == nameChannel);
+
+            // Tạo một danh sách tạm để lưu tổng thời gian của mỗi bản tin trong kênh "VTV"
+            var tempTotalTimes = new Dictionary<string, double>();
+
+            // Duyệt qua danh sách và tính tổng thời gian cho mỗi bản tin của kênh "VTV"
+            foreach (var item in filteredItems)
+            {
+                if (tempTotalTimes.ContainsKey(item.NameBanTin))
+                {
+                    tempTotalTimes[item.NameBanTin] += item.time;
+                }
+                else
+                {
+                    tempTotalTimes[item.NameBanTin] = item.time;
+                }
+            }
+
+            // In ra tổng thời gian của mỗi bản tin trong kênh "VTV"
+            Console.WriteLine($"{nameChannel} gồm:");
+            foreach (var entry in tempTotalTimes)
+            {
+                Console.WriteLine($"{entry.Key}: {entry.Value} giây");
+            }
         }
 
     }
+    
 }

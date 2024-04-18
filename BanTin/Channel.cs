@@ -12,7 +12,7 @@ namespace BanTin
         private int limitNews;
         private List<New> sang;
         private List<New> toi;
-        private List<Anchor> listAnchors;
+        private string anchorName;
 
         private static List<Channel> channels = new List<Channel>();
 
@@ -21,6 +21,7 @@ namespace BanTin
 
         public Channel(string name, int limitNews)
         {
+            anchorName = "Chưa có nguười dẫn chương trình";
             this.name = name;
             if (limitNews < 10 && limitNews >= 3)
                 this.limitNews = limitNews;
@@ -31,7 +32,6 @@ namespace BanTin
             }
 
             channels.Add(this);
-            this.listAnchors = new List<Anchor>();
             this.toi = new List<New>();
             this.sang = new List<New>();
         }
@@ -48,14 +48,10 @@ namespace BanTin
         public int getLimitNews() { return limitNews; }
         public string getName() { return name; }
 
-        public List<Anchor> getListAnchors()
-        {
-            return listAnchors;
-        }
 
-        public void addAnchor(string nameAnchor)
+        public void setAnchor(string nameAnchor)
         {
-            foreach (Anchor anchor in listAnchors) { }
+            anchorName = nameAnchor;
         }
 
         public static List<Channel> getChanels()
@@ -128,8 +124,6 @@ namespace BanTin
                 i++;
             }
         }
-
-
 
     }
 }

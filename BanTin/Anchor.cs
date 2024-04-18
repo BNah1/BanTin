@@ -61,7 +61,7 @@ namespace BanTin
                 }
         }
 
-        public List<Anchor> getListAnchors()
+        public static List<Anchor> getListAnchors()
         {
             return anchors;
         }

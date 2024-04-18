@@ -44,17 +44,6 @@ namespace BanTin
         {
             return Day;
         }
-        public void printAll()
-        {
-            foreach (Channel channel in listChannels)
-            {
-                Console.WriteLine(channel.getName + " :");
-                channel.printAll();
-                Console.WriteLine(listChannels);
-            }
-
-        }
-
 
 
 

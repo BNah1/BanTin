@@ -22,12 +22,13 @@ namespace BanTin
     {
         private static readonly string filePath = "C:\\Users\\PC\\source\\repos\\BanTin\\BanTin\\data.json";
         static BanTinList banTinList1 = new BanTinList();
+        static BanTinList banTinList2 = new BanTinList();
         static void Main(string[] args)
         {
             PhuongThuc.createCalendar();
             KhoiTao();
+            DangNhap();
             Menu();
-            PhuongThuc.SwapBanTin();
         }
 
         public static void KhoiTao()
@@ -105,111 +106,30 @@ namespace BanTin
 
         }
 
-
-
-
-
-
-
-
-        public static void Test2()
+        public static void DangNhap()
         {
-            // Tao kenh VTV1 o tat ca cac ngay
-            PhuongThuc.addChannel("VTV1", 5);
-            PhuongThuc.addChannel("VTV2", 5);
-            PhuongThuc.addChannel("VTV3", 5);
-            PhuongThuc.addChannel("VTV4", 5);
-
-
-            foreach (Channel c in Calendar.getCalendarDay(3, 3).getListChannels())
+            Service service = new Service();
+            Console.WriteLine("Mời bạn đăng nhập");
+            bool loggedIn = false;
+            do
             {
-                Console.WriteLine(c.getName());
-            }
-            // Tạo các bản tin
-            Category category1 = new Category("The Thao");
-            BanTin banTin1 = new BanTin("BanTin1", 180, "Nội dung bản tin 1");
-            BanTin banTin2 = new BanTin("BanTin2", 150, "Nội dung bản tin 2");
-            BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
-            BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
-            BanTin banTin5 = new BanTin("BanTin5", 90, "Nội dung bản tin 4");
-            banTinList1.Add(banTin1);
-            banTinList1.Add(banTin2);
-            banTinList1.Add(banTin3);
-            banTinList1.Add(banTin4);
-            banTinList1.Add(banTin5);
+                Console.WriteLine("Nhập tên đăng nhập:");
+                string username = Console.ReadLine();
 
-            string json = JsonSerializer.Serialize(banTinList1, new JsonSerializerOptions { WriteIndented = true, Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All) });
-            try
-            {
-                File.WriteAllText(filePath, json, System.Text.Encoding.UTF8);
-                Console.WriteLine($"Dữ liệu JSON đã được ghi vào file {filePath}");
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine("Lỗi ghi: " + ex.Message);
-            }
+                Console.WriteLine("Nhập mật khẩu:");
+                string password = Console.ReadLine(); // Sử dụng phương thức ReadPassword() đã được định nghĩa trước đó
 
-            // Deserialized
-            try
-            {
-                string newDataFromFile = File.ReadAllText(filePath);
-                // Deserialize dữ liệu từ file mới thành một danh sách sinh viên mới
-                BanTinList banTinList2 = JsonSerializer.Deserialize<BanTinList>(newDataFromFile);
-                Console.Write(banTinList2);
-
-                // Hiển thị danh sách sinh viên mới
-                Console.WriteLine("\nDanh sách ban tin sau khi được deserialized:");
-                foreach (BanTin _bantin in banTinList2.Bantins)
+                // Thực hiện kiểm tra tên đăng nhập và mật khẩu ở đây
+                // Nếu thông tin đăng nhập đúng, đặt biến loggedIn thành true, ngược lại, hiển thị thông báo lỗi và yêu cầu nhập lại
+                if (service.Login(username, password))
                 {
-                    Console.WriteLine(_bantin);
+                    Menu();
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Lỗi đọc: " + ex.Message);
-            }
-
-            QuangCao quangcao2 = new QuangCao("QuangCao1", 30, "bbbb");
-            LiveStream live1 = new LiveStream("Live", 50, "bbbb");
-            // Thêm bản tin vào kênh và đặt thời gian
-
-            foreach (New inew in New.listBanTins)
-            {
-                Console.WriteLine(inew.getName());
-            }
-
-            Console.WriteLine("--------------");
-            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin1", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin2", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "QuangCao1", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "Live", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
-            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
-
-
-            //In thông tin của CalendarDay
-            Console.WriteLine("Ban tin ngày 3/3 " + " gồm: ");
-            foreach (Channel iChannel in Calendar.getCalendarDay(3, 3).getListChannels())
-            {
-                Console.WriteLine("-----");
-                Console.WriteLine(iChannel.getName() + " : ");
-                foreach (New iNew in iChannel.Sang)
+                else
                 {
-                    Console.WriteLine(iNew.getName());
-                    foreach (TimeSet x in iNew.getListTime())
-                    {
-                        if (x.NameBanTin == iNew.getName() && x.NameChannel == iChannel.getName())
-                            Console.WriteLine("Chiếu lúc : " + x.getTimeStart().ToString("HH:mm:ss"));
-                    }
+                    Console.WriteLine("Tên đăng nhập hoặc mật khẩu không chính xác. Vui lòng thử lại.");
                 }
-            }
-
-
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("");
-
+            } while (!loggedIn);
         }
 
         public static void Menu()
@@ -223,8 +143,9 @@ namespace BanTin
                 Console.WriteLine("---- 3. Quản lý kênh ");
                 Console.WriteLine("---- 4. Quản lý thể loại ");
                 Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
-                Console.WriteLine("---- 6. Lưu file vào Json và đọc file ");
-                Console.WriteLine("---- 7. Thoát ");
+                Console.WriteLine("---- 6. Đọc dữ liệu từ file JSON ");
+                Console.WriteLine("---- 6. Lưu dữ liệu vừa thao tác vào file JSON ");
+                Console.WriteLine("---- 8. Thoát ");
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("--------------------------------------");
 
@@ -239,17 +160,21 @@ namespace BanTin
                         PhuongThuc.QuanLiPeople();
                         break;
                     case "3":
-                        // Xử lý lựa chọn 3
+                        PhuongThuc.QuanLiKenh();
                         break;
                     case "4":
-                        // Xử lý lựa chọn 4
+                        PhuongThuc.QuanLiTheLoai();
                         break;
                     case "5":
                         PhuongThuc.QuanLiSetTime();
                         break;
                     case "6":
+                        //Đọc
                         break;
                     case "7":
+                        //Lưu
+                        break;
+                    case "8":
                         exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp
                         Console.WriteLine("Thoát chương trình");
                         Environment.Exit(0);
@@ -264,6 +189,58 @@ namespace BanTin
             }
         }
 
+        static void SerializeObjectToJsonFile<T>(T obj, string filePath)
+        {
+            // Serialize đối tượng thành chuỗi JSON
+            string json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
+            {
+                WriteIndented = true,
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
+            });
 
+            try
+            {
+                // Ghi chuỗi JSON vào tệp văn bản
+                File.WriteAllText(filePath, json, System.Text.Encoding.UTF8);
+                Console.WriteLine($"Dữ liệu JSON đã được ghi vào file {filePath}");
+            }
+            catch (IOException ex)
+            {
+                Console.WriteLine("Lỗi ghi: " + ex.Message);
+            }
+        }
+
+        static T DeserializeJsonToObject<T>(string filePath)
+        {
+            try
+            {
+                // Đọc dữ liệu từ tệp JSON
+                string jsonData = File.ReadAllText(filePath);
+
+                // Deserialize dữ liệu từ tệp thành đối tượng có kiểu dữ liệu T
+                T deserializedObject = JsonSerializer.Deserialize<T>(jsonData);
+
+                if (deserializedObject != null)
+                {
+                    // Hiển thị thông tin của đối tượng sau khi deserialize
+                    Console.WriteLine($"Đối tượng đã được deserialize từ tệp {filePath}:");
+                    Console.WriteLine(deserializedObject);
+
+                    // Trả về đối tượng đã deserialize
+                    return deserializedObject;
+                }
+                else
+                {
+                    Console.WriteLine("Dữ liệu deserialized là null.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi đọc dữ liệu từ tệp {filePath}: {ex.Message}");
+            }
+
+            // Trả về một giá trị mặc định nếu có lỗi xảy ra hoặc không deserialize được
+            return default(T);
+        }
     }
 }

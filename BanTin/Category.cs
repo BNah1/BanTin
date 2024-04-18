@@ -11,7 +11,7 @@ namespace BanTin
         private static int i = 1;
         public string name { get; set; }
         private List<New> news { get; set; }
-        private static List<Category> categories { get; set; }
+        private static List<Category> categories = new List<Category>(); 
 
 
         public Category(string name)
@@ -27,6 +27,11 @@ namespace BanTin
                 categories.Add(this);
             }
             categories.Add(this);
+        }
+
+        public string getName() 
+        {
+            return name;
         }
 
         public List<New> getNews()
