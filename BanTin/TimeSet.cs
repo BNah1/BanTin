@@ -105,10 +105,12 @@ namespace BanTin
 
             foreach (TimeSet index in listAllTimeSet)
             { 
-                if(nameofChannel == index.nameChannel && nameofnew == index.nameBanTin &&)
+                if(nameofChannel == index.nameChannel && nameofnew == index.nameBanTin && period == index.period && day == index.day && month == index.month)
+                    listAllTimeSet.Remove(index);
+                Console.WriteLine("Xoá thành công");
+                break;
             }
-            listAllTimeSet.Remove(this);
-            Console.WriteLine("Đặt lịch thành công");
+            
         }
 
     }

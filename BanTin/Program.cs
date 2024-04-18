@@ -26,10 +26,6 @@ namespace BanTin
         {
             PhuongThuc.createCalendar();
             KhoiTao();
-            foreach (Category iTheLoai in Category.getCategories())
-            {
-                Console.WriteLine(iTheLoai.name);
-            }
             Menu();
             PhuongThuc.SwapBanTin();
         }
@@ -68,6 +64,17 @@ namespace BanTin
             Author nguyenC = new Author("Nguyen C", "Dai VTV", "nguyenA@gmail.com");
             Anchor LeA = new Anchor("Le A", "Dai VTV", "nguyenA@gmail.com");
             Reporter TranA = new Reporter("Tran A", "Dai VTV", "nguyenA@gmail.com");
+
+
+            nguyenA.setAuthor("BanTin1");
+            nguyenA.setAuthor("BanTin2");
+            nguyenA.setAuthor("BanTin3");
+            nguyenA.setAuthor("BanTin4");
+            nguyenA.setAuthor("BanTin5");
+            LeA.addChannelforAnchor("VTV1");
+            LeA.addChannelforAnchor("VTV2");
+            LeA.addChannelforAnchor("VTV3");
+
 
             thethao.setCategory("BanTin1");
             thethao.setCategory("BanTin2");

@@ -12,8 +12,8 @@ namespace BanTin
         private string name;
         private string mail;
         private int numOfNews;
-        private List<BanTin> news { get; set; }
-        private static List<Author> authors { get; set; }
+        private List<BanTin> news = new List<BanTin>();
+        private static List<Author> authors = new List<Author>();
         public Author(string name, string company, string mail)
         {
             this.name = name;
@@ -113,9 +113,18 @@ namespace BanTin
 
         public void setAuthor(string input)
         {
-            foreach(BanTin index in BanTin.getListNew())
-            news.Add(banTinDaTao);
-            banTinDaTao.setAuthorName(this.name);
+            if (news == null)
+            {
+                news = new List<BanTin>();
+            }
+            foreach (BanTin index in BanTin.getListNew())
+            {
+                if (index.getName() == input) 
+                { 
+                news.Add(index);
+                index.setAuthorName(this.name); 
+                }
+            }
             numOfNews = news.Count;
         }
 

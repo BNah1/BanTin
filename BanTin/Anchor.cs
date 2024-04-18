@@ -13,7 +13,7 @@ namespace BanTin
         private string company;
         private int numOfDays;
         private List<string> listChannels = new List<string>();
-        private static List<Anchor> anchors;
+        private static List<Anchor> anchors = new List<Anchor>();
 
         public Anchor(string name, string company, string mail) : base(name, company, mail)
         {
@@ -43,7 +43,7 @@ namespace BanTin
 
         public void addChannelforAnchor(string input) 
         {
-            anchors.Add(this);
+            listChannels.Add(input);
         }
 
         public override void printAll()

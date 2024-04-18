@@ -26,40 +26,6 @@ namespace BanTin
             }
         }
 
-
-
-        public static void setTimeAndBanTinForChannel(string nameofChannel, string nameofnew, string period, int day, int month)
-        {
-            CalendarDay calendarDay = Calendar.getCalendarDay(day, month);
-            if (calendarDay != null)
-            {
-                List<Channel> channels = calendarDay.getListChannels().ToList();
-                foreach (Channel channel in channels)
-                {
-                    if (channel.getName() == nameofChannel)
-                    {
-                        List<New> news = New.listBanTins;
-                        foreach (New newsItem in news)
-                        {
-                            if (nameofnew == newsItem.getName())
-                            {
-                                channel.setTimeAndAddBanTin(newsItem, period, day, month);
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                calendarDay.setListChannels(channels); // Cập nhật danh sách kênh trong calendarDay
-            }
-            else
-            {
-                // Xử lý trường hợp ngày không hợp lệ
-                Console.WriteLine("Ngày không hợp lệ!");
-            }
-        }
-
-
         // Phương thức chức năng
         // Tạo mới 1 Channel ( đồng thời thêm vào các ngày luôn )
         public static void addChannel(string nameofChannel, int numberOfNews)
@@ -438,10 +404,12 @@ namespace BanTin
                         break;
 
                     case "3":
-                        Console.WriteLine("Bạn đã chọn xoá lịch chiếu của bản tin truyền hình");
+                        Console.WriteLine("Bạn đã chọn Xoá lịch chiếu của bản tin truyền hình");
+                        TimeSet.deleteTimeSet();
                         break;
 
                     case "4":
+                        Console.WriteLine("Bạn đã chọn Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
                         inThongTin();
                         break;
                     case "0":
@@ -570,6 +538,36 @@ namespace BanTin
             Console.WriteLine("Đặt lịch thành công");
         }
 
+        public static void setTimeAndBanTinForChannel(string nameofChannel, string nameofnew, string period, int day, int month)
+        {
+            CalendarDay calendarDay = Calendar.getCalendarDay(day, month);
+            if (calendarDay != null)
+            {
+                List<Channel> channels = calendarDay.getListChannels().ToList();
+                foreach (Channel channel in channels)
+                {
+                    if (channel.getName() == nameofChannel)
+                    {
+                        List<New> news = New.listBanTins;
+                        foreach (New newsItem in news)
+                        {
+                            if (nameofnew == newsItem.getName())
+                            {
+                                channel.setTimeAndAddBanTin(newsItem, period, day, month);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                calendarDay.setListChannels(channels); // Cập nhật danh sách kênh trong calendarDay
+            }
+            else
+            {
+                // Xử lý trường hợp ngày không hợp lệ
+                Console.WriteLine("Ngày không hợp lệ!");
+            }
+        }
         public static void nhapBanTin()
         {
             bool continueInput = true;
