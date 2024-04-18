@@ -100,14 +100,14 @@ namespace BanTin
 
                     case "3":
                         Console.WriteLine("Bạn đã chọn sửa bản tin");
-                        suaBanTin();
-                        break;
-
-                    case "4":
-                        Console.WriteLine("Nhập tên bản tin cần xoá");
                         string iName = Console.ReadLine();
                         foreach (New News in New.listBanTins)
                             New.listBanTins.Remove(News);
+                        break;
+
+                    case "4":
+                        Console.WriteLine("Đặt thời gian chiếu");
+                        setTimeforNew();
                         break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");
@@ -218,6 +218,7 @@ namespace BanTin
                                 {
                                     Console.WriteLine("Quay lại menu");
                                     found = true; // Đánh dấu tìm thấy để thoát khỏi vòng lặp
+                                    break;
                                 }
                             }
                         }
@@ -421,7 +422,7 @@ namespace BanTin
                 Console.WriteLine("3. Xoá lịch chiếu của bản tin truyền hình");
                 Console.WriteLine("4. Hiển thị thông tin lịch chiếu bản tin theo tuỳ chọn");
                 Console.WriteLine("0. Thoát");
-                Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
+                Console.Write("Chọn chức năng (nhập số từ 0 đến 4): ");
                 string choice = Console.ReadLine();
 
                 switch (choice)
@@ -441,6 +442,7 @@ namespace BanTin
                         break;
 
                     case "4":
+                        inThongTin();
                         break;
                     case "0":
                         Console.WriteLine("Tạm biệt!");
@@ -545,7 +547,7 @@ namespace BanTin
             string nameofnew = Console.ReadLine();
 
             // Nhập thời gian
-            Console.WriteLine("Nhập khoảng thời gian (VD: 'sáng', 'chiều', 'tối'):");
+            Console.WriteLine("Nhập khoảng thời gian (sang/toi):");
             string period = Console.ReadLine();
 
             // Nhập ngày và tháng
@@ -565,6 +567,7 @@ namespace BanTin
 
             // Gọi phương thức setTimeAndBanTinForChannel với dữ liệu đã nhập
             setTimeAndBanTinForChannel(nameofChannel, nameofnew, period, day, month);
+            Console.WriteLine("Đặt lịch thành công");
         }
 
         public static void nhapBanTin()

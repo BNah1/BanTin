@@ -73,5 +73,43 @@ namespace BanTin
                    "Thời gian bat dau: " + timeStart + " tại kênh " + nameChannel;
         }
 
+        public static void deleteTimeSet() 
+        {
+
+            // Nhập tên kênh
+            Console.WriteLine("Nhập tên kênh:");
+            string nameofChannel = Console.ReadLine();
+
+            // Nhập tên bản tin
+            Console.WriteLine("Nhập tên bản tin:");
+            string nameofnew = Console.ReadLine();
+
+            // Nhập thời gian
+            Console.WriteLine("Nhập khoảng thời gian (sang/toi):");
+            string period = Console.ReadLine();
+
+            // Nhập ngày và tháng
+            Console.WriteLine("Nhập ngày:");
+            int day;
+            while (!int.TryParse(Console.ReadLine(), out day) || day < 1 || day > 31)
+            {
+                Console.WriteLine("Ngày không hợp lệ! Nhập lại:");
+            }
+
+            Console.WriteLine("Nhập tháng:");
+            int month;
+            while (!int.TryParse(Console.ReadLine(), out month) || month < 1 || month > 12)
+            {
+                Console.WriteLine("Tháng không hợp lệ! Nhập lại:");
+            }
+
+            foreach (TimeSet index in listAllTimeSet)
+            { 
+                if(nameofChannel == index.nameChannel && nameofnew == index.nameBanTin &&)
+            }
+            listAllTimeSet.Remove(this);
+            Console.WriteLine("Đặt lịch thành công");
+        }
+
     }
 }

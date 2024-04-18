@@ -111,8 +111,9 @@ namespace BanTin
             return name;
         }
 
-        public void setAuthor(BanTin banTinDaTao)
+        public void setAuthor(string input)
         {
+            foreach(BanTin index in BanTin.getListNew())
             news.Add(banTinDaTao);
             banTinDaTao.setAuthorName(this.name);
             numOfNews = news.Count;

@@ -21,10 +21,11 @@ namespace BanTin
     class Program
     {
         private static readonly string filePath = "C:\\Users\\PC\\source\\repos\\BanTin\\BanTin\\data.json";
+        static BanTinList banTinList1 = new BanTinList();
         static void Main(string[] args)
         {
             PhuongThuc.createCalendar();
-            Test2();
+            KhoiTao();
             foreach (Category iTheLoai in Category.getCategories())
             {
                 Console.WriteLine(iTheLoai.name);
@@ -32,6 +33,77 @@ namespace BanTin
             Menu();
             PhuongThuc.SwapBanTin();
         }
+
+        public static void KhoiTao()
+        {
+            // Tao kenh VTV1 o tat ca cac ngay
+            PhuongThuc.addChannel("VTV1", 5);
+            PhuongThuc.addChannel("VTV2", 5);
+            PhuongThuc.addChannel("VTV3", 5);
+
+            // Tạo các bản tin
+            Category category1 = new Category("The Thao");
+            BanTin banTin1 = new BanTin("BanTin1", 180, "Nội dung bản tin 1");
+            BanTin banTin2 = new BanTin("BanTin2", 150, "Nội dung bản tin 2");
+            BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
+            BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
+            BanTin banTin5 = new BanTin("BanTin5", 90, "Nội dung bản tin 4");
+            banTinList1.Add(banTin1);
+            banTinList1.Add(banTin2);
+            banTinList1.Add(banTin3);
+            banTinList1.Add(banTin4);
+            banTinList1.Add(banTin5);
+
+            QuangCao quangcao1 = new QuangCao("QuangCao1", 30, "bbbb");
+            QuangCao quangcao2 = new QuangCao("QuangCao2", 30, "bbbb");
+            LiveStream live1 = new LiveStream("Live1", 50, "bbbb");
+            LiveStream live2 = new LiveStream("Live1", 50, "bbbb");
+
+            // tạo thể loại + 
+            Category thethao = new Category("The Thao");
+            Category giaitri = new Category("Giai Tri");
+            Category thoisu = new Category("Thoi Su");
+            Author nguyenA = new Author("Nguyen A", "Dai VTV", "nguyenA@gmail.com");
+            Author nguyenB = new Author("Nguyen B", "Dai VTV", "nguyenA@gmail.com");
+            Author nguyenC = new Author("Nguyen C", "Dai VTV", "nguyenA@gmail.com");
+            Anchor LeA = new Anchor("Le A", "Dai VTV", "nguyenA@gmail.com");
+            Reporter TranA = new Reporter("Tran A", "Dai VTV", "nguyenA@gmail.com");
+
+            thethao.setCategory("BanTin1");
+            thethao.setCategory("BanTin2");
+            giaitri.setCategory("BanTin3");
+            giaitri.setCategory("BanTin4");
+            thoisu.setCategory("BanTin5");
+
+
+            //Đặt thời gian cho các bản tin
+            Console.WriteLine("--------------");
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin1", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin2", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "QuangCao1", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "Live", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
+
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin1", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin2", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin3", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV1", "QuangCao1", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "Live", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin2", "toi", 3, 3);
+            PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin3", "toi", 3, 3);
+
+
+
+        }
+
+
+
+
+
+
+
 
         public static void Test2()
         {
@@ -46,7 +118,6 @@ namespace BanTin
             {
                 Console.WriteLine(c.getName());
             }
-            BanTinList banTinList1 = new BanTinList();
             // Tạo các bản tin
             Category category1 = new Category("The Thao");
             BanTin banTin1 = new BanTin("BanTin1", 180, "Nội dung bản tin 1");
@@ -106,8 +177,6 @@ namespace BanTin
             PhuongThuc.setTimeAndBanTinForChannel("VTV1", "BanTin3", "sang", 3, 3);
             PhuongThuc.setTimeAndBanTinForChannel("VTV1", "QuangCao1", "sang", 3, 3);
             PhuongThuc.setTimeAndBanTinForChannel("VTV1", "Live", "sang", 3, 3);
-
-
             PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin2", "sang", 3, 3);
             PhuongThuc.setTimeAndBanTinForChannel("VTV2", "BanTin3", "sang", 3, 3);
 
