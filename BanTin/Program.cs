@@ -39,7 +39,6 @@ namespace BanTin
             PhuongThuc.addChannel("VTV3", 5);
 
             // Tạo các bản tin
-            Category category1 = new Category("The Thao");
             BanTin banTin1 = new BanTin("BanTin1", 180, "Nội dung bản tin 1");
             BanTin banTin2 = new BanTin("BanTin2", 150, "Nội dung bản tin 2");
             BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");

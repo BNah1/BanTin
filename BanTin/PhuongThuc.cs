@@ -684,24 +684,20 @@ namespace BanTin
                     break;
                 case "2":
                     Console.WriteLine("Nhập tên thể loại: ");
-                    string nameofCategory = "";
-                    int maxTime2x = 0;
+                    string nameofCategory = Console.ReadLine(); // Nhập tên thể loại một lần
+                    bool categoryFound = false;
                     foreach (Category check in Category.getCategories())
                     {
-                        nameofCategory = Console.ReadLine();
                         if (nameofCategory == check.getName())
                         {
                             check.printAllBanTin();
+                            categoryFound = true;
                             break;
                         }
-                        if (maxTime2x == 3)
-                        {
-                            QuanLiTheLoai();
-                            break;
-                        }
-
-                        maxTime2x++;
-                        Console.WriteLine("Nhập sai hoặc kênh không tồn tại , vui lòng nhập lại ");
+                    }
+                    if (!categoryFound)
+                    {
+                        Console.WriteLine("Tên thể loại không hợp lệ hoặc không tồn tại.");
                     }
                     break;
                 case "3":
