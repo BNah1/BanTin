@@ -48,7 +48,7 @@ namespace BanTin
 
         public override void printAll()
         {
-            Console.WriteLine("Tên tác giả: " + name);
+            Console.WriteLine("Tên nguười dẫn chương trình: " + name);
             Console.WriteLine("Thuộc : " + company);
             Console.WriteLine("Email : " + mail);
             Console.WriteLine("Các kênh " + name + "chịu trách nhiệm :");

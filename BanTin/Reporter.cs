@@ -31,7 +31,7 @@ namespace BanTin
 
         public override void printAll()
         {
-            Console.WriteLine("Tên tác giả: " + name);
+            Console.WriteLine("Tên phóng viên: " + name);
             Console.WriteLine("Thuộc : " + company);
             Console.WriteLine("Email : " + mail);
             Console.WriteLine("Số lượng bản tin phát sóng trực tiếp của tác giả : " + listNews.Count);

@@ -144,7 +144,7 @@ namespace BanTin
                 Console.WriteLine("---- 4. Quản lý thể loại ");
                 Console.WriteLine("---- 5. Quản lý thời gian trình chiếu ");
                 Console.WriteLine("---- 6. Đọc dữ liệu từ file JSON ");
-                Console.WriteLine("---- 6. Lưu dữ liệu vừa thao tác vào file JSON ");
+                Console.WriteLine("---- 7. Lưu dữ liệu vừa thao tác vào file JSON ");
                 Console.WriteLine("---- 8. Thoát ");
                 Console.WriteLine("--------------------------------------");
                 Console.WriteLine("--------------------------------------");
@@ -169,10 +169,15 @@ namespace BanTin
                         PhuongThuc.QuanLiSetTime();
                         break;
                     case "6":
-                        //Đọc
+                        BanTinList deserializeBanTin = PhuongThuc.DeserializeJsonToObject<BanTinList>(filePath);
+                        foreach (BanTin bantin in deserializeBanTin.Bantins)
+                        {
+                            Console.WriteLine(bantin.ToString());
+                        }
                         break;
                     case "7":
-                        //Lưu
+                        BanTinList chooseBanTinToJson = banTinList1 == PhuongThuc.banTinListNew ? banTinList1 : PhuongThuc.banTinListNew;
+                        PhuongThuc.SerializeObjectToJsonFile(chooseBanTinToJson, filePath);
                         break;
                     case "8":
                         exit = true; // Đặt biến exit thành true để thoát khỏi vòng lặp

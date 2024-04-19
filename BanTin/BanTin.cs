@@ -33,15 +33,27 @@ namespace BanTin
         {
             CategoryName = " Chưa có dữ liệu thể loại ";
             AuthorName = " Chưa có dữ liệu tác giả ";
-            this.Name = name;
-            this.Time = time;
-            this.NoiDung = noiDung;
-            listTime = new List<TimeSet>();
-            listChannels = new List<string>();
-            listDays = new List<string>();
-            getListNew().Add(this);
+                this.Name = name;
+                this.Time = time;
+                this.NoiDung = noiDung;
+                listTime = new List<TimeSet>();
+                listChannels = new List<string>();
+                listDays = new List<string>();
+                getListNew().Add(this);
+            
         }
-
+        // Kiểm tra xem "name" đã tồn tại trong danh sách hay chưa
+        private bool IsNameUnique(string name)
+        {
+            foreach (BanTin bantin in getListNew())
+            {
+                if (bantin.Name == name)
+                {
+                    return false; // Tên đã tồn tại trong danh sách
+                }
+            }
+            return true; // Tên chưa tồn tại trong danh sách
+        }
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("name", Name);

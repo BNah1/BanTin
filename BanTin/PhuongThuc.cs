@@ -12,6 +12,8 @@ namespace BanTin
 {
     internal class PhuongThuc
     {
+        private static string filePath = "C:\\Users\\PC\\Downloads\\BanTin\\BanTin\\data.json";
+        public static BanTinList banTinListNew = new BanTinList();
         // Hàm khởi tạo
         public static void createCalendar()
         {
@@ -697,7 +699,7 @@ namespace BanTin
 
         public static void QuanLiTheLoai()
         {
-            Console.WriteLine("---- Quản lý kênh ----");
+            Console.WriteLine("---- Quản lý Thể Loại ----");
             Console.WriteLine("---- 1. Hiển thị danh sách thể loại ");
             Console.WriteLine("---- 2. Hiển thị các bản tin thuộc thể loại ");
             Console.WriteLine("---- 3. Thoát ");
@@ -750,8 +752,12 @@ namespace BanTin
                 double time = double.Parse(Console.ReadLine());
                 Console.WriteLine("Nội dung bản tin :");
                 string noiDung = Console.ReadLine();
+                banTinListNew = DeserializeJsonToObject<BanTinList>(filePath);
+                Console.WriteLine(banTinListNew);
                 BanTin bantinNew = new BanTin(name, time, noiDung);
-
+                banTinListNew.Add(bantinNew);
+                // Serialize
+                // SerializeObjectToJsonFile(bantinNew, filePath);
                 Category belongstoCategory = null;
                 bool validCategory = false;
                 foreach (Category iTheLoai in Category.getCategories())
@@ -776,6 +782,7 @@ namespace BanTin
                                 string nameCategory = Console.ReadLine();
                                 Category addCategory = new Category(nameCategory);
                                 Console.WriteLine("Đã tạo thành công " + categoryName);
+
                                 bantinNew.setCategoryName(categoryName);
                                 break;
                             case 2:
