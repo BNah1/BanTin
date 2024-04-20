@@ -44,11 +44,6 @@ namespace BanTin
             BanTin banTin3 = new BanTin("BanTin3", 120, "Nội dung bản tin 3");
             BanTin banTin4 = new BanTin("BanTin4", 90, "Nội dung bản tin 4");
             BanTin banTin5 = new BanTin("BanTin5", 90, "Nội dung bản tin 4");
-            banTinList1.Add(banTin1);
-            banTinList1.Add(banTin2);
-            banTinList1.Add(banTin3);
-            banTinList1.Add(banTin4);
-            banTinList1.Add(banTin5);
 
             QuangCao quangcao1 = new QuangCao("QuangCao1", 30, "bbbb");
             QuangCao quangcao2 = new QuangCao("QuangCao2", 30, "bbbb");
@@ -189,63 +184,9 @@ namespace BanTin
                         break;
                 }
 
-
                 Console.WriteLine();
             }
         }
 
-        static void SerializeObjectToJsonFile<T>(T obj, string filePath)
-        {
-            // Serialize đối tượng thành chuỗi JSON
-            string json = JsonSerializer.Serialize(obj, new JsonSerializerOptions
-            {
-                WriteIndented = true,
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.Create(System.Text.Unicode.UnicodeRanges.All)
-            });
-
-            try
-            {
-                // Ghi chuỗi JSON vào tệp văn bản
-                File.WriteAllText(filePath, json, System.Text.Encoding.UTF8);
-                Console.WriteLine($"Dữ liệu JSON đã được ghi vào file {filePath}");
-            }
-            catch (IOException ex)
-            {
-                Console.WriteLine("Lỗi ghi: " + ex.Message);
-            }
-        }
-
-        static T DeserializeJsonToObject<T>(string filePath)
-        {
-            try
-            {
-                // Đọc dữ liệu từ tệp JSON
-                string jsonData = File.ReadAllText(filePath);
-
-                // Deserialize dữ liệu từ tệp thành đối tượng có kiểu dữ liệu T
-                T deserializedObject = JsonSerializer.Deserialize<T>(jsonData);
-
-                if (deserializedObject != null)
-                {
-                    // Hiển thị thông tin của đối tượng sau khi deserialize
-                    Console.WriteLine($"Đối tượng đã được deserialize từ tệp {filePath}:");
-                    Console.WriteLine(deserializedObject);
-
-                    // Trả về đối tượng đã deserialize
-                    return deserializedObject;
-                }
-                else
-                {
-                    Console.WriteLine("Dữ liệu deserialized là null.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Lỗi đọc dữ liệu từ tệp {filePath}: {ex.Message}");
-            }
-
-            // Trả về một giá trị mặc định nếu có lỗi xảy ra hoặc không deserialize được
-            return default(T);
-        }
     }
 }

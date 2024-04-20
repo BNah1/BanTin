@@ -1003,7 +1003,7 @@ namespace BanTin
                 Console.WriteLine(newsItem.getName());
                 foreach (var timeSet in newsItem.getListTime())
                 {
-                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName() && timeSet.Period == period)
                     {
                         Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
                     }
