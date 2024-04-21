@@ -48,7 +48,7 @@ namespace BanTin
             QuangCao quangcao1 = new QuangCao("QuangCao1", 30, "bbbb");
             QuangCao quangcao2 = new QuangCao("QuangCao2", 30, "bbbb");
             LiveStream live1 = new LiveStream("Live1", 50, "bbbb");
-            LiveStream live2 = new LiveStream("Live1", 50, "bbbb");
+            LiveStream live2 = new LiveStream("Live2", 50, "bbbb");
 
             // tạo thể loại + 
             Category thethao = new Category("The Thao");

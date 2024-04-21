@@ -48,9 +48,11 @@ namespace BanTin
             {
                 Console.WriteLine("Quản lý bản tin: ");
                 Console.WriteLine("1. Thêm bản tin");
-                Console.WriteLine("2. Sửa bản tin");
-                Console.WriteLine("3. Xóa bản tin");
-                Console.WriteLine("4. Đặt thời gian chiếu");
+                Console.WriteLine("2. Thêm quảng cáo");
+                Console.WriteLine("3. Thêm bản tin trực tiếp");
+                Console.WriteLine("4. Sửa bản tin");
+                Console.WriteLine("5. Xóa bản tin");
+                Console.WriteLine("6. Đặt thời gian chiếu");
                 Console.WriteLine("0. Thoát");
                 Console.Write("Chọn chức năng (nhập số từ 0 đến 5): ");
                 string choice = Console.ReadLine();
@@ -61,20 +63,58 @@ namespace BanTin
                         Console.WriteLine("Bạn đã chọn Thêm bản tin");
                         nhapBanTin();
                         break;
-
                     case "2":
+                        try
+                        {
+                            Console.WriteLine("Bạn đã chọn thêm quảng cáo");
+                            Console.WriteLine("Tên bản tin :");
+                            string name1 = Console.ReadLine();
+                            Console.WriteLine("Thời lượng bản tin :");
+                            double time1 = double.Parse(Console.ReadLine());
+                            Console.WriteLine("Nội dung bản tin :");
+                            string noiDung1 = Console.ReadLine();
+                            Console.WriteLine(banTinListNew);
+                            QuangCao iQC = new QuangCao(name1, time1, noiDung1);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý ngoại lệ ở đây
+                            Console.WriteLine("Đã xảy ra một ngoại lệ: " + ex.Message);
+                        }
+                        break;
+                    case "3":
+                        try
+                        {
+                            Console.WriteLine("Bạn đã chọn thêm bản tin trực tiếp");
+                            Console.WriteLine("Tên bản tin :");
+                            string name2 = Console.ReadLine();
+                            Console.WriteLine("Thời lượng bản tin :");
+                            double time2 = double.Parse(Console.ReadLine());
+                            Console.WriteLine("Nội dung bản tin :");
+                            string noiDung2 = Console.ReadLine();
+                            Console.WriteLine(banTinListNew);
+                            LiveStream ilive = new LiveStream(name2, time2, noiDung2);
+                        }
+                        catch (Exception ex)
+                        {
+                            // Xử lý ngoại lệ ở đây
+                            Console.WriteLine("Đã xảy ra một ngoại lệ: " + ex.Message);
+                        }
+                        break;
+
+                    case "4":
                         Console.WriteLine("Bạn đã chọn sửa bản tin");
                         suaBanTin();
                         break;
 
-                    case "3":
+                    case "5":
                         Console.WriteLine("Bạn đã chọn sửa bản tin");
                         string iName = Console.ReadLine();
                         foreach (New News in New.listBanTins)
                             New.listBanTins.Remove(News);
                         break;
 
-                    case "4":
+                    case "6":
                         Console.WriteLine("Đặt thời gian chiếu");
                         setTimeforNew();
                         break;
@@ -404,7 +444,7 @@ namespace BanTin
 
                     case "2":
                         Console.WriteLine("Bạn đã chọn Đổi vị trí của 2 bản tin");
-                        SwapBanTin();
+                        SwapBanTinWithDelegate();
                         break;
 
                     case "3":
@@ -497,7 +537,7 @@ namespace BanTin
                 }
             }
         }
-            public static void setTimeforNew()
+        public static void setTimeforNew()
         {
             
             Console.WriteLine("Nhập tên kênh: VTV1 , VTV2 , VTV3 :");
@@ -746,6 +786,7 @@ namespace BanTin
 
             while (continueInput)
             {
+                try { 
                 Console.WriteLine("Tên bản tin :");
                 string name = Console.ReadLine();
                 Console.WriteLine("Thời lượng bản tin :");
@@ -858,7 +899,12 @@ namespace BanTin
                         Console.WriteLine("Lua chon khong hop le, lam on nhap lai");
                         break;
                 }
-
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Đã xảy ra lỗi: " + ex.Message);
+                    Console.WriteLine("Vui lòng nhập lại.");
+                }
             }
         }
         public static void suaBanTin()
@@ -1214,7 +1260,7 @@ namespace BanTin
                 Console.WriteLine(newsItem.getName());
                 foreach (var timeSet in newsItem.getListTime())
                 {
-                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName())
+                    if (timeSet.NameBanTin == newsItem.getName() && timeSet.NameChannel == targetChannel.getName() && timeSet.Period == period)
                     {
                         Console.WriteLine("Chiếu lúc : " + timeSet.getTimeStart().ToString("HH:mm:ss"));
                     }
